@@ -10,25 +10,19 @@ import React, {useEffect} from 'react';
 import RNBootSplash from 'react-native-bootsplash';
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   useColorScheme,
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const App = () => {
   useEffect(() => {
-    RNBootSplash.hide();
+    setTimeout(() => {
+      RNBootSplash.hide({fade: true});
+    }, 2000);
   }, []);
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -37,7 +31,9 @@ const App = () => {
   };
   return (
     <SafeAreaView style={backgroundStyle}>
-      <View>test</View>
+      <View>
+        <Text>this is hot reload </Text>
+      </View>
     </SafeAreaView>
   );
 };
