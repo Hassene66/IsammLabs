@@ -3,7 +3,8 @@ package com.isamm_labs;
 import com.facebook.react.ReactActivity;
 import android.os.Bundle;
 import com.zoontek.rnbootsplash.RNBootSplash;
-
+import android.view.WindowManager;
+import com.facebook.react.ReactActivityDelegate; 
 public class MainActivity extends ReactActivity {
 
   /**
@@ -14,9 +15,16 @@ public class MainActivity extends ReactActivity {
   protected String getMainComponentName() {
     return "Isamm_labs";
   }
-   @Override
-    protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    RNBootSplash.init(R.drawable.bootsplash, MainActivity.this);
+  
+  @Override
+  protected ReactActivityDelegate createReactActivityDelegate() {
+    return new ReactActivityDelegate(this, getMainComponentName()) {
+
+      @Override
+      protected void loadApp(String appKey) {
+        RNBootSplash.init(MainActivity.this); 
+        super.loadApp(appKey);
+      }
+    };
   }
 }
