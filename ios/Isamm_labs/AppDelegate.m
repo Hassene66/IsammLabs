@@ -1,6 +1,6 @@
 #import "AppDelegate.h"
 #import "RNBootSplash.h" 
-
+#import <Firebase.h>
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -30,6 +30,7 @@ static void InitializeFlipper(UIApplication *application) {
 {
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
+  [FIRApp configure]; 
 #endif
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
