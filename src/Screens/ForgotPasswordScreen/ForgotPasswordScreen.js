@@ -2,44 +2,28 @@ import React, {useState, useEffect} from 'react';
 import RNBootSplash from 'react-native-bootsplash';
 import {SafeAreaView, StyleSheet, View, Text} from 'react-native';
 import AppTextInput from '../../Components/AppTextInput';
-import SVGImg from '../../assets/logo.svg';
 import AppButton from '../../Components/AppButton';
-import auth from '@react-native-firebase/auth';
-
-const LoginScreen = ({navigation}) => {
+const App = () => {
   useEffect(() => {
     setTimeout(() => {
       RNBootSplash.hide({fade: true});
     }, 2000);
   }, []);
-
-  useEffect(() => {
-    auth()
-      .signInWithEmailAndPassword('hassene.ayoub@yahoo.fr', '13456')
-      .then(user => {
-        console.log(user);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }, []);
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const handleChange = email => {
+    console.log('email: ', email);
+  };
   return (
     <SafeAreaView style={styles.loginScreen}>
-      <View style={styles.logo}>
-        <SVGImg width={200} height={200} />
-      </View>
       <View style={styles.loginForm}>
-        <AppTextInput icon="email" placeholder="email" />
-        <AppTextInput icon="lock" placeholder="password" secureTextEntry />
-        <Text
-          onPress={() => navigation.navigate('Forgot Password')}
-          style={styles.forgotPassword}>
-          forgot password?
-        </Text>
-        <AppButton title="login" style={styles.submitButton} />
+        <Text style={styles.inputLabel}>Confirmer votre email :</Text>
+        <AppTextInput
+          icon="email"
+          placeholder="email"
+          onChangeText={handleChange}
+        />
+        <AppButton title="submit" style={styles.submitButton} />
       </View>
     </SafeAreaView>
   );
@@ -67,6 +51,10 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     textDecorationLine: 'underline',
   },
+  inputLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
 });
 
-export default LoginScreen;
+export default App;

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "287970661310",
+    "project_id": "issam-labs-cc4b7",
+    "storage_bucket": "issam-labs-cc4b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:287970661310:android:22726106773f78d9ccdfef",
+        "android_client_info": {
+          "package_name": "com.isamm_labs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "287970661310-3qtphebi8rfgs1r4qq4b2qltln83hkht.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.isamm_labs",
+            "certificate_hash": "b24b80bba94c9dbdf99a79d2f3e81577abd3649e"
+          }
+        },
+        {
+          "client_id": "287970661310-cd1ra7g048cfqcom2jacqflrgdhrgf9p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGQSD2zYovbNCybkKGWmqT3o7QWj4b35s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "287970661310-cd1ra7g048cfqcom2jacqflrgdhrgf9p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
