@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   View,
+  Platform,
 } from 'react-native';
 import defaultStyles from '../Config/styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 7,
+    padding: Platform.OS === 'ios' ? 18 : 7,
     marginVertical: 10,
   },
   icon: {marginRight: 8, marginLeft: 2},
