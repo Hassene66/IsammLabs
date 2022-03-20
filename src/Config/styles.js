@@ -2,7 +2,7 @@ import colors from './color';
 export default {
   colors: colors,
   Text: {
-    fontFamily: 'Roboto',
+    fontFamily: 'System',
     fontSize: 17,
     color: colors.dark,
   },
