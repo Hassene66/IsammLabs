@@ -1,29 +1,36 @@
-import React, {useState, useEffect} from 'react';
-import RNBootSplash from 'react-native-bootsplash';
+import React from 'react';
 import {SafeAreaView, StyleSheet, View, Text} from 'react-native';
-import AppTextInput from '../../Components/AppTextInput';
-import AppButton from '../../Components/AppButton';
-const App = () => {
-  useEffect(() => {
-    setTimeout(() => {
-      RNBootSplash.hide({fade: true});
-    }, 2000);
-  }, []);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const handleChange = email => {
-    console.log('email: ', email);
+import {AppForm, AppFormField, SubmitButton} from '../../Components/forms';
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string()
+    .required('Veuillez indiquer votre email')
+    .email('Veuillez fournir une adresse email valide')
+    .label('Email'),
+});
+
+const ForgotPassword = () => {
+  const handleSubmit = values => {
+    console.log(values);
   };
+
   return (
     <SafeAreaView style={styles.loginScreen}>
       <View style={styles.loginForm}>
         <Text style={styles.inputLabel}>Confirmer votre email :</Text>
-        <AppTextInput
-          icon="email"
-          placeholder="email"
-          onChangeText={handleChange}
-        />
-        <AppButton title="submit" style={styles.submitButton} />
+        <AppForm
+          initialValues={{email: '', password: ''}}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}>
+          <AppFormField
+            icon="email"
+            name="email"
+            placeholder="email"
+            keyboardType="email-address"
+          />
+          <SubmitButton title="soumettre" />
+        </AppForm>
       </View>
     </SafeAreaView>
   );
@@ -57,4 +64,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default ForgotPassword;

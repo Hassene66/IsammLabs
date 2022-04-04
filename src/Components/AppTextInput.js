@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import defaultStyles from '../Config/styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import ErrorMessage from './ErrorMessage';
+import ErrorMessage from './forms/ErrorMessage';
 import color from '../Config/color';
 
 const AppTextInput = ({
