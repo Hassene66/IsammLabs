@@ -1,5 +1,5 @@
-import React, {useEffect, useRef} from 'react';
-import {StyleSheet, View, Keyboard} from 'react-native';
+import React, {useRef} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import defaultStyles from '../Config/styles';
 
@@ -12,18 +12,6 @@ const Input = ({
 }) => {
   const input_ref = useRef(null);
 
-  useEffect(() => {
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      () => {
-        input_ref.current.blur();
-      },
-    );
-
-    return () => {
-      keyboardDidHideListener.remove();
-    };
-  }, []);
   return (
     <>
       <View style={[styles.inputContainer]}>

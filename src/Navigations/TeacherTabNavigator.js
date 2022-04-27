@@ -1,11 +1,12 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import HomeScreen from '../Screens/HomeScreen/HomeScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import NewClaimButton from './NewClaimButton';
 import routes from './routes';
+import MyProfileScreen from '../Screens/MyProfileScreen/MyProfileScreen';
+import HomeScreen from '../Screens/HomeScreen/HomeScreen';
+import LabsInfoScreen from '../Screens/LabsInfoScreen/LabsInfoScreen';
 const Tab = createBottomTabNavigator();
-
 const TeacherTabNavigator = () => (
   <Tab.Navigator screenOptions={{}}>
     <Tab.Screen
@@ -18,11 +19,13 @@ const TeacherTabNavigator = () => (
       }}
     />
     <Tab.Screen
-      name={routes.ADD_CLAIM}
-      component={HomeScreen}
+      name={routes.LABS_INFO}
+      component={LabsInfoScreen}
       options={({navigation}) => ({
         tabBarButton: () => (
-          <NewClaimButton onPress={() => navigation.navigate('account')} />
+          <NewClaimButton
+            onPress={() => navigation.navigate(routes.LABS_INFO)}
+          />
         ),
         tabBarIcon: ({size, color}) => (
           <MaterialCommunityIcons
@@ -35,7 +38,7 @@ const TeacherTabNavigator = () => (
     />
     <Tab.Screen
       name={routes.PROFILE}
-      component={HomeScreen}
+      children={() => <MyProfileScreen />}
       options={{
         tabBarIcon: ({size, color}) => (
           <MaterialCommunityIcons name="account" size={size} color={color} />

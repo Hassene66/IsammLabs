@@ -4,4 +4,5 @@ export default Object.freeze({
   ACCEUIL: 'Acceuil',
   ADD_CLAIM: 'Add claim',
   PROFILE: 'Profile',
+  LABS_INFO: 'Labs information',
 });

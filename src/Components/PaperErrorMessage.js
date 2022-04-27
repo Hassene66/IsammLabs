@@ -13,6 +13,6 @@ export default ErrorMessage;
 const styles = StyleSheet.create({
   error: {
     color: 'red',
-    fontFamily: 'Cairo-SemiBold',
+    fontFamily: 'System',
   },
 });
