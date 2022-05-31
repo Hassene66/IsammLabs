@@ -1,47 +1,82 @@
 import React, {useState, useEffect} from 'react';
-import RNBootSplash from 'react-native-bootsplash';
 import {SafeAreaView, StyleSheet, View, Text} from 'react-native';
-import AppTextInput from '../../Components/AppTextInput';
 import SVGImg from '../../assets/logo.svg';
-import AppButton from '../../Components/AppButton';
-import auth from '@react-native-firebase/auth';
-
-const LoginScreen = ({navigation}) => {
-  useEffect(() => {
-    setTimeout(() => {
-      RNBootSplash.hide({fade: true});
-    }, 2000);
-  }, []);
-
-  useEffect(() => {
-    auth()
-      .signInWithEmailAndPassword('hassene.ayoub@yahoo.fr', '13456')
-      .then(user => {
-        console.log(user);
+import * as Yup from 'yup';
+import {AppForm, AppFormField, SubmitButton} from '../../Components/forms';
+import axios from 'axios';
+import storage from '../../Utils/asyncStorage';
+import MyActivityIndicator from '../../Components/MyActivityIndicator';
+const validationSchema = Yup.object().shape({
+  email: Yup.string()
+    .required('Veuillez indiquer votre email')
+    .email('Veuillez fournir une adresse email valide')
+    .label('Email'),
+  password: Yup.string()
+    .required('Veuillez indiquer votre mot de passe')
+    .min(6, 'Un minimum de 6 caractères est requis  ')
+    .label('Password'),
+});
+const saveData = async data => {
+  try {
+    storage.setItem('token', data.token);
+    storage.setItem('user', data.user);
+  } catch (e) {
+    alert('Failed to save the data to the storage');
+  }
+};
+const LoginScreen = ({setUser, navigation}) => {
+  const [loading, setLoading] = useState(false);
+  var isMonting = true;
+  const handleSubmit = async values => {
+    isMonting = true;
+    setLoading(true);
+    axios
+      .post('http://172.30.218.59:5000/api/login', values)
+      .then(({data}) => {
+        saveData(data);
+        setUser(data.user);
       })
-      .catch(e => {
-        console.log(e);
-      });
-  }, []);
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+      .catch(err => {
+        console.log(err);
+      })
+      .finally(() => setLoading(false));
+  };
+  useEffect(() => () => (isMonting = false));
   return (
-    <SafeArea style={styles.loginScreen}>
-      <View style={styles.logo}>
-        <SVGImg width={200} height={200} />
-      </View>
-      <View style={styles.loginForm}>
-        <AppTextInput icon="email" placeholder="email" />
-        <AppTextInput icon="lock" placeholder="password" secureTextEntry />
-        <Text
-          onPress={() => navigation.navigate('Forgot Password')}
-          style={styles.forgotPassword}>
-          forgot password?
-        </Text>
-        <AppButton title="login" style={styles.submitButton} />
-      </View>
-    </SafeArea>
+    <>
+      <MyActivityIndicator loading={loading}>
+        <SafeAreaView style={styles.loginScreen}>
+          <AppForm
+            initialValues={{email: '', password: ''}}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}>
+            <View style={styles.logo}>
+              <SVGImg width={200} height={200} />
+            </View>
+            <View style={styles.loginForm}>
+              <AppFormField
+                icon="email"
+                name="email"
+                placeholder="email"
+                keyboardType="email-address"
+              />
+              <AppFormField
+                icon="lock"
+                name="password"
+                placeholder="mot de passe"
+                secureTextEntry
+              />
+              <Text
+                onPress={() => navigation.navigate('Forgot Password')}
+                style={styles.forgotPassword}>
+                mot de passe oublié?
+              </Text>
+              <SubmitButton title="Login" />
+            </View>
+          </AppForm>
+        </SafeAreaView>
+      </MyActivityIndicator>
+    </>
   );
 };
 
