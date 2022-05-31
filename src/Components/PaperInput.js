@@ -1,20 +1,39 @@
-import React, {useRef} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useEffect, useRef} from 'react';
+import {StyleSheet, View, Keyboard} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import defaultStyles from '../Config/styles';
-
 const Input = ({
   name = 'name',
   placeholder = 'placeholder',
   keyboardType = 'default',
-  icon = null,
+  icon: Icon = null,
+  errors,
+  touched,
+  containerStyle,
   ...rest
 }) => {
   const input_ref = useRef(null);
 
+  useEffect(() => {
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        input_ref.current.blur();
+      },
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+    };
+  }, []);
   return (
     <>
-      <View style={[styles.inputContainer]}>
+      <View
+        style={[
+          styles.inputContainer,
+          errors[name] && touched[name] && styles.error,
+          containerStyle,
+        ]}>
         <TextInput
           ref={input_ref}
           style={styles.input}
@@ -22,9 +41,9 @@ const Input = ({
           keyboardType={keyboardType}
           underlineColor="transparent"
           left={
-            icon && (
+            Icon && (
               <TextInput.Icon
-                name={icon}
+                name={Icon}
                 color={defaultStyles.colors.medium}
                 size={21}
               />
@@ -65,5 +84,9 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     fontWeight: null,
     fontSize: defaultStyles.Text.fontSize,
+  },
+  error: {
+    borderWidth: 2,
+    borderColor: 'red',
   },
 });
