@@ -6,6 +6,8 @@ import RadioButtonListing from '../../Components/RadioButtonListing';
 import * as Yup from 'yup';
 import routes from '../../Navigations/routes';
 import axios from 'axios';
+import FlashMessage, {showMessage} from 'react-native-flash-message';
+import MyActivityIndicator from '../../Components/MyActivityIndicator';
 
 const list = [
   {id: 1, label: 'Hassene'},
@@ -33,6 +35,11 @@ const labos = [
 ];
 const AddClaimScreen = ({navigation: {navigate}}) => {
   const [techniciens, setTechniciens] = useState([]);
+  const [blocs, setBlocs] = useState([]);
+  const [selectedBloc, setSelectedBloc] = useState([]);
+  const [selectedLaboratory, setSelectedLaboratory] = useState([]);
+  const [, setSelectedComputer] = useState([]);
+  const [loading, setLoading] = useState(false);
   console.log('techniciens: ', techniciens);
 
   const validationSchema = Yup.object().shape({
@@ -44,57 +51,85 @@ const AddClaimScreen = ({navigation: {navigate}}) => {
       .nullable()
       .required('Veuillez indiquer le laboratoire')
       .label('Laboratoire'),
-    ordinateurs: Yup.array()
-      .min(1, 'Veuillez sélectionner au moins un PC')
-      .label('Ordinateurs'),
+    ordinateur: Yup.object()
+      .nullable()
+      .required("Veuillez indiquer l'ordinateur")
+      .label('Ordinateur'),
     technicien: Yup.object()
       .nullable()
       .required('Veuillez indiquer le technicien')
       .label('Technicien'),
   });
   const handleSubmit = values => {
-    navigate(routes.ADD_CLAIM_SECOND, values);
+    navigate(routes.ADD_CLAIM_SECOND, {values});
   };
   useEffect(() => {
+    setLoading(true);
     axios
-      .get('http://172.30.218.59:5000/api/users', {
+      .get('http://172.30.208.93:5000/api/users', {
         params: {role: 'technicien'},
       })
       .then(({data}) => {
         setTechniciens(data.map(t => ({id: t._id, label: t.fullname})));
+        return axios.get('http://172.30.208.93:5000/api/bloc');
       })
-      .catch(err => console.log(err));
+      .then(({data}) => {
+        setBlocs(data);
+      })
+      .catch(() =>
+        showMessage({
+          message: 'Erreur de serveur',
+          type: 'danger',
+          icon: 'auto',
+          duration: 2500,
+        }),
+      )
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
+  console.log(blocs);
   return (
-    <View style={{marginHorizontal: 20}}>
-      <AppForm
-        validationSchema={validationSchema}
-        initialValues={{
-          bloc: null,
-          laboratoire: null,
-          ordinateurs: [],
-          technicien: null,
-        }}
-        onSubmit={handleSubmit}>
-        <RadioButtonListing placeholder="bloc" name="bloc" list={labos} />
-        <RadioButtonListing
-          placeholder="laboratoire"
-          name="laboratoire"
-          list={labos}
-        />
-        <Picker
-          placeholder="liste des ordinateurs"
-          name="ordinateurs"
-          list={labos}
-        />
-        <RadioButtonListing
-          placeholder="technicien"
-          name="technicien"
-          list={techniciens}
-        />
-        <SubmitButton style={styles.SubmitButton} title="Procéder" />
-      </AppForm>
-    </View>
+    <MyActivityIndicator loading={loading}>
+      <View style={{marginHorizontal: 20}}>
+        <AppForm
+          validationSchema={validationSchema}
+          initialValues={{
+            bloc: null,
+            laboratoire: null,
+            ordinateur: null,
+            technicien: null,
+          }}
+          onSubmit={handleSubmit}>
+          <RadioButtonListing
+            getSelectedItem={setSelectedBloc}
+            placeholder="bloc"
+            name="bloc"
+            list={blocs}
+          />
+          <RadioButtonListing
+            getSelectedItem={setSelectedLaboratory}
+            placeholder="laboratoire"
+            name="laboratoire"
+            list={selectedBloc?.labs || []}
+          />
+          <RadioButtonListing
+            getSelectedItem={setSelectedComputer}
+            placeholder="ordinateur"
+            name="ordinateur"
+            list={selectedLaboratory?.computer || []}
+          />
+
+          <RadioButtonListing
+            placeholder="technicien"
+            name="technicien"
+            list={techniciens}
+          />
+          <SubmitButton style={styles.SubmitButton} title="Procéder" />
+        </AppForm>
+      </View>
+      <FlashMessage position="top" />
+    </MyActivityIndicator>
   );
 };
 

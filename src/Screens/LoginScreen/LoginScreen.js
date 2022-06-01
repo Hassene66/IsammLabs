@@ -6,6 +6,7 @@ import {AppForm, AppFormField, SubmitButton} from '../../Components/forms';
 import axios from 'axios';
 import storage from '../../Utils/asyncStorage';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';
+import FlashMessage, {showMessage} from 'react-native-flash-message';
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .required('Veuillez indiquer votre email')
@@ -18,7 +19,6 @@ const validationSchema = Yup.object().shape({
 });
 const saveData = async data => {
   try {
-    storage.setItem('token', data.token);
     storage.setItem('user', data.user);
   } catch (e) {
     alert('Failed to save the data to the storage');
@@ -26,18 +26,32 @@ const saveData = async data => {
 };
 const LoginScreen = ({setUser, navigation}) => {
   const [loading, setLoading] = useState(false);
-  var isMonting = true;
+
   const handleSubmit = async values => {
     isMonting = true;
     setLoading(true);
     axios
-      .post('http://172.30.218.59:5000/api/login', values)
+      .post('http://172.30.208.93:5000/api/login', values)
       .then(({data}) => {
         saveData(data);
         setUser(data.user);
       })
-      .catch(err => {
-        console.log(err);
+      .catch(error => {
+        if (error.response.status) {
+          showMessage({
+            message: 'Les informations de connexion fournies sont invalides',
+            type: 'danger',
+            icon: 'auto',
+            duration: 2500,
+          });
+        } else {
+          showMessage({
+            message: 'Erreur de serveur',
+            type: 'danger',
+            icon: 'auto',
+            duration: 2500,
+          });
+        }
       })
       .finally(() => setLoading(false));
   };
@@ -75,6 +89,7 @@ const LoginScreen = ({setUser, navigation}) => {
             </View>
           </AppForm>
         </SafeAreaView>
+        <FlashMessage position="top" />
       </MyActivityIndicator>
     </>
   );

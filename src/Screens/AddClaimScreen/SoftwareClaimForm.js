@@ -5,7 +5,7 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import color from '../../Config/color';
 import NewSoftwareForm from './NewSoftwareForm';
 import SoftwareUpdateForm from './SoftwareUpdateForm';
-const SoftwareClaimForm = () => {
+const SoftwareClaimForm = ({values}) => {
   const Tab = createMaterialTopTabNavigator();
   return (
     <View style={styles.container}>
@@ -24,7 +24,7 @@ const SoftwareClaimForm = () => {
             ),
           }}
           name="Nouveau logiciel"
-          children={() => <NewSoftwareForm />}
+          children={() => <NewSoftwareForm values={values} />}
         />
         <Tab.Screen
           options={{
