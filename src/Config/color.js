@@ -9,4 +9,6 @@ export default {
   lighter: '#f7f7f7',
   danger: '#ff5252',
   veryLight: '#f0f0f0',
+  lightRed: '#FCF4F4',
+  lightGrey: '#595959',
 };

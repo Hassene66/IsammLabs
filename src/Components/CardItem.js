@@ -4,8 +4,8 @@ import PcCaractiresitics from './PcCaracteresitics';
 import SoftwaresInstalled from './SoftwaresInstalled';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import color from '../../Config/color';
-import {TouchableHighlight} from 'react-native-gesture-handler';
+import color from '../Config/color';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const CardItem = ({item}) => {
   const [showCaracteristic, setShowCaracteristic] = useState(true);
@@ -87,7 +87,7 @@ const CardItem = ({item}) => {
             <MaterialCommunityIcons
               color={color.primary}
               name="view-grid"
-              size={23}
+              size={24}
               style={{marginRight: 5}}
             />
             <Text style={{fontWeight: '400', fontSize: 17}}>Bloc A</Text>
@@ -113,50 +113,49 @@ const CardItem = ({item}) => {
             flexDirection: 'row',
             marginVertical: 10,
           }}>
-          <TouchableHighlight
+          <TouchableWithoutFeedback
             onPress={handleShowCaracteristic}
             style={{
               flexWrap: 'wrap',
+              borderRadius: 8,
               marginRight: 8,
+              backgroundColor: showCaracteristic
+                ? color.primary
+                : color.lightRed,
             }}>
             <Text
               style={{
                 padding: 9,
-                backgroundColor: color.primary,
                 fontWeight: '600',
-                fontSize: 17,
-                color: color.white,
+                fontSize: 15,
+                color: !showCaracteristic ? color.black : color.white,
               }}>
               caractéristique
             </Text>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={handleShowSoftwares}>
-            <View style={{flexWrap: 'wrap'}}>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={handleShowSoftwares}>
+            <View
+              style={{
+                flexWrap: 'wrap',
+                borderRadius: 8,
+                backgroundColor: !showCaracteristic
+                  ? color.primary
+                  : color.lightRed,
+              }}>
               <Text
                 style={{
                   padding: 9,
-                  backgroundColor: 'grey',
                   fontWeight: '600',
-                  fontSize: 17,
-                  color: color.white,
+                  fontSize: 15,
+                  color: showCaracteristic ? color.black : color.white,
                 }}>
                 Logiciel installé
               </Text>
             </View>
-          </TouchableHighlight>
+          </TouchableWithoutFeedback>
         </View>
         {showCaracteristic && <PcCaractiresitics item={item} />}
         {!showCaracteristic && <SoftwaresInstalled item={item} />}
-        {/* <Tab.Navigator>
-          <Tab.Screen
-            name="Caractéristique"
-            component={() => <PcCaractiresitics key={data._id} data={data} />}
-          />
-          <Tab.Screen
-            name="Logiciel Installé"
-            component={() => <SoftwaresInstalled key={data._id} data={data} />}
-          />
-        </Tab.Navigator> */}
       </View>
     </View>
   );

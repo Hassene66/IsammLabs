@@ -1,8 +1,7 @@
-import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import {useState} from 'react';
 import {FlatList} from 'react-native-gesture-handler';
-import CardItem from './CardItem';
+import CardItem from '../../Components/CardItem';
 
 const LabsInfoScreen = () => {
   const data = [
@@ -36,13 +35,7 @@ const LabsInfoScreen = () => {
         graphicCard: 'Nvidea Gt 270',
         storage: '500 Gb',
       },
-      softwareInstalled: [
-        'Android studio',
-        'python',
-        'Node.js',
-        'Angular',
-        'C++',
-      ],
+      softwareInstalled: ['Android studio', 'python', 'Angular', 'C++'],
     },
   ];
 

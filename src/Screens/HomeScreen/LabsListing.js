@@ -17,25 +17,25 @@ export default class Home extends Component {
       data: [
         {
           id: 1,
-          title: 'Bloc A',
+          title: 'lab 1',
           image:
             'https://img.icons8.com/external-xnimrodx-lineal-color-xnimrodx/128/undefined/external-pc-computer-xnimrodx-lineal-color-xnimrodx.png',
         },
         {
           id: 1,
-          title: 'Bloc B',
+          title: 'Lab 2',
           image:
             'https://img.icons8.com/external-xnimrodx-lineal-color-xnimrodx/128/undefined/external-pc-computer-xnimrodx-lineal-color-xnimrodx.png',
         },
         {
           id: 2,
-          title: 'Bloc C',
+          title: 'Lab 3',
           image:
             'https://img.icons8.com/external-xnimrodx-lineal-color-xnimrodx/128/undefined/external-pc-computer-xnimrodx-lineal-color-xnimrodx.png',
         },
         {
           id: 3,
-          title: 'Bloc D',
+          title: 'Lab 4',
           image:
             'https://img.icons8.com/external-xnimrodx-lineal-color-xnimrodx/128/undefined/external-pc-computer-xnimrodx-lineal-color-xnimrodx.png',
         },

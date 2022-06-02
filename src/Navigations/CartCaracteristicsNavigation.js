@@ -1,6 +1,6 @@
 import React from 'react';
-import PcCaractiresitics from '../Screens/LabsInfoScreen/PcCaracteresitics';
-import SoftwaresInstalled from '../Screens/LabsInfoScreen/SoftwaresInstalled';
+import PcCaractiresitics from '../Components/PcCaracteresitics';
+import SoftwaresInstalled from '../Components/SoftwaresInstalled';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 const CartCaracteristicsNavigation = () => {
