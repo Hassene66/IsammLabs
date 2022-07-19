@@ -11,6 +11,7 @@ import color from '../../Config/color';
 import Collapsible from 'react-native-collapsible';
 import User from '../../assets/userImage.png';
 import {useNavigation} from '@react-navigation/native';
+import moment from 'moment';
 const ClaimsCard = ({data}) => {
   const navigation = useNavigation();
   const [showMoreContent, setShowMoreContent] = useState(false);
@@ -26,13 +27,13 @@ const ClaimsCard = ({data}) => {
             source={User}
           />
           <View style={styles.cardHeaderInfo}>
-            <Text style={styles.userInfo}>{data.teacher}</Text>
+            <Text style={styles.userInfo}>{data?.createdBy?.fullname}</Text>
             <Text
               style={{
                 color: '#B0B0B0',
                 fontWeight: '600',
               }}>
-              {data.email}
+              {data?.createdBy?.email}
             </Text>
           </View>
           <FontAwesome
@@ -44,10 +45,10 @@ const ClaimsCard = ({data}) => {
       </TouchableWithoutFeedback>
       <View style={styles.cardBodyContainer}>
         <Text style={styles.Title}>Réclamation :</Text>
-        <Text style={styles.subTitle}>{data.claimTitle}</Text>
+        <Text style={styles.subTitle}>{data.title}</Text>
         <Text style={styles.Title}>Détail :</Text>
         <Text numberOfLines={2} ellipsizeMode="tail" style={styles.subTitle}>
-          {data.claimDetails}
+          {data.description}
         </Text>
         <Collapsible collapsed={!showMoreContent}>
           <View style={styles.footerContainer}>
@@ -58,10 +59,11 @@ const ClaimsCard = ({data}) => {
                   size={22}
                   style={{marginHorizontal: 10, color: color.primary}}
                 />
-                <Text
-                  style={
-                    styles.subTitle
-                  }>{`${data.startingDate} > ${data.endingDate} `}</Text>
+                <Text style={styles.subTitle}>{`${moment(
+                  data?.createdAt,
+                ).format('DD/MM/YYYY')} > ${moment(data?.createdAt)
+                  .add(7, 'days')
+                  .format('DD/MM/YYYY')} `}</Text>
               </View>
               <View style={styles.secondCol}>
                 <FontAwesome
@@ -69,7 +71,7 @@ const ClaimsCard = ({data}) => {
                   size={22}
                   style={{marginHorizontal: 10, color: color.primary}}
                 />
-                <Text style={styles.subTitle}>{data.bloc}</Text>
+                <Text style={styles.subTitle}>{data?.bloc?.label}</Text>
               </View>
             </View>
             <View
@@ -90,7 +92,7 @@ const ClaimsCard = ({data}) => {
                     numberOfLines={1}
                     ellipsizeMode="tail"
                     style={styles.subTitle}>
-                    {data.pc.map(item => `${item}, `)}
+                    {data?.computer?.label}
                   </Text>
                 </View>
               </View>
@@ -100,7 +102,7 @@ const ClaimsCard = ({data}) => {
                   size={22}
                   style={{marginHorizontal: 10, color: color.primary}}
                 />
-                <Text style={styles.subTitle}>{data.labo}</Text>
+                <Text style={styles.subTitle}>{data.labo.label}</Text>
               </View>
             </View>
           </View>

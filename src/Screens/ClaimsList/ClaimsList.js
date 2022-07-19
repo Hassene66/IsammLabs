@@ -1,57 +1,62 @@
-import {StyleSheet, Text, View, FlatList} from 'react-native';
-import React from 'react';
+import {StyleSheet, FlatList} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import uuid from 'react-native-uuid';
 import ClaimsCard from './ClaimsCard';
-const Data = [
-  {
-    id: 1,
-    teacher: 'Hassene Ayoub',
-    email: 'hassene.ayoub@yahoo.fr',
-    claimTitle: 'First Claim',
-    claimDetails: 'This is claim details',
-    startingDate: '08/02/2022',
-    endingDate: '08/02/2022',
-    bloc: 'Bloc A',
-    pc: ['PC1', 'PC2', 'PC3', 'PC4'],
-    labo: 'Labo 3',
-  },
-  {
-    id: 2,
-    teacher: 'Marouen Ayoub',
-    email: 'marouene.ayoub@yahoo.fr',
-    claimTitle: 'Second Claim',
-    claimDetails:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elitsed do eiusmod tempor incididunt ut labore et dolor consectetur adipiscing elitsed do',
-    startingDate: '08/02/2022',
-    endingDate: '10/02/2022',
-    bloc: 'Bloc B',
-    pc: ['PC1', 'PC2', 'PC3'],
-    labo: 'Labo 5',
-  },
-  {
-    id: 3,
-    teacher: 'Marouen Ayoub',
-    email: 'marouene.ayoub@yahoo.fr',
-    claimTitle: 'Second Claim',
-    claimDetails:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elitsed do eiusmod tempor incididunt ut labore et dolor consectetur adipiscing elitsed do',
-    startingDate: '08/02/2022',
-    endingDate: '10/02/2022',
-    bloc: 'Bloc B',
-    pc: ['PC1', 'PC2', 'PC3'],
-    labo: 'Labo 5',
-  },
-];
+import storage from '../../Utils/asyncStorage';
+import MyActivityIndicator from '../../Components/MyActivityIndicator';
+import axios from '../../Utils/axios';
+import {View, Text} from 'react-native';
+
+import {useIsFocused} from '@react-navigation/native';
 const ClaimsList = () => {
+  const [loading, setLoading] = useState(true);
+  const [claims, setClaims] = useState([]);
+
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    setLoading(true);
+    storage
+      .getItem('user')
+      .then(user => {
+        return axios.get('/api/claim', {
+          params: {
+            assignedTo: user._id,
+            status: 'unprocessed',
+          },
+        });
+      })
+      .then(({data}) => setClaims(data))
+      .catch(err => console.log(err))
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [isFocused]);
   return (
-    <FlatList
-      showsVerticalScrollIndicator={false}
-      data={Data}
-      keyExtractor={() => uuid.v4()}
-      renderItem={({item}) => <ClaimsCard data={item} />}
-    />
+    <MyActivityIndicator loading={loading}>
+      {!loading &&
+        (!!claims.length ? (
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={claims}
+            keyExtractor={() => uuid.v4()}
+            renderItem={({item}) => <ClaimsCard data={item} />}
+          />
+        ) : (
+          <View style={styles.messageContainer}>
+            <Text style={styles.text}>Aucune réclamation à traiter</Text>
+          </View>
+        ))}
+    </MyActivityIndicator>
   );
 };
 export default ClaimsList;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  messageContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {textAlign: 'center', fontWeight: '700', fontSize: 16},
+});
