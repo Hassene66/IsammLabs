@@ -5,9 +5,9 @@ import {AppForm, SubmitButton} from '../../Components/forms';
 import RadioButtonListing from '../../Components/RadioButtonListing';
 import * as Yup from 'yup';
 import routes from '../../Navigations/routes';
-import axios from 'axios';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';
+import axios from '../../Utils/axios';
 
 const list = [
   {id: 1, label: 'Hassene'},
@@ -40,7 +40,6 @@ const AddClaimScreen = ({navigation: {navigate}}) => {
   const [selectedLaboratory, setSelectedLaboratory] = useState([]);
   const [, setSelectedComputer] = useState([]);
   const [loading, setLoading] = useState(false);
-  console.log('techniciens: ', techniciens);
 
   const validationSchema = Yup.object().shape({
     bloc: Yup.object()
@@ -66,12 +65,12 @@ const AddClaimScreen = ({navigation: {navigate}}) => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get('http://172.30.208.93:5000/api/users', {
+      .get('/api/users', {
         params: {role: 'technicien'},
       })
       .then(({data}) => {
         setTechniciens(data.map(t => ({id: t._id, label: t.fullname})));
-        return axios.get('http://172.30.208.93:5000/api/bloc');
+        return axios.get('/api/bloc');
       })
       .then(({data}) => {
         setBlocs(data);
@@ -88,7 +87,6 @@ const AddClaimScreen = ({navigation: {navigate}}) => {
         setLoading(false);
       });
   }, []);
-  console.log(blocs);
   return (
     <MyActivityIndicator loading={loading}>
       <View style={{marginHorizontal: 20}}>

@@ -4,6 +4,7 @@ import SoftwareClaimForm from './SoftwareClaimForm';
 import HardwareReclamation from './HardwareClaimForm';
 import CustomTopTabNavigator from '../../Navigations/CustomTopTabNavigator';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+
 const AddClaimSecondStepScreen = ({route}) => {
   const {values} = route.params;
 

@@ -3,12 +3,15 @@ import React, {useState, useEffect} from 'react';
 import {AppForm, AppFormField, SubmitButton} from '../../Components/forms';
 import Title from '../../Components/Title';
 import * as Yup from 'yup';
-import axios from 'axios';
 import storage from '../../Utils/asyncStorage';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';
-import FlashMessage, {showMessage} from 'react-native-flash-message';
+import axios from '../../Utils/axios';
+import {ALERT_TYPE, Dialog} from 'react-native-alert-notification';
+import routes from '../../Navigations/routes';
+import {useNavigation} from '@react-navigation/native';
 
 const NewSoftwareForm = ({values}) => {
+  const navigation = useNavigation();
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -27,7 +30,7 @@ const NewSoftwareForm = ({values}) => {
   const handleSubmit = formValues => {
     setLoading(true);
     axios
-      .post('http://172.30.208.93:5000/api/claim', {
+      .post('/api/claim', {
         ...formValues,
         ...{
           claimType: 'software',
@@ -39,11 +42,14 @@ const NewSoftwareForm = ({values}) => {
         },
       })
       .then(() => {
-        showMessage({
-          message: 'réclamation été ajoutée avec succès',
-          type: 'success',
-          icon: 'auto',
-          duration: 2500,
+        Dialog.show({
+          type: ALERT_TYPE.SUCCESS,
+          title: 'Succès',
+          textBody: 'La réclamation a été envoyée avec succès',
+          button: 'fermer',
+          onHide: function () {
+            navigation.navigate(routes.ACCEUIL);
+          },
         });
       })
       .catch(err => {
@@ -54,24 +60,25 @@ const NewSoftwareForm = ({values}) => {
       });
   };
   return (
-    <View style={{flex: 1}}>
-      <AppForm
-        initialValues={{titre: '', logicielle: '', description: ''}}
-        onSubmit={handleSubmit}
-        validationSchema={validationSchema}>
-        <View style={styles.formContainer}>
-          <Title
-            text="Formulaire de réclamation"
-            titleStyle={styles.formTitleStyle}
-          />
-          <AppFormField name="title" placeholder="titre" />
-          <AppFormField name="toAddSoftware" placeholder="logicielle" />
-          <AppFormField name="description" placeholder="description" />
-          <SubmitButton title="Envoyer" style={styles.SubmitButton} />
-        </View>
-      </AppForm>
-      <FlashMessage position="top" />
-    </View>
+    <>
+      <MyActivityIndicator loading={loading}>
+        <AppForm
+          initialValues={{titre: '', logicielle: '', description: ''}}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}>
+          <View style={styles.formContainer}>
+            <Title
+              text="Formulaire de réclamation"
+              titleStyle={styles.formTitleStyle}
+            />
+            <AppFormField name="title" placeholder="titre" />
+            <AppFormField name="toAddSoftware" placeholder="logicielle" />
+            <AppFormField name="description" placeholder="description" />
+            <SubmitButton title="Envoyer" style={styles.SubmitButton} />
+          </View>
+        </AppForm>
+      </MyActivityIndicator>
+    </>
   );
 };
 

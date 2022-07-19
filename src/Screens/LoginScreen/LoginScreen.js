@@ -3,10 +3,10 @@ import {SafeAreaView, StyleSheet, View, Text} from 'react-native';
 import SVGImg from '../../assets/logo.svg';
 import * as Yup from 'yup';
 import {AppForm, AppFormField, SubmitButton} from '../../Components/forms';
-import axios from 'axios';
 import storage from '../../Utils/asyncStorage';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
+import axios from '../../Utils/axios';
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .required('Veuillez indiquer votre email')
@@ -31,7 +31,7 @@ const LoginScreen = ({setUser, navigation}) => {
     isMonting = true;
     setLoading(true);
     axios
-      .post('http://172.30.208.93:5000/api/login', values)
+      .post('/api/login', values)
       .then(({data}) => {
         saveData(data);
         setUser(data.user);
