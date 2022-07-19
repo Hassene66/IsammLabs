@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   StyleSheet,
   Text,
@@ -22,13 +22,23 @@ const RadioButtonListing = ({
   list = [],
   name,
   style = {},
+  getSelectedItem = () => {},
 }) => {
   const refRBSheet = useRef();
   const [selectedItem, setSelectedItem] = useState(undefined);
   const {setFieldValue, errors, touched} = useFormikContext();
   const onSelectItem = item => {
     setSelectedItem(item);
+    getSelectedItem(item);
   };
+  useEffect(() => {
+    setSelectedItem(undefined);
+
+    return () => {
+      setSelectedItem(undefined);
+      setFieldValue(name, undefined);
+    };
+  }, []);
   return (
     <>
       <TouchableWithoutFeedback onPress={() => refRBSheet.current.open()}>

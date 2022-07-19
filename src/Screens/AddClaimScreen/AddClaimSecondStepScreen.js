@@ -4,7 +4,10 @@ import SoftwareClaimForm from './SoftwareClaimForm';
 import HardwareReclamation from './HardwareClaimForm';
 import CustomTopTabNavigator from '../../Navigations/CustomTopTabNavigator';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-const AddClaimSecondStepScreen = ({}) => {
+
+const AddClaimSecondStepScreen = ({route}) => {
+  const {values} = route.params;
+
   const Tab = createMaterialTopTabNavigator();
 
   return (
@@ -27,7 +30,7 @@ const AddClaimSecondStepScreen = ({}) => {
         initialRouteName="SoftwareRecalamation">
         <Tab.Screen
           name="SoftwareReclamation"
-          children={() => <SoftwareClaimForm />}
+          children={() => <SoftwareClaimForm values={values} />}
         />
         <Tab.Screen
           name="HardwareReclamation"
