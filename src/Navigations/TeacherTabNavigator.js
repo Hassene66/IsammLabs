@@ -17,6 +17,7 @@ const TeacherTabNavigator = () => (
         tabBarIcon: ({size, color}) => (
           <MaterialCommunityIcons name="home" size={size} color={color} />
         ),
+        headerShown: false,
       }}
     />
     <Tab.Screen

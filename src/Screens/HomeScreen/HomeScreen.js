@@ -1,13 +1,16 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {Root} from 'react-native-alert-notification';
 
 const HomeScreen = () => {
   const handleSubmit = values => {
     console.log(values);
   };
   return (
-    <View>
-      <Text>Test</Text>
+    <View style={styles.container}>
+      <Root theme="light">
+        <Text>Test</Text>
+      </Root>
     </View>
   );
 };
@@ -15,6 +18,10 @@ const HomeScreen = () => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: 20,
+    flex: 1,
+  },
   loginScreen: {
     backgroundColor: '#f2f2f2',
     flex: 1,
