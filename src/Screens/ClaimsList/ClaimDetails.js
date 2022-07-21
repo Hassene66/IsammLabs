@@ -9,6 +9,7 @@ import axios from '../../Utils/axios';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';
 import {useNavigation} from '@react-navigation/native';
 import routes from '../../Navigations/routes';
+import {ALERT_TYPE, Toast} from 'react-native-alert-notification';
 
 const ClaimsCard = ({route}) => {
   const navigation = useNavigation();
@@ -18,8 +19,23 @@ const ClaimsCard = ({route}) => {
     setLoading(true);
     axios
       .put('/api/claim/' + params._id, {status: 'resolved'})
-      .then(() => {})
-      .catch(() => {})
+      .then(() =>
+        Toast.show({
+          type: ALERT_TYPE.SUCCESS,
+          title: 'Succès',
+          textBody: 'La réclamation a été résolue avec succès',
+          autoClose: 3000,
+        }),
+      )
+      .catch(e => {
+        Toast.show({
+          type: ALERT_TYPE.DANGER,
+          title: 'Erreur',
+          textBody:
+            "Un problème s'est produit pendant l'opération de mise à jour",
+          autoClose: 3000,
+        });
+      })
       .finally(() => {
         setLoading(false);
         navigation.navigate(routes.CLAIM_LIST);

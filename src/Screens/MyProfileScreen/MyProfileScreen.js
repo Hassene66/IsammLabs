@@ -38,6 +38,7 @@ const MyProfileScreen = () => {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
   useEffect(() => {
+    console.log('in');
     storage
       .getItem('user')
       .then(user => setUser(user))
@@ -90,7 +91,7 @@ export default MyProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 20,
+    marginVertical: 15,
   },
   screen: {
     backgroundColor: color.veryLight,

@@ -135,7 +135,8 @@ const styles = StyleSheet.create({
     elevation: 8,
     backgroundColor: 'white',
     borderRadius: 20,
-    margin: 20,
+    marginHorizontal: 20,
+    marginVertical: 12,
   },
 
   cardHeader: {
