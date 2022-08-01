@@ -12,15 +12,20 @@ import Collapsible from 'react-native-collapsible';
 import User from '../../assets/userImage.png';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
-const ClaimsCard = ({data}) => {
+import routes from '../../Navigations/routes';
+const ClaimsCard = ({data, pressable = true}) => {
   const navigation = useNavigation();
   const [showMoreContent, setShowMoreContent] = useState(false);
   return (
     <View style={styles.cardContainer}>
       <TouchableWithoutFeedback
-        onPress={() => {
-          navigation.navigate('Claim Details', data);
-        }}>
+        onPress={
+          pressable
+            ? () => {
+                navigation.navigate(routes.CLAIM_DETAIL, data);
+              }
+            : () => {}
+        }>
         <View style={styles.cardHeader}>
           <Image
             style={{width: 50, height: 50, marginRight: 5}}
@@ -36,11 +41,13 @@ const ClaimsCard = ({data}) => {
               {data?.createdBy?.email}
             </Text>
           </View>
-          <FontAwesome
-            name="chevron-circle-right"
-            size={30}
-            style={{marginRight: 10, color: color.light}}
-          />
+          {pressable && (
+            <FontAwesome
+              name="chevron-circle-right"
+              size={30}
+              style={{marginRight: 10, color: color.light}}
+            />
+          )}
         </View>
       </TouchableWithoutFeedback>
       <View style={styles.cardBodyContainer}>
@@ -102,7 +109,7 @@ const ClaimsCard = ({data}) => {
                   size={22}
                   style={{marginHorizontal: 10, color: color.primary}}
                 />
-                <Text style={styles.subTitle}>{data.labo.label}</Text>
+                <Text style={styles.subTitle}>{data?.labo?.label}</Text>
               </View>
             </View>
           </View>

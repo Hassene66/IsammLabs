@@ -10,6 +10,8 @@ import routes from '../../Navigations/routes';
 import axios from '../../Utils/axios';
 import color from '../../Config/color';
 import {ScrollView} from 'react-native-gesture-handler';
+import userService from '../../Services/userService';
+import blocService from '../../Services/blocService';
 
 const list = [
   {id: 1, label: 'Hassene'},
@@ -67,20 +69,17 @@ const AddClaimScreen = ({navigation: {navigate}}) => {
   };
   useEffect(() => {
     setLoading(true);
-    axios
-      .get('/api/users', {
-        params: {role: 'technicien'},
-      })
+    userService
+      .getAllUserApi({role: 'technicien', isAvailable: true})
       .then(({data}) => {
         setTechniciens(data.map(t => ({id: t._id, label: t.fullname})));
-        return axios.get('/api/bloc');
+        return blocService.getAllBlocsApi();
       })
       .then(({data}) => {
         setBlocs(data);
       })
       .then(() => Dialog.hide())
       .catch(() => {
-        console.log('catch');
         Dialog.show({
           type: ALERT_TYPE.DANGER,
           title: 'Erreur',

@@ -13,4 +13,6 @@ export default Object.freeze({
   CLAIM_CARD: 'Claim Card',
   CLAIM_LIST: 'Claim List',
   LABS_INFO: 'Labs information',
+  PROCESSED_CLAIMS: 'Processed claims',
+  TECHNICIEN_NOTIFICATION: 'technicien notifications',
 });

@@ -9,4 +9,7 @@ export default {
   lighter: '#f7f7f7',
   danger: '#ff5252',
   veryLight: '#f0f0f0',
+  pink: '#f58dfc',
+  purple: '#8da0fc',
+  orange: '#fa8282',
 };

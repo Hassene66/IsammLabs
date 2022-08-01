@@ -6,7 +6,10 @@ import {AppForm, AppFormField, SubmitButton} from '../../Components/forms';
 import storage from '../../Utils/asyncStorage';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
-import axios from '../../Utils/axios';
+import messaging from '@react-native-firebase/messaging';
+import authService from '../../Services/authService';
+import userService from '../../Services/userService';
+
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .required('Veuillez indiquer votre email')
@@ -17,9 +20,9 @@ const validationSchema = Yup.object().shape({
     .min(6, 'Un minimum de 6 caractères est requis  ')
     .label('Password'),
 });
-const saveData = async data => {
+const saveData = async (key, data) => {
   try {
-    storage.setItem('user', data.user);
+    storage.setItem(key, data);
   } catch (e) {
     alert('Failed to save the data to the storage');
   }
@@ -28,13 +31,13 @@ const LoginScreen = ({setUser, navigation}) => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async values => {
-    isMonting = true;
     setLoading(true);
-    axios
-      .post('/api/login', values)
+    authService
+      .loginApi(values)
       .then(({data}) => {
-        saveData(data);
+        saveData('user', data.user);
         setUser(data.user);
+        saveFcmKeyToDatabase(data?.user?._id);
       })
       .catch(error => {
         if (error.response.status) {
@@ -55,7 +58,29 @@ const LoginScreen = ({setUser, navigation}) => {
       })
       .finally(() => setLoading(false));
   };
-  useEffect(() => () => (isMonting = false));
+
+  const saveFcmKeyToDatabase = async uid => {
+    try {
+      const fcm_key = await storage.getItem('fcm_token');
+      await userService.updateFCMTokenApi(uid, fcm_key);
+    } catch (error) {
+      showMessage({
+        message: 'Erreur de serveur',
+        type: 'danger',
+        icon: 'auto',
+        duration: 2500,
+      });
+    }
+  };
+  useEffect(() => {
+    const unsubscribe = messaging().onTokenRefresh(token => {
+      if (token) {
+        saveData('fcm_token', token);
+      }
+    });
+    return unsubscribe;
+  }, []);
+
   return (
     <>
       <MyActivityIndicator loading={loading}>

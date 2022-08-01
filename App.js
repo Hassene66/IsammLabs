@@ -16,7 +16,10 @@ import LoginScreen from './src/Screens/LoginScreen/LoginScreen';
 import getCurrentUser from './src/Utils/getAuthUser';
 import storage from './src/Utils/asyncStorage';
 import MyActivityIndicator from './src/Components/MyActivityIndicator';
-
+import messaging from '@react-native-firebase/messaging';
+import routes from './src/Navigations/routes';
+import notificationListeners from './src/Utils/notificationListeners';
+import {Root} from 'react-native-alert-notification';
 const App = () => {
   const [user, setUser] = useState(null);
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -34,20 +37,26 @@ const App = () => {
       RNBootSplash.hide({fade: true});
     }, 2000);
     readData();
+    if (user) {
+      const unsubscribe = notificationListeners();
+      return unsubscribe;
+    }
   }, [user]);
   return (
-    <NavigationContainer theme={NavigationTheme}>
-      {hasLoaded &&
-        (user ? (
-          user.role === 'enseignant' ? (
-            <TeacherTabNavigator />
+    <Root theme="light">
+      <NavigationContainer theme={NavigationTheme}>
+        {hasLoaded &&
+          (user ? (
+            user.role === 'enseignant' ? (
+              <TeacherTabNavigator />
+            ) : (
+              <TechnicianTabNavigator />
+            )
           ) : (
-            <TechnicianTabNavigator />
-          )
-        ) : (
-          <LoginScreen setUser={setUser} />
-        ))}
-    </NavigationContainer>
+            <LoginScreen setUser={setUser} />
+          ))}
+      </NavigationContainer>
+    </Root>
   );
 };
 export default App;
