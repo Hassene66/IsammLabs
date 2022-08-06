@@ -4,12 +4,12 @@ import uuid from 'react-native-uuid';
 import ClaimsCard from './ClaimsCard';
 import storage from '../../Utils/asyncStorage';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';
-import axios from '../../Utils/axios';
 import {View, Text} from 'react-native';
 import {Root} from 'react-native-alert-notification';
 import {useIsFocused} from '@react-navigation/native';
 import color from '../../Config/color';
 import {AppForm, SubmitButton} from '../../Components/forms';
+import claimService from '../../Services/claimService';
 const ClaimsList = () => {
   const [loading, setLoading] = useState(true);
   const [claims, setClaims] = useState([]);
@@ -21,11 +21,9 @@ const ClaimsList = () => {
     storage
       .getItem('user')
       .then(user => {
-        return axios.get('/api/claim', {
-          params: {
-            assignedTo: user._id,
-            status: 'unprocessed',
-          },
+        return claimService.getAllClaimsApi({
+          assignedTo: user._id,
+          status: 'unprocessed',
         });
       })
       .then(({data}) => setClaims(data))
@@ -38,7 +36,7 @@ const ClaimsList = () => {
     fetchData();
   }, [isFocused]);
   return (
-    <>
+    <View style={{backgroundColor: 'white', flex: 1}}>
       <AppForm
         initialValues={{
           status: 'unprocessed',
@@ -70,14 +68,14 @@ const ClaimsList = () => {
                 <SubmitButton
                   onSubmit={fetchData}
                   title="Actualiser"
-                  style={styles.btnContainer}
+                  isGradient={false}
                   textStyle={styles.btnText}
                 />
               </View>
             ))}
         </MyActivityIndicator>
       </AppForm>
-    </>
+    </View>
   );
 };
 export default ClaimsList;
@@ -90,16 +88,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
+    marginBottom: 10,
     textAlign: 'center',
     fontWeight: '600',
     fontSize: 20,
     color: color.dark,
-  },
-  btnContainer: {
-    backgroundColor: color.lighter,
-    borderWidth: 1,
-    borderColor: color.medium,
-    width: undefined,
   },
   btnText: {fontSize: 15, color: color.medium},
 });

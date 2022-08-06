@@ -73,17 +73,20 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginTop: 20,
     marginBottom: 5,
-    borderRadius: 10,
-    height: 65,
+    borderRadius: 5,
+    height: 61,
     overflow: 'hidden',
     shadowOpacity: 0.5,
+    borderWidth: 1,
+    borderColor: '#979797',
   },
   input: {
     borderRadius: 0,
-    height: 67,
+    height: 63,
     overflow: 'hidden',
     fontWeight: null,
     fontSize: defaultStyles.Text.fontSize,
+    backgroundColor: 'white',
   },
   error: {
     borderWidth: 2,
