@@ -36,7 +36,7 @@ const ClaimsList = () => {
     fetchData();
   }, [isFocused]);
   return (
-    <>
+    <View style={{backgroundColor: 'white', flex: 1}}>
       <AppForm
         initialValues={{
           status: 'unprocessed',
@@ -68,14 +68,14 @@ const ClaimsList = () => {
                 <SubmitButton
                   onSubmit={fetchData}
                   title="Actualiser"
-                  style={styles.btnContainer}
+                  isGradient={false}
                   textStyle={styles.btnText}
                 />
               </View>
             ))}
         </MyActivityIndicator>
       </AppForm>
-    </>
+    </View>
   );
 };
 export default ClaimsList;
@@ -88,16 +88,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
+    marginBottom: 10,
     textAlign: 'center',
     fontWeight: '600',
     fontSize: 20,
     color: color.dark,
-  },
-  btnContainer: {
-    backgroundColor: color.lighter,
-    borderWidth: 1,
-    borderColor: color.medium,
-    width: undefined,
   },
   btnText: {fontSize: 15, color: color.medium},
 });

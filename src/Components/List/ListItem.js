@@ -73,7 +73,7 @@ const ListItem = ({
         </View>
         {isProfile ? (
           <Switch
-            trackColor={{true: '#d69f9f', false: '#767577'}}
+            trackColor={{true: color.secondary, false: '#767577'}}
             thumbColor={isEnabled ? color.primary : '#f4f3f4'}
             ios_backgroundColor="#3e3e3e"
             onValueChange={handleChange}

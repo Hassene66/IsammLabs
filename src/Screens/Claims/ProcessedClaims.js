@@ -24,7 +24,7 @@ const ProcessedClaims = () => {
       .then(user => {
         return claimService.getAllClaimsApi({
           assignedTo: user._id,
-          status: 'unprocessed',
+          status: 'resolved',
         });
       })
       .then(({data}) => setClaims(data))
@@ -69,8 +69,8 @@ const ProcessedClaims = () => {
               <Text style={styles.text}>Aucune réclamation traitée</Text>
               <SubmitButton
                 onSubmit={fetchData}
+                isGradient={false}
                 title="Actualiser"
-                style={styles.btnContainer}
                 textStyle={styles.btnText}
               />
             </View>
@@ -89,16 +89,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
+    marginBottom: 10,
     textAlign: 'center',
     fontWeight: '600',
     fontSize: 20,
     color: color.dark,
-  },
-  btnContainer: {
-    backgroundColor: color.lighter,
-    borderWidth: 1,
-    borderColor: color.medium,
-    width: undefined,
   },
   btnText: {fontSize: 15, color: color.medium},
 });

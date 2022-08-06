@@ -131,17 +131,16 @@ const ClaimsCard = ({route}) => {
                   <Text style={styles.subTitle}>{params.labo?.label}</Text>
                 </View>
               </View>
-              <View style={{flexDirection: 'row', marginTop: 10}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginTop: 10,
+                }}>
                 <View style={{flex: 1, paddingHorizontal: 10}}>
                   <SubmitButton
                     onSubmit={markNotResolved}
                     title="Non Résolu"
-                    style={{
-                      padding: 10,
-                      backgroundColor: color.lighter,
-                      borderWidth: 1,
-                      borderColor: color.medium,
-                    }}
+                    isGradient={false}
                     textStyle={{fontSize: 15, color: color.medium}}
                   />
                 </View>

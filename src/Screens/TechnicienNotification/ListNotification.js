@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, FlatList, RefreshControl, Text, View} from 'react-native';
 import SwitchSelector from 'react-native-switch-selector';
+import moment from 'moment';
+import momentTimezone from 'moment-timezone';
 import color from '../../Config/color';
 import Notification from '../../Components/Notification';
 import uuid from 'react-native-uuid';
-import ClaimsCard from '../ClaimsList/ClaimsCard';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';
-import {Root} from 'react-native-alert-notification';
+import {Dialog, Root} from 'react-native-alert-notification';
 import {useIsFocused} from '@react-navigation/native';
 import {AppForm, SubmitButton} from '../../Components/forms';
 import ListItemSeperator from '../../Components/List/ListItemSeperator';
@@ -15,11 +16,16 @@ import storage from '../../Utils/asyncStorage';
 
 const ListNotification = () => {
   const [loading, setLoading] = useState(false);
-  const [notification, setNotification] = useState([]);
+  const [todayNotifications, setTodayNotifications] = useState([]);
+  const [allNotifications, setAllNotifications] = useState([]);
+  const [reload, setReload] = useState(0);
+  const [selectedSwitch, setSelectedSwitch] = useState('today');
   const isFocused = useIsFocused();
+  const TODAY = 'today';
+  const ALL = 'all';
   const options = [
-    {label: "Aujourd'hui", value: '1'},
-    {label: 'Tous', value: '1.5'},
+    {label: "Aujourd'hui", value: TODAY},
+    {label: 'Tous', value: ALL},
   ];
 
   const fetchData = () => {
@@ -32,16 +38,42 @@ const ListNotification = () => {
         });
       })
       .then(({data}) => {
-        setNotification(data);
+        setAllNotifications(data);
+        setTodayNotifications(
+          data.filter(notification =>
+            moment(notification?.createdAt).isSame(
+              momentTimezone().tz('Africa/Tunis').add(1, 'hours'),
+              'days',
+            ),
+          ),
+        );
       })
-      .catch(err => console.log(JSON.stringify(err.response)))
+      .catch(() =>
+        Dialog.show({
+          type: ALERT_TYPE.DANGER,
+          title: 'Erreur',
+          textBody: 'échec de la récupération des données du serveur',
+          button: 'fermer',
+          closeOnOverlayTap: false,
+        }),
+      )
       .finally(() => {
         setLoading(false);
       });
   };
   useEffect(() => {
     fetchData();
-  }, [isFocused]);
+  }, [isFocused, reload]);
+
+  const handleDelete = id => {
+    notificationService
+      .deleteNotificationApi(id)
+      .then(() => setReload(prev => prev + 1))
+      .catch(err => {
+        console.log(JSON.stringify(err.response));
+      });
+  };
+
   return (
     <AppForm
       initialValues={{
@@ -53,7 +85,7 @@ const ListNotification = () => {
           buttonColor={color.primary}
           options={options}
           initial={0}
-          onPress={value => console.log(`Call onPress with value: ${value}`)}
+          onPress={value => setSelectedSwitch(value)}
         />
         <View style={styles.BodyContainer}>
           <MyActivityIndicator loading={loading}>
@@ -61,7 +93,8 @@ const ListNotification = () => {
               <Root theme="light" />
             </View>
             {!loading &&
-              (!!notification.length ? (
+              ((!!todayNotifications.length && selectedSwitch === TODAY) ||
+              (!!allNotifications.length && selectedSwitch === ALL) ? (
                 <FlatList
                   refreshControl={
                     <RefreshControl
@@ -73,17 +106,23 @@ const ListNotification = () => {
                   }
                   showsVerticalScrollIndicator={false}
                   ItemSeparatorComponent={ListItemSeperator}
-                  data={notification}
+                  data={
+                    selectedSwitch === TODAY
+                      ? todayNotifications
+                      : allNotifications
+                  }
                   keyExtractor={() => uuid.v4()}
-                  renderItem={({item}) => <Notification data={item} />}
+                  renderItem={({item}) => (
+                    <Notification data={item} handleDelete={handleDelete} />
+                  )}
                 />
               ) : (
                 <View style={styles.messageContainer}>
-                  <Text style={styles.text}>aucune notification trouvée</Text>
+                  <Text style={styles.text}>Aucune notification trouvée</Text>
                   <SubmitButton
                     onSubmit={fetchData}
                     title="Actualiser"
-                    style={styles.btnContainer}
+                    isGradient={false}
                     textStyle={styles.btnText}
                   />
                 </View>
@@ -112,16 +151,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
+    marginBottom: 10,
     textAlign: 'center',
     fontWeight: '600',
     fontSize: 20,
     color: color.dark,
-  },
-  btnContainer: {
-    backgroundColor: color.lighter,
-    borderWidth: 1,
-    borderColor: color.medium,
-    width: undefined,
   },
   btnText: {fontSize: 15, color: color.medium},
 });

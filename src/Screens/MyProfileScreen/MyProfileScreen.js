@@ -16,7 +16,7 @@ const menuItem = [
     title: 'Réclamation Traitées',
     icon: {
       name: 'check',
-      backgroundColor: color.secondary,
+      backgroundColor: color.green,
     },
     targetScreen: routes.PROCESSED_CLAIMS,
   },
