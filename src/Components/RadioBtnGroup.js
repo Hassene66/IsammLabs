@@ -33,7 +33,7 @@ const ItemRadioBtn = ({title = '', data, onPress, initial = 1}) => {
 export default ItemRadioBtn;
 
 const styles = StyleSheet.create({
-  textStyle: {fontFamily: 'Cairo-SemiBold'},
+  textStyle: {fontFamily: 'System'},
   titleStyle: {
     marginBottom: 5,
     fontSize: 20,

@@ -17,4 +17,7 @@ export default {
   pink: '#f58dfc',
   purple: '#8da0fc',
   orange: '#fa8282',
+  lightRed: '#FCF4F4',
+  lightGrey: '#595959',
+  lightBlue: '#ecf9ff',
 };

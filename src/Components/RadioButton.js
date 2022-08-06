@@ -28,5 +28,5 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 5,
   },
-  textStyle: {fontFamily: 'Cairo-SemiBold'},
+  textStyle: {fontFamily: 'System'},
 });

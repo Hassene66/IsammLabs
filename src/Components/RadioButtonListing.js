@@ -130,20 +130,20 @@ const styles = StyleSheet.create({
   title: {
     paddingLeft: 11,
     fontSize: 11,
-    fontFamily: 'Cairo-SemiBold',
+    fontFamily: 'System',
     color: color.primary,
     marginBottom: 3,
   },
   subTitle: {
     paddingLeft: 10,
     fontSize: 14,
-    fontFamily: 'Cairo-SemiBold',
+    fontFamily: 'System',
     color: 'black',
   },
   Placeholder: {
     paddingLeft: 5,
     fontSize: 15,
-    fontFamily: 'Cairo-SemiBold',
+    fontFamily: 'System',
     color: color.medium,
   },
   icon: {
@@ -176,11 +176,11 @@ const styles = StyleSheet.create({
     color: color.primary,
   },
   btn: {
-    fontFamily: 'Cairo-Bold',
+    fontFamily: 'System',
     fontSize: 12,
   },
   textInput: {
-    fontFamily: 'Cairo-Regular',
+    fontFamily: 'System',
     textAlign: 'right',
     fontSize: 17,
     paddingLeft: 20,

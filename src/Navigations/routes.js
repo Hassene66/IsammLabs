@@ -15,4 +15,5 @@ export default Object.freeze({
   LABS_INFO: 'Labs information',
   PROCESSED_CLAIMS: 'Processed claims',
   TECHNICIEN_NOTIFICATION: 'technicien notifications',
+  PC_LISTING: 'PC Listing',
 });
