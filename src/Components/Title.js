@@ -10,7 +10,7 @@ export default Title;
 
 const styles = StyleSheet.create({
   text: {
-    fontFamily: 'Cairo-Bold',
+    fontFamily: 'System',
     fontSize: 25,
     color: color.primary,
   },

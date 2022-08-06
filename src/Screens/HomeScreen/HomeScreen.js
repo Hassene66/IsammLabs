@@ -1,99 +1,144 @@
-import React, {Component} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  Alert,
-  ScrollView,
-  FlatList,
-} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import routes from '../../Navigations/routes';
+import blocService from '../../Services/BlocsService';
+import MyActivityIndicator from '../../Components/MyActivityIndicator';
+import {showMessage} from 'react-native-flash-message';
+import LinearGradient from 'react-native-linear-gradient';
+import MaskedView from '@react-native-masked-view/masked-view';
+import mockData from '../../Utils/blocsData';
+import Logo1 from '../../assets/joystick.svg';
+import Logo2 from '../../assets/camera.svg';
+import Logo3 from '../../assets/window.svg';
+import Logo4 from '../../assets/pain.svg';
+import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
 
-export default class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [
-        {
-          id: 1,
-          title: 'Bloc A',
-          image:
-            'https://img.icons8.com/external-xnimrodx-lineal-color-xnimrodx/128/undefined/external-pc-computer-xnimrodx-lineal-color-xnimrodx.png',
-        },
-        {
-          id: 1,
-          title: 'Bloc B',
-          image:
-            'https://img.icons8.com/external-xnimrodx-lineal-color-xnimrodx/128/undefined/external-pc-computer-xnimrodx-lineal-color-xnimrodx.png',
-        },
-        {
-          id: 2,
-          title: 'Bloc C',
-          image:
-            'https://img.icons8.com/external-xnimrodx-lineal-color-xnimrodx/128/undefined/external-pc-computer-xnimrodx-lineal-color-xnimrodx.png',
-        },
-        {
-          id: 3,
-          title: 'Bloc D',
-          image:
-            'https://img.icons8.com/external-xnimrodx-lineal-color-xnimrodx/128/undefined/external-pc-computer-xnimrodx-lineal-color-xnimrodx.png',
-        },
-      ],
-    };
-  }
+export default Home = () => {
+  const navigation = useNavigation();
+  const [laoding, setLaoding] = useState(false);
+  // const fetchAllBlocks = async () => {
+  //   try {
+  //     setLaoding(true);
+  //     const blocs = await blocService.getAllBlocs();
+  //     setData(blocs);
+  //     setLaoding(false);
+  //   } catch (error) {
+  //     showMessage({
+  //       message: 'Erreur de serveur',
+  //       type: 'danger',
+  //       icon: 'auto',
+  //       duration: 2500,
+  //     });
+  //   } finally {
+  //     setLaoding(false);
+  //   }
+  // };
+  useEffect(() => {
+    setLaoding(true);
+    blocService
+      .getAllBlocs()
+      .then(data => {
+        setData(data);
+      })
+      .catch(() =>
+        showMessage({
+          message: 'Erreur de serveur',
+          type: 'danger',
+          icon: 'auto',
+          duration: 2500,
+        }),
+      )
+      .finally(setLaoding(false));
+  }, []);
+  const [data, setData] = useState(mockData);
 
-  clickEventListener(item) {
-    Alert.alert(item.title);
-  }
+  const clickEventListener = item => {
+    navigation.navigate(routes.LABS_INFO, item);
+  };
 
-  render() {
-    return (
+  return (
+    <MyActivityIndicator loading={laoding}>
       <View style={styles.container}>
         <FlatList
           style={styles.list}
           contentContainerStyle={styles.listContainer}
-          data={this.state.data}
+          data={data}
           horizontal={false}
           numColumns={2}
           keyExtractor={item => {
             return item.id;
           }}
-          renderItem={({item}) => {
+          renderItem={({item, index}) => {
+            const CustomTag = idx => {
+              switch (idx) {
+                case 0:
+                  return <Logo1 />;
+                case 1:
+                  return <Logo2 />;
+                case 2:
+                  return <Logo3 />;
+                case 3:
+                  return <Logo4 />;
+                default:
+                  break;
+              }
+            };
             return (
               <View>
                 <TouchableOpacity
                   style={styles.card}
                   onPress={() => {
-                    this.clickEventListener(item);
+                    clickEventListener(item);
                   }}>
-                  <Image style={styles.cardImage} source={{uri: item.image}} />
-                </TouchableOpacity>
-
-                <View style={styles.cardHeader}>
                   <View
-                    style={{alignItems: 'center', justifyContent: 'center'}}>
-                    <Text style={styles.title}>{item.title}</Text>
+                    style={{
+                      marginVertical: 7,
+                      marginTop: 28,
+                    }}>
+                    {CustomTag(index)}
                   </View>
-                </View>
+                  <MaskedView
+                    maskElement={
+                      <Text
+                        style={[
+                          styles.title,
+                          {backgroundColor: 'transparent'},
+                        ]}>
+                        {item.label}
+                      </Text>
+                    }>
+                    <LinearGradient
+                      start={{x: 0, y: 0}}
+                      end={{x: 1, y: 0}}
+                      colors={[
+                        '#0e94cf',
+                        '#289fce',
+                        '#5db5cc',
+                        '#72bfcc',
+                        '#8ac9cb',
+                      ]}>
+                      <Text style={[styles.title, {opacity: 0}]}>
+                        {item.label}
+                      </Text>
+                    </LinearGradient>
+                  </MaskedView>
+                </TouchableOpacity>
               </View>
             );
           }}
         />
       </View>
-    );
-  }
-}
+    </MyActivityIndicator>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 40,
-    backgroundColor: '#f6f6f6',
   },
   list: {
     paddingHorizontal: 5,
-    backgroundColor: '#f6f6f6',
   },
   listContainer: {
     alignItems: 'center',
@@ -103,28 +148,28 @@ const styles = StyleSheet.create({
     shadowColor: '#474747',
     shadowOffset: {
       width: 0,
-      height: 6,
+      height: 8,
     },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
-
+    shadowOpacity: 0.27,
+    shadowRadius: 11.49,
     elevation: 12,
-    marginVertical: 15,
-    marginHorizontal: 30,
-    backgroundColor: '#e2e2e2',
-    //flexBasis: '42%',
-    width: 140,
-    height: 140,
-    borderRadius: 25,
+    marginVertical: 10,
+    marginHorizontal: 10,
+    backgroundColor: 'white',
+    flexBasis: '42%',
+    width: 160,
+    height: 160,
+    borderRadius: 0,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'column',
   },
   cardHeader: {
     paddingVertical: 17,
     paddingHorizontal: 16,
     borderTopLeftRadius: 1,
     borderTopRightRadius: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -144,12 +189,13 @@ const styles = StyleSheet.create({
   cardImage: {
     height: 50,
     width: 50,
-    alignSelf: 'center',
   },
   title: {
-    fontSize: 18,
     flex: 1,
+    fontSize: 22,
+    textAlign: 'center',
     alignSelf: 'center',
     color: '#696969',
+    fontWeight: '900',
   },
 });

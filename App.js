@@ -16,6 +16,7 @@ import LoginScreen from './src/Screens/LoginScreen/LoginScreen';
 import getCurrentUser from './src/Utils/getAuthUser';
 import storage from './src/Utils/asyncStorage';
 import MyActivityIndicator from './src/Components/MyActivityIndicator';
+import LottieSplashScreen from 'react-native-lottie-splash-screen';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -31,7 +32,7 @@ const App = () => {
   };
   useEffect(() => {
     setTimeout(() => {
-      RNBootSplash.hide({fade: true});
+      LottieSplashScreen.hide();
     }, 2000);
     readData();
   }, [user]);

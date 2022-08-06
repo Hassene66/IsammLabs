@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     tabBarLabelStyle: {
-      fontFamily: 'Cairo-SemiBold',
+      fontFamily: 'System',
       fontWeight: 'bold',
     },
   },

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -25,8 +25,8 @@ const PcCaractiresitics = ({item}) => {
             size={23}
             style={{marginRight: 5}}
           />
-          <Text style={{fontWeight: '400', fontSize: 17}}>
-            {item.caracteristic.ip}
+          <Text style={styles.characteristicFont}>
+            {item.characteristics.ip}
           </Text>
         </View>
         <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
@@ -36,8 +36,8 @@ const PcCaractiresitics = ({item}) => {
             size={23}
             style={{marginRight: 5}}
           />
-          <Text style={{fontWeight: '400', fontSize: 17}}>
-            {item.caracteristic.processor}
+          <Text style={styles.characteristicFont}>
+            {item.characteristics.proccessor}
           </Text>
         </View>
         <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
@@ -47,9 +47,7 @@ const PcCaractiresitics = ({item}) => {
             size={30}
             style={{marginRight: 3}}
           />
-          <Text style={{fontWeight: '400', fontSize: 17}}>
-            {item.caracteristic.graphicCard}
-          </Text>
+          <Text style={styles.characteristicFont}>gt 620</Text>
         </View>
       </View>
       <View style={{flex: 1, marginLeft: 20}}>
@@ -65,8 +63,8 @@ const PcCaractiresitics = ({item}) => {
             size={23}
             style={{marginRight: 5}}
           />
-          <Text style={{fontWeight: '400', fontSize: 17}}>
-            {item.caracteristic.os}
+          <Text style={styles.characteristicFont}>
+            {item?.characteristics?.os}
           </Text>
         </View>
         <View
@@ -81,8 +79,8 @@ const PcCaractiresitics = ({item}) => {
             size={19}
             style={{marginRight: 5}}
           />
-          <Text style={{fontWeight: '400', fontSize: 17}}>
-            {item.caracteristic.ram} GB
+          <Text style={styles.characteristicFont}>
+            {item?.characteristics?.ram} GB
           </Text>
         </View>
         <View
@@ -97,8 +95,8 @@ const PcCaractiresitics = ({item}) => {
             size={25}
             style={{marginRight: 4}}
           />
-          <Text style={{fontWeight: '400', fontSize: 17}}>
-            {item.caracteristic.storage}
+          <Text style={styles.characteristicFont}>
+            {item?.characteristics?.storage}
           </Text>
         </View>
       </View>
@@ -107,3 +105,7 @@ const PcCaractiresitics = ({item}) => {
 };
 
 export default PcCaractiresitics;
+
+const styles = StyleSheet.create({
+  characteristicFont: {fontWeight: '400', fontSize: 17},
+});

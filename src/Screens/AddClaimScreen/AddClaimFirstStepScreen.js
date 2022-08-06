@@ -82,10 +82,7 @@ const AddClaimScreen = ({navigation: {navigate}}) => {
           icon: 'auto',
           duration: 2500,
         }),
-      )
-      .finally(() => {
-        setLoading(false);
-      });
+      );
   }, []);
   return (
     <MyActivityIndicator loading={loading}>

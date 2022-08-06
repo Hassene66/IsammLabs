@@ -1,5 +1,5 @@
 export default {
-  primary: '#C84648',
+  primary: '#1b97cc',
   secondary: '#4ecdc4',
   black: '#000',
   white: '#fff',
@@ -11,4 +11,5 @@ export default {
   veryLight: '#f0f0f0',
   lightRed: '#FCF4F4',
   lightGrey: '#595959',
+  lightBlue: '#ecf9ff',
 };

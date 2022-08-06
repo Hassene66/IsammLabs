@@ -7,6 +7,7 @@ import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import uuid from 'react-native-uuid';
 
 const SoftwaresInstalled = ({item}) => {
+  console.log(item);
   return (
     <View style={{flex: 1, backgroundColor: color.white}}>
       <View
@@ -41,10 +42,10 @@ const SoftwaresInstalled = ({item}) => {
           flexWrap: 'wrap',
         }}>
         <FlatList
-          data={item.softwareInstalled}
+          data={item}
           renderItem={({item}) => (
             <View
-              key={item._id}
+              key={item?.id}
               style={{flexDirection: 'row', marginVertical: 5, width: 170}}>
               <Feather
                 color="black"
@@ -52,7 +53,9 @@ const SoftwaresInstalled = ({item}) => {
                 size={23}
                 style={{marginRight: 5}}
               />
-              <Text style={{fontWeight: '400', fontSize: 17}}>{item}</Text>
+              <Text style={{fontWeight: '400', fontSize: 17}}>
+                {item?.name}
+              </Text>
             </View>
           )}
           keyExtractor={() => `${uuid.v4()}`}

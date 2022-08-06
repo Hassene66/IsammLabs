@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   ToggleBtn: {
-    fontFamily: 'Cairo-Bold',
+    fontFamily: 'System',
     color: 'white',
     fontSize: 15,
     padding: 8,
