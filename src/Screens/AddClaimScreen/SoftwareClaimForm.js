@@ -5,41 +5,38 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import color from '../../Config/color';
 import NewSoftwareForm from './NewSoftwareForm';
 import SoftwareUpdateForm from './SoftwareUpdateForm';
-import {Root} from 'react-native-alert-notification';
 
 const SoftwareClaimForm = ({values}) => {
   const Tab = createMaterialTopTabNavigator();
   return (
     <View style={styles.container}>
-      <Root>
-        <Tab.Navigator
-          swipeVelocityImpact={0.4}
-          sceneContainerStyle={{
-            backgroundColor: 'transparent',
+      <Tab.Navigator
+        swipeVelocityImpact={0.4}
+        sceneContainerStyle={{
+          backgroundColor: 'transparent',
+        }}
+        backBehavior="history"
+        screenOptions={styles.screenOptions}
+        initialRouteName="HardwareClaim">
+        <Tab.Screen
+          options={{
+            tabBarIcon: ({color}) => (
+              <FontAwesome name="plus" size={23} color={color} />
+            ),
           }}
-          backBehavior="history"
-          screenOptions={styles.screenOptions}
-          initialRouteName="HardwareClaim">
-          <Tab.Screen
-            options={{
-              tabBarIcon: ({color}) => (
-                <FontAwesome name="plus" size={23} color={color} />
-              ),
-            }}
-            name="Nouveau logiciel"
-            children={() => <NewSoftwareForm values={values} />}
-          />
-          <Tab.Screen
-            options={{
-              tabBarIcon: ({color}) => (
-                <FontAwesome name="refresh" size={23} color={color} />
-              ),
-            }}
-            name="Mise à jour"
-            children={() => <SoftwareUpdateForm />}
-          />
-        </Tab.Navigator>
-      </Root>
+          name="Nouveau logiciel"
+          children={() => <NewSoftwareForm values={values} />}
+        />
+        <Tab.Screen
+          options={{
+            tabBarIcon: ({color}) => (
+              <FontAwesome name="refresh" size={23} color={color} />
+            ),
+          }}
+          name="Mise à jour"
+          children={() => <SoftwareUpdateForm />}
+        />
+      </Tab.Navigator>
     </View>
   );
 };

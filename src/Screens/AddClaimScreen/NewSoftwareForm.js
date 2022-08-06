@@ -6,9 +6,10 @@ import * as Yup from 'yup';
 import storage from '../../Utils/asyncStorage';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';
 import axios from '../../Utils/axios';
-import {ALERT_TYPE, Dialog} from 'react-native-alert-notification';
+import {ALERT_TYPE, Dialog, Toast} from 'react-native-alert-notification';
 import routes from '../../Navigations/routes';
 import {useNavigation} from '@react-navigation/native';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const NewSoftwareForm = ({values}) => {
   const navigation = useNavigation();
@@ -42,18 +43,30 @@ const NewSoftwareForm = ({values}) => {
         },
       })
       .then(() => {
-        Dialog.show({
+        navigation.reset({
+          index: 0,
+          routes: [
+            {
+              name: routes.ACCEUIL,
+            },
+          ],
+        });
+        Toast.show({
           type: ALERT_TYPE.SUCCESS,
           title: 'Succès',
           textBody: 'La réclamation a été envoyée avec succès',
           button: 'fermer',
-          onHide: function () {
-            navigation.navigate(routes.ACCEUIL);
-          },
+          autoClose: 3000,
         });
       })
-      .catch(err => {
-        console.log(err);
+      .catch(() => {
+        Toast.show({
+          type: ALERT_TYPE.DANGER,
+          title: 'Erreur',
+          textBody:
+            "Une erreur s'est produite lors de l'exécution de l'opération",
+          autoClose: 3000,
+        });
       })
       .finally(() => {
         setLoading(false);
@@ -61,23 +74,25 @@ const NewSoftwareForm = ({values}) => {
   };
   return (
     <>
-      <MyActivityIndicator loading={loading}>
-        <AppForm
-          initialValues={{titre: '', logicielle: '', description: ''}}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}>
-          <View style={styles.formContainer}>
-            <Title
-              text="Formulaire de réclamation"
-              titleStyle={styles.formTitleStyle}
-            />
-            <AppFormField name="title" placeholder="titre" />
-            <AppFormField name="toAddSoftware" placeholder="logicielle" />
-            <AppFormField name="description" placeholder="description" />
-            <SubmitButton title="Envoyer" style={styles.SubmitButton} />
-          </View>
-        </AppForm>
-      </MyActivityIndicator>
+      <ScrollView>
+        <MyActivityIndicator loading={loading}>
+          <AppForm
+            initialValues={{titre: '', logicielle: '', description: ''}}
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}>
+            <View style={styles.formContainer}>
+              <Title
+                text="Formulaire de réclamation"
+                titleStyle={styles.formTitleStyle}
+              />
+              <AppFormField name="title" placeholder="titre" />
+              <AppFormField name="toAddSoftware" placeholder="logicielle" />
+              <AppFormField name="description" placeholder="description" />
+              <SubmitButton title="Envoyer" style={styles.SubmitButton} />
+            </View>
+          </AppForm>
+        </MyActivityIndicator>
+      </ScrollView>
     </>
   );
 };

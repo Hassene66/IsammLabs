@@ -8,6 +8,7 @@ import routes from './routes';
 import AddClaimNavigator from './AddClaimNavigator';
 import AddNewPcNavigator from './AddNewPcNavigator';
 import MyProfileScreen from '../Screens/MyProfileScreen/MyProfileScreen';
+import TechnicienProfileNavigator from './TechnicienProfileNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -37,8 +38,9 @@ const TechnicianTabNavigator = () => (
     />
     <Tab.Screen
       name={routes.PROFILE}
-      children={() => <MyProfileScreen />}
+      children={TechnicienProfileNavigator}
       options={{
+        headerShown: false,
         tabBarIcon: ({size, color}) => (
           <MaterialCommunityIcons name="account" size={size} color={color} />
         ),

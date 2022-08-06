@@ -12,6 +12,8 @@ export default Object.freeze({
   TO_REPAIR: 'To repair',
   CLAIM_CARD: 'Claim Card',
   CLAIM_LIST: 'Claim List',
-  LABS_INFO: 'Labs Information',
+  LABS_INFO: 'Labs information',
+  PROCESSED_CLAIMS: 'Processed claims',
+  TECHNICIEN_NOTIFICATION: 'technicien notifications',
   PC_LISTING: 'PC Listing',
 });

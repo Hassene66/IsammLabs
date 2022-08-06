@@ -5,6 +5,7 @@ const SubmitButton = ({
   title,
   style = {},
   textStyle = {},
+  isGradient = true,
   onSubmit = () => {},
 }) => {
   const {handleSubmit} = useFormikContext();
@@ -16,6 +17,7 @@ const SubmitButton = ({
       }}
       style={style}
       textStyle={textStyle}
+      isGradient={isGradient}
     />
   );
 };

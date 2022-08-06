@@ -1,18 +1,33 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
-import colors from '../Config/color';
+import LinearGradient from 'react-native-linear-gradient';
+import color from '../Config/color';
 const AppButton = ({
   title,
   onPress,
-  color = 'primary',
+  isGradient = false,
   style = {},
   textStyle = {},
 }) => {
+  const GradientWrapper = ({children}) =>
+    isGradient ? (
+      <LinearGradient
+        colors={['#0E94CF', '#8DCBCB']}
+        start={{x: 0, y: 1}}
+        end={{x: 1, y: 0}}
+        style={[styles.linearGradient, style]}>
+        {children}
+      </LinearGradient>
+    ) : (
+      children
+    );
   return (
     <TouchableOpacity
-      style={[styles.button, {backgroundColor: colors[color]}, style]}
+      style={[styles.button, !isGradient && styles.notGradient, style]}
       onPress={onPress}>
-      <Text style={[styles.text, textStyle]}>{title}</Text>
+      <GradientWrapper>
+        <Text style={[styles.text, textStyle]}>{title}</Text>
+      </GradientWrapper>
     </TouchableOpacity>
   );
 };
@@ -23,16 +38,25 @@ const styles = StyleSheet.create({
   button: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.primary,
-    padding: 15,
-    borderRadius: 10,
-    width: '100%',
-    marginVertical: 7,
   },
   text: {
     color: 'white',
-    fontWeight: 'bold',
+    fontWeight: '600',
     fontSize: 18,
     textTransform: 'uppercase',
+  },
+  linearGradient: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    padding: 15,
+    borderRadius: 5,
+  },
+  notGradient: {
+    padding: 10,
+    backgroundColor: color.lighter,
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: color.medium,
   },
 });

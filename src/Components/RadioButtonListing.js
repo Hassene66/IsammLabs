@@ -71,7 +71,7 @@ const RadioButtonListing = ({
       <View>
         <RBSheet
           ref={refRBSheet}
-          closeOnPressMask={false}
+          closeOnPressMask
           animationType="fade"
           closeOnDragDown
           height={useWindowDimensions().height / 2}

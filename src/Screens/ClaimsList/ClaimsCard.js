@@ -7,24 +7,32 @@ import {
   Image,
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import color from '../../Config/color';
 import Collapsible from 'react-native-collapsible';
 import User from '../../assets/userImage.png';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
-const ClaimsCard = ({data}) => {
+import routes from '../../Navigations/routes';
+import {AppForm, SubmitButton} from '../../Components/forms';
+const ClaimsCard = ({data, pressable = true}) => {
   const navigation = useNavigation();
-  const [showMoreContent, setShowMoreContent] = useState(false);
   return (
-    <View style={styles.cardContainer}>
-      <TouchableWithoutFeedback
-        onPress={() => {
-          navigation.navigate('Claim Details', data);
-        }}>
+    <AppForm
+      initialValues={{
+        status: 'unprocessed',
+      }}
+      onSubmit={() => {}}>
+      <View style={styles.cardContainer}>
         <View style={styles.cardHeader}>
-          <Image
-            style={{width: 50, height: 50, marginRight: 5}}
-            source={User}
+          <Ionicons
+            name="md-person-circle-sharp"
+            size={55}
+            color={color.light_green}
+            style={styles.icon}
           />
           <View style={styles.cardHeaderInfo}>
             <Text style={styles.userInfo}>{data?.createdBy?.fullname}</Text>
@@ -36,26 +44,19 @@ const ClaimsCard = ({data}) => {
               {data?.createdBy?.email}
             </Text>
           </View>
-          <FontAwesome
-            name="chevron-circle-right"
-            size={30}
-            style={{marginRight: 10, color: color.light}}
-          />
         </View>
-      </TouchableWithoutFeedback>
-      <View style={styles.cardBodyContainer}>
-        <Text style={styles.Title}>Réclamation :</Text>
-        <Text style={styles.subTitle}>{data.title}</Text>
-        <Text style={styles.Title}>Détail :</Text>
-        <Text numberOfLines={2} ellipsizeMode="tail" style={styles.subTitle}>
-          {data.description}
-        </Text>
-        <Collapsible collapsed={!showMoreContent}>
+        <View style={styles.cardBodyContainer}>
+          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.Title}>
+            {data.title}
+          </Text>
+          <Text numberOfLines={3} ellipsizeMode="tail" style={styles.subTitle}>
+            {data.description}
+          </Text>
           <View style={styles.footerContainer}>
             <View style={styles.claimDetails}>
               <View style={styles.firstCol}>
-                <FontAwesome
-                  name="calendar-o"
+                <MaterialCommunityIcons
+                  name="calendar-range-outline"
                   size={22}
                   style={{marginHorizontal: 10, color: color.primary}}
                 />
@@ -66,9 +67,9 @@ const ClaimsCard = ({data}) => {
                   .format('DD/MM/YYYY')} `}</Text>
               </View>
               <View style={styles.secondCol}>
-                <FontAwesome
-                  name="th-large"
-                  size={22}
+                <Ionicons
+                  name="grid-outline"
+                  size={20}
                   style={{marginHorizontal: 10, color: color.primary}}
                 />
                 <Text style={styles.subTitle}>{data?.bloc?.label}</Text>
@@ -82,8 +83,8 @@ const ClaimsCard = ({data}) => {
                 marginTop: 10,
               }}>
               <View style={styles.firstCol}>
-                <FontAwesome
-                  name="desktop"
+                <AntDesign
+                  name="iconfontdesktop"
                   size={22}
                   style={{marginHorizontal: 10, color: color.primary}}
                 />
@@ -96,27 +97,39 @@ const ClaimsCard = ({data}) => {
                   </Text>
                 </View>
               </View>
-              <View style={[styles.secondCol, {marginLeft: 15}]}>
-                <FontAwesome
-                  name="map-marker"
-                  size={22}
+              <View style={styles.secondCol}>
+                <SimpleLineIcons
+                  name="location-pin"
+                  size={20}
                   style={{marginHorizontal: 10, color: color.primary}}
                 />
-                <Text style={styles.subTitle}>{data.labo.label}</Text>
+                <Text style={styles.subTitle}>{data?.labo?.label}</Text>
               </View>
             </View>
+            {pressable && (
+              <View
+                style={{
+                  alignItems: 'center',
+                  marginTop: 10,
+                }}>
+                <SubmitButton
+                  onSubmit={
+                    pressable
+                      ? () => {
+                          navigation.navigate(routes.CLAIM_DETAIL, data);
+                        }
+                      : () => {}
+                  }
+                  title="Détail"
+                  style={{padding: 10, paddingHorizontal: 30}}
+                  textStyle={{fontSize: 15}}
+                />
+              </View>
+            )}
           </View>
-        </Collapsible>
-        <TouchableWithoutFeedback
-          onPress={() => setShowMoreContent(prev => !prev)}>
-          <View style={styles.ToggleBtnContainer}>
-            <Text style={styles.ToggleBtn}>
-              {showMoreContent ? '▲  Moins de détails' : '▼ Plus de détails'}
-            </Text>
-          </View>
-        </TouchableWithoutFeedback>
+        </View>
       </View>
-    </View>
+    </AppForm>
   );
 };
 
@@ -132,10 +145,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
 
-    elevation: 8,
+    elevation: 10,
     backgroundColor: 'white',
-    borderRadius: 20,
-    margin: 20,
+    borderRadius: 5,
+    marginHorizontal: 20,
+    marginVertical: 12,
   },
 
   cardHeader: {
@@ -149,18 +163,20 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 5,
   },
-  userInfo: {fontSize: 18, fontWeight: 'bold', color: color.medium},
-  Title: {fontSize: 17, fontWeight: 'bold', color: 'black'},
-  subTitle: {fontSize: 13, color: 'black'},
+  userInfo: {fontSize: 18, fontWeight: 'bold', color: color.dark_blue},
+  Title: {fontSize: 20, fontWeight: 'bold', color: color.dark_green},
+  subTitle: {fontSize: 13, color: color.medium, lineHeight: 17},
   ToggleBtnContainer: {
-    backgroundColor: color.primary,
-    borderRadius: 10,
+    backgroundColor: color.white,
+    borderWidth: 2,
+    borderColor: color.primary,
+    borderRadius: 5,
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'center',
     marginTop: 8,
   },
-  cardBodyContainer: {backgroundColor: 'white', margin: 15},
+  cardBodyContainer: {backgroundColor: 'white', margin: 15, marginTop: 0},
   claimDetails: {
     flex: 1,
     flexDirection: 'row',
@@ -177,13 +193,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  thirdCol: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   footerContainer: {
     flex: 1,
     paddingVertical: 8,
   },
   ToggleBtn: {
-    fontFamily: 'System',
-    color: 'white',
+    fontFamily: 'Cairo-Bold',
+    color: color.primary,
     fontSize: 15,
     padding: 8,
   },
