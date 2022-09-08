@@ -4,11 +4,11 @@ import NewClaimButton from './NewClaimButton';
 import routes from './routes';
 import AddClaimNavigator from './AddClaimNavigator';
 import DisplayLabsNavigator from './DisplayLabs';
-import MyProfileScreen from '../Screens/MyProfileScreen/MyProfileScreen';
 import LinearGradient from 'react-native-linear-gradient';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import color from '../Config/color';
 import {View, StyleSheet} from 'react-native';
+import TeacherProfileNavigator from './TeacherProfileNavigator';
 const Tab = createBottomTabNavigator();
 const TeacherTabNavigator = () => (
   <Tab.Navigator
@@ -29,21 +29,21 @@ const TeacherTabNavigator = () => (
       tabBarStyle: {
         shadowColor: 'transparent',
         backgroundColor: 'transparent',
-        height: 92,
-        paddingTop: 10,
+        height: 60,
       },
     }}>
     <Tab.Screen
       name={routes.ACCEUIL}
       component={DisplayLabsNavigator}
       options={{
+        headerShown: false,
         tabBarIcon: ({size, focused}) => {
           return (
             <View>
               {focused && <View style={styles.dotStyle} />}
               <MaterialCommunityIcons
                 name="home"
-                size={size + 17}
+                size={size + 10}
                 color={color.white}
               />
             </View>
@@ -64,16 +64,17 @@ const TeacherTabNavigator = () => (
       })}
     />
     <Tab.Screen
-      name={routes.PROFILE}
-      children={() => <MyProfileScreen />}
+      name={routes.TECHNICIEN_PROFILE}
+      children={TeacherProfileNavigator}
       options={{
+        headerShown: false,
         tabBarIcon: ({size, focused}) => {
           return (
             <View>
               {focused && <View style={styles.dotStyle} />}
               <MaterialCommunityIcons
                 name="account"
-                size={size + 17}
+                size={size + 10}
                 color={color.white}
               />
             </View>
@@ -88,7 +89,7 @@ export default TeacherTabNavigator;
 
 const styles = StyleSheet.create({
   dotStyle: {
-    left: 17,
+    left: 15,
     width: 6,
     height: 6,
     borderRadius: 3,

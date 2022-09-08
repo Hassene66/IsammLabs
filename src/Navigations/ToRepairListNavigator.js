@@ -5,12 +5,14 @@ import routes from './routes';
 import ClaimsList from '../Screens/ClaimsList/ClaimsList';
 import ClaimDetails from '../Screens/ClaimsList/ClaimDetails';
 import ClaimsCard from '../Screens/ClaimsList/ClaimsCard';
+import claimOptions from '../Utils/claimOptions';
 const Stack = createNativeStackNavigator();
-const AddClaimNavigator = () => (
+const ToRepairListNavigator = () => (
   <Stack.Navigator initialRouteName={routes.CLAIM_LIST}>
     <Stack.Screen
       name={routes.CLAIM_LIST}
       component={ClaimsList}
+      initialParams={{fromRoute: claimOptions[0].value}}
       options={{
         title: 'Liste des réclamations',
         headerTitleAlign: 'center',
@@ -27,6 +29,7 @@ const AddClaimNavigator = () => (
     <Stack.Screen
       name={routes.CLAIM_DETAIL}
       component={ClaimDetails}
+      initialParams={{fromRoute: claimOptions[0].value}}
       options={{
         title: 'Détail réclamation',
       }}
@@ -34,6 +37,4 @@ const AddClaimNavigator = () => (
   </Stack.Navigator>
 );
 
-export default AddClaimNavigator;
-
-const styles = StyleSheet.create({});
+export default ToRepairListNavigator;

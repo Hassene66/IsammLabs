@@ -6,19 +6,16 @@ import {FlatList} from 'react-native-gesture-handler';
 import CardItem from '../../Components/CardItem';
 
 const LabsInfoScreen = ({route}) => {
-  const pcData = route?.params;
-
-  const [PcData, setPcData] = useState(pcData);
+  const {label, computer} = route?.params;
+  console.log('route?.params: ', route?.params);
   return (
     <FlatList
-      data={PcData.computer}
+      data={computer}
       keyExtractor={el => el._id.toString()}
       renderItem={({item, index}) => (
-        <CardItem key={index} item={item} block={PcData?.label} />
+        <CardItem key={index} item={item} block={label} />
       )}
     />
-
-    // <CardItem data={data[0]} />
   );
 };
 

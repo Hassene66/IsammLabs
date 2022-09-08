@@ -146,9 +146,12 @@ class RadioButtonRN extends React.Component {
                       : boxDeactiveBgColor,
                 },
                 modifiedVersion && {
-                  borderColor: activeIndex === index ? activeColor : 'white',
-                  elevation: activeIndex === index ? null : 15,
+                  borderColor: activeIndex === index ? activeColor : '#bfbdbd',
+                  // elevation: activeIndex === index ? null : 15,
                 },
+                modifiedVersion && index % 2 === 0
+                  ? styles.rightMargin
+                  : styles.leftMargin,
                 boxStyle,
               ]}
               activeOpacity={0.9}
@@ -231,8 +234,8 @@ class RadioButtonRN extends React.Component {
 const styles = StyleSheet.create({
   productBox: {
     flexDirection: 'row',
-    borderRadius: 7,
-    borderWidth: 2,
+    borderRadius: 5,
+    borderWidth: 1,
     paddingHorizontal: 10,
     paddingVertical: 15,
     marginTop: 10,
@@ -267,6 +270,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10000,
   },
+  rightMargin: {marginRight: 5},
+  leftMargin: {marginLeft: 5},
 });
 
 /* Props ======================================= */
@@ -299,7 +304,7 @@ RadioButtonRN.defaultProps = {
   data: [],
   animationTypes: [],
   selectedBtn: () => {},
-  activeColor: '#C84648',
+  activeColor: '#3DA8CE',
   deactiveColor: 'grey',
   boxActiveBgColor: '#e1f5fe33',
   boxDeactiveBgColor: '#fff',

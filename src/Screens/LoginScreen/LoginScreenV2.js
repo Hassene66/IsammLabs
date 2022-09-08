@@ -11,7 +11,6 @@ import FlashMessage, {showMessage} from 'react-native-flash-message';
 import messaging from '@react-native-firebase/messaging';
 import authService from '../../Services/authService';
 import userService from '../../Services/userService';
-import LinearGradient from 'react-native-linear-gradient';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -77,12 +76,11 @@ const LoginScreenV2 = ({setUser, navigation}) => {
     }
   };
   useEffect(() => {
-    const unsubscribe = messaging().onTokenRefresh(token => {
-      if (token) {
+    messaging()
+      .getToken()
+      .then(token => {
         saveData('fcm_token', token);
-      }
-    });
-    return unsubscribe;
+      });
   }, []);
 
   return (

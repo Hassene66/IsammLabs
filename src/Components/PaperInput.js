@@ -1,6 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import {StyleSheet, View, Keyboard} from 'react-native';
 import {TextInput} from 'react-native-paper';
+import color from '../Config/color';
 import defaultStyles from '../Config/styles';
 const Input = ({
   name = 'name',
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     shadowOpacity: 0.5,
     borderWidth: 1,
-    borderColor: '#979797',
+    borderColor: color.green,
   },
   input: {
     borderRadius: 0,

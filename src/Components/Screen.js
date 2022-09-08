@@ -16,7 +16,7 @@ const Screen = ({children, style}) => {
 };
 const styles = StyleSheet.create({
   Screen: {
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    // paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     flex: 1,
   },
   view: {

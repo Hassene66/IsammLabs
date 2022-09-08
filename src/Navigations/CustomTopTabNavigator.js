@@ -1,8 +1,15 @@
-import {TouchableWithoutFeedback, Dimensions, View} from 'react-native';
+import {
+  TouchableWithoutFeedback,
+  Dimensions,
+  View,
+  Text,
+  StyleSheet,
+} from 'react-native';
 import React from 'react';
 import {Title} from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
 import color from '../Config/color';
+import MaskedView from '@react-native-masked-view/masked-view';
 
 const CustomTopTabNavigator = ({
   state,
@@ -12,20 +19,12 @@ const CustomTopTabNavigator = ({
 }) => {
   return (
     <LinearGradient
-      start={{x: 0, y: 0}}
+      colors={['#0E94CF', '#8DCBCB']}
+      start={{x: 0, y: 1}}
       end={{x: 1, y: 0}}
-      colors={[
-        '#D52C69',
-        '#E14169',
-        '#E24069',
-        '#EB516A',
-        '#F6656A',
-        '#F97369',
-        '#F87268',
-      ]}
       style={{
         overflow: 'hidden',
-        borderRadius: 20,
+        borderRadius: 5,
         marginHorizontal: 12,
         marginTop: 15,
       }}>
@@ -66,36 +65,53 @@ const CustomTopTabNavigator = ({
                         <View
                           style={{
                             height: 53,
-                            width: Dimensions.get('window').width / 2 - 20,
+                            width: Dimensions.get('window').width / 2 - 30,
                             backgroundColor: 'white',
-                            opacity: 0.7,
+                            // opacity: 0.7,
                             justifyContent: 'center',
                             alignItems: 'center',
-                            borderRadius: 15,
+                            borderRadius: 5,
                           }}>
-                          <Title
-                            style={{
-                              color: color.dark,
-                              fontSize: 18,
-                              fontWeight: 'bold',
-                            }}>
-                            {PagesName[0]}
-                          </Title>
+                          <MaskedView
+                            maskElement={
+                              <Text
+                                style={[
+                                  styles.title,
+                                  {backgroundColor: 'transparent'},
+                                ]}>
+                                {PagesName[0]}
+                              </Text>
+                            }>
+                            <LinearGradient
+                              start={{x: 0, y: 0}}
+                              end={{x: 1, y: 0}}
+                              colors={[
+                                '#0e94cf',
+                                '#289fce',
+                                '#5db5cc',
+                                '#72bfcc',
+                                '#8ac9cb',
+                              ]}>
+                              <Text style={[styles.title, {opacity: 0}]}>
+                                {PagesName[0]}
+                              </Text>
+                            </LinearGradient>
+                          </MaskedView>
                         </View>
                       </View>
                     ) : (
                       <View
                         style={{
                           height: 53,
-                          width: Dimensions.get('window').width / 2 - 20,
+                          width: Dimensions.get('window').width / 2 - 30,
                           justifyContent: 'center',
                           alignItems: 'center',
                           borderRadius: 15,
                         }}>
                         <Title
                           style={{
-                            color: color.dark,
-                            fontSize: 18,
+                            color: color.white,
+                            fontSize: 20,
                             fontWeight: 'bold',
                           }}>
                           {PagesName[0]}
@@ -116,36 +132,52 @@ const CustomTopTabNavigator = ({
                         <View
                           style={{
                             height: 53,
-                            width: Dimensions.get('window').width / 2 - 65,
+                            width: Dimensions.get('window').width / 2 - 30,
                             backgroundColor: 'white',
-                            opacity: 0.7,
                             justifyContent: 'center',
                             alignItems: 'center',
-                            borderRadius: 15,
+                            borderRadius: 5,
                           }}>
-                          <Title
-                            style={{
-                              color: color.dark,
-                              fontSize: 18,
-                              fontWeight: 'bold',
-                            }}>
-                            {PagesName[1]}
-                          </Title>
+                          <MaskedView
+                            maskElement={
+                              <Text
+                                style={[
+                                  styles.title,
+                                  {backgroundColor: 'transparent'},
+                                ]}>
+                                {PagesName[1]}
+                              </Text>
+                            }>
+                            <LinearGradient
+                              start={{x: 0, y: 0}}
+                              end={{x: 1, y: 0}}
+                              colors={[
+                                '#0e94cf',
+                                '#289fce',
+                                '#5db5cc',
+                                '#72bfcc',
+                                '#8ac9cb',
+                              ]}>
+                              <Text style={[styles.title, {opacity: 0}]}>
+                                {PagesName[1]}
+                              </Text>
+                            </LinearGradient>
+                          </MaskedView>
                         </View>
                       </View>
                     ) : (
                       <View
                         style={{
                           height: 53,
-                          width: Dimensions.get('window').width / 2 - 65,
+                          width: Dimensions.get('window').width / 2 - 30,
                           justifyContent: 'center',
                           alignItems: 'center',
                           borderRadius: 15,
                         }}>
                         <Title
                           style={{
-                            color: color.dark,
-                            fontSize: 18,
+                            color: color.white,
+                            fontSize: 20,
                             fontWeight: 'bold',
                           }}>
                           {PagesName[1]}
@@ -162,5 +194,13 @@ const CustomTopTabNavigator = ({
     </LinearGradient>
   );
 };
-
 export default CustomTopTabNavigator;
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 20,
+    textAlign: 'center',
+    alignSelf: 'center',
+    color: '#696969',
+    fontWeight: '900',
+  },
+});

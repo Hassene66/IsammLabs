@@ -1,4 +1,4 @@
-import {StyleSheet, Text, Dimensions, View} from 'react-native';
+import {Dimensions, View} from 'react-native';
 import React from 'react';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {Title} from 'react-native-paper';

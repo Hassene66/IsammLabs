@@ -69,8 +69,14 @@ const ListNotification = () => {
     notificationService
       .deleteNotificationApi(id)
       .then(() => setReload(prev => prev + 1))
-      .catch(err => {
-        console.log(JSON.stringify(err.response));
+      .catch(() => {
+        Dialog.show({
+          type: ALERT_TYPE.DANGER,
+          title: 'Erreur',
+          textBody: 'échec de la récupération des données du serveur',
+          button: 'fermer',
+          closeOnOverlayTap: false,
+        });
       });
   };
 
@@ -82,15 +88,29 @@ const ListNotification = () => {
       onSubmit={() => {}}>
       <View style={styles.TopContainer}>
         <SwitchSelector
+          borderRadius={5}
           buttonColor={color.primary}
           options={options}
           initial={0}
           onPress={value => setSelectedSwitch(value)}
+          backgroundColor={color.lighter}
         />
         <View style={styles.BodyContainer}>
           <MyActivityIndicator loading={loading}>
             <View style={styles.toast}>
-              <Root theme="light" />
+              <Root
+                theme="light"
+                colors={[
+                  {
+                    danger: color.primary,
+                    card: color.lightBlue,
+                    overlay: 'black',
+                    label: 'black',
+                    success: color.primary,
+                    warning: color.primary,
+                  },
+                ]}
+              />
             </View>
             {!loading &&
               ((!!todayNotifications.length && selectedSwitch === TODAY) ||

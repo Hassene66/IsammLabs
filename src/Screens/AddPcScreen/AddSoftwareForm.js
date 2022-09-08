@@ -1,78 +1,80 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, View, FlatList} from 'react-native';
-import {AppForm, AppFormField, SubmitButton} from '../../Components/forms';
+import React, {useRef, useState, useEffect, useMemo} from 'react';
+import {StyleSheet} from 'react-native';
+import {AppForm} from '../../Components/forms';
 import * as Yup from 'yup';
-import Icon from 'react-native-vector-icons/AntDesign';
-import color from '../../Config/color';
-import uuid from 'react-native-uuid';
-
-function VirtualizedView(props) {
-  return (
-    <FlatList
-      data={[]}
-      ListEmptyComponent={null}
-      keyExtractor={() => 'dummy'}
-      renderItem={null}
-      ListHeaderComponent={() => (
-        <React.Fragment>{props.children}</React.Fragment>
-      )}
-    />
+import osOptions from '../../Utils/osOptions';
+import OsSwitchSelector from '../../Components/OsSwitchSelector';
+import AdvancedChecklistButton from '../../Components/AdvancedChecklistButton';
+import softwareService from '../../Services/softwareService';
+import {ALERT_TYPE, Toast} from 'react-native-alert-notification';
+import useDeepCompareEffect from 'use-deep-compare-effect';
+const AddSoftwareForm = ({
+  getSelectedIds = () => {},
+  setLoading = () => {},
+}) => {
+  let selectedSoftwareList = useMemo(
+    () => ({windows: [], linux: [], macos: []}),
+    [],
   );
-}
+  let idsList = useMemo(() => ({}), []);
+  const addSoftwareRef = useRef();
+  const [selectedOs, setSelectedSoftware] = useState(osOptions[0].value);
+  const [reload, setReload] = useState(0);
+  const [softwareList, setSoftwareList] = useState([]);
+  useState(selectedSoftwareList);
+  const getSelectedIdsAndItems = (name, ids, listItems) => {
+    selectedSoftwareList[name] = listItems;
+    idsList[name] = ids;
+    getSelectedIds(idsList);
+  };
+  useEffect(() => {
+    softwareService
+      .getAllSoftwaresApi()
+      .then(({data}) => {
+        setSoftwareList(
+          data.map(software => ({...software, id: software?._id})),
+        );
+      })
+      .catch(() =>
+        Toast.show({
+          type: ALERT_TYPE.DANGER,
+          title: 'Erreur',
+          textBody:
+            "Une erreur s'est produite lors de l'exécution de l'opération",
+          autoClose: 3000,
+        }),
+      );
+  }, [reload]);
 
-const AddSoftwareForm = () => {
-  const [installedSoftware, setInstalledSoftware] = useState([]);
-  const handleSubmit = ({logiciel}) => {
-    setInstalledSoftware(prevArr => [...prevArr, logiciel]);
+  const handleSubmit = values => {
+    console.log('values: ', values);
   };
   const validationSchema = Yup.object().shape({
-    logiciel: Yup.string().required('Veuillez indiquer le logiciel'),
+    os: Yup.string().required("Veuillez indiquer l'os"),
   });
   return (
     <AppForm
       initialValues={{
-        logiciel: '',
+        os: osOptions[0].value,
+        macos: null,
+        linux: null,
+        windows: null,
       }}
+      innerRef={addSoftwareRef}
       onSubmit={handleSubmit}
       validationSchema={validationSchema}>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <View style={{width: '60%'}}>
-          <AppFormField
-            name="logiciel"
-            placeholder="logiciel"
-            containerStyle={{marginTop: null}}
-          />
-        </View>
-        <View style={{width: '35%'}}>
-          <SubmitButton title="Ajouter" />
-        </View>
-      </View>
-      <View>
-        <FlatList
-          data={installedSoftware}
-          keyExtractor={() => uuid.v4()}
-          renderItem={({item}) => (
-            <View style={styles.listContainer}>
-              <View style={styles.listItemContainer}>
-                <Icon name="check" size={26} color={color.primary} />
-                <Text style={styles.text}>{item}</Text>
-              </View>
-            </View>
-          )}
-          numColumns={2}
-        />
-      </View>
+      <OsSwitchSelector name="os" getSelectedItem={setSelectedSoftware} />
+      <AdvancedChecklistButton
+        placeholder="logiciel"
+        name={selectedOs}
+        list={softwareList}
+        getSelectedIdsAndItems={getSelectedIdsAndItems}
+        selectedSoftware={selectedSoftwareList}
+        setReload={setReload}
+        setLoading={setLoading}
+      />
     </AppForm>
   );
 };
 
 export default AddSoftwareForm;
-
-const styles = StyleSheet.create({
-  listContainer: {flexDirection: 'row', marginVertical: 15},
-  listItemContainer: {
-    width: '50%',
-    flexDirection: 'row',
-  },
-  text: {fontSize: 18, fontWeight: '600'},
-});

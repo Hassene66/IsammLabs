@@ -20,8 +20,10 @@ const ListItem = ({
   IconComponent,
   onPress,
   isProfile = false,
+  isTech = false,
   userID,
   isAvailable,
+  topBorder = false,
 }) => {
   const [isEnabled, setIsEnabled] = useState(isAvailable);
 
@@ -31,7 +33,7 @@ const ListItem = ({
       .then(({data}) => {
         return storage.setItem('user', data.user);
       })
-      .catch(err => {
+      .catch(() => {
         Dialog.show({
           type: ALERT_TYPE.DANGER,
           title: 'Erreur',
@@ -57,8 +59,13 @@ const ListItem = ({
   }, [isAvailable]);
 
   return (
-    <TouchableHighlight onPress={onPress} underlayColor={color.light}>
-      <View style={styles.container}>
+    <TouchableHighlight onPress={onPress} underlayColor={color.primary}>
+      <View
+        style={[
+          styles.container,
+          !isProfile && styles.bottomBorder,
+          topBorder && styles.topBorder,
+        ]}>
         {IconComponent}
         {image && <Image style={styles.image} source={image} />}
         <View style={styles.detailContainer}>
@@ -72,13 +79,15 @@ const ListItem = ({
           )}
         </View>
         {isProfile ? (
-          <Switch
-            trackColor={{true: color.secondary, false: '#767577'}}
-            thumbColor={isEnabled ? color.primary : '#f4f3f4'}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={handleChange}
-            value={isEnabled}
-          />
+          isTech && (
+            <Switch
+              trackColor={{true: color.secondary, false: '#767577'}}
+              thumbColor={isEnabled ? color.primary : '#f4f3f4'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={handleChange}
+              value={isEnabled}
+            />
+          )
         ) : (
           <MaterialCommunityIcons
             color={color.medium}
@@ -115,6 +124,14 @@ const styles = StyleSheet.create({
   subTitle: {
     color: color.medium,
     fontSize: 14,
+  },
+  bottomBorder: {
+    borderBottomWidth: 1,
+    borderBottomColor: color.primary,
+  },
+  topBorder: {
+    borderTopWidth: 1,
+    borderTopColor: color.primary,
   },
 });
 export default ListItem;
