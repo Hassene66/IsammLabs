@@ -2,11 +2,20 @@ import {StyleSheet, Text, View, TouchableOpacity, Animated} from 'react-native';
 import React from 'react';
 import moment from 'moment';
 import momentTimezone from 'moment-timezone';
-import {Swipeable, GestureHandlerRootView} from 'react-native-gesture-handler';
+import {
+  Swipeable,
+  GestureHandlerRootView,
+  TouchableWithoutFeedback,
+} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import color from '../Config/color';
+import {useNavigation} from '@react-navigation/native';
+import routes from '../Navigations/routes';
 
 const Notification = ({data, handleDelete = () => {}}) => {
+  console.log('data: ', data);
+  const navigation = useNavigation();
+
   const DeleteAction = () => {
     return (
       <TouchableOpacity onPress={() => handleDelete(data._id)}>
@@ -24,25 +33,30 @@ const Notification = ({data, handleDelete = () => {}}) => {
   return (
     <GestureHandlerRootView>
       <Swipeable renderRightActions={DeleteAction}>
-        <View style={styles.container}>
-          <View style={styles.firstRaw}>
-            <Text style={styles.title}>{data?.title}</Text>
-            <Text style={styles.dateTime}>
-              {moment(data?.datetime).isSame(
-                momentTimezone().tz('Africa/Tunis').add(1, 'hours'),
-                'days',
-              )
-                ? moment(data?.createdAt).fromNow()
-                : moment(data?.createdAt).locale('fr').calendar()}
+        <TouchableWithoutFeedback
+          onPress={() => {
+            navigation.navigate(routes[data?.targetScreen], data?.data);
+          }}>
+          <View style={styles.container}>
+            <View style={styles.firstRaw}>
+              <Text style={styles.title}>{data?.title}</Text>
+              <Text style={styles.dateTime}>
+                {moment(data?.datetime).isSame(
+                  momentTimezone().tz('Africa/Tunis').add(1, 'hours'),
+                  'days',
+                )
+                  ? moment(data?.createdAt).fromNow()
+                  : moment(data?.createdAt).locale('fr').calendar()}
+              </Text>
+            </View>
+            <Text
+              numberOfLines={2}
+              ellipsizeMode="tail"
+              style={styles.description}>
+              {data?.description}
             </Text>
           </View>
-          <Text
-            numberOfLines={2}
-            ellipsizeMode="tail"
-            style={styles.description}>
-            {data?.description}
-          </Text>
-        </View>
+        </TouchableWithoutFeedback>
       </Swipeable>
     </GestureHandlerRootView>
   );

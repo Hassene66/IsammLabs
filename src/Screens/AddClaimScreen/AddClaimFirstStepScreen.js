@@ -2,41 +2,15 @@ import {StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import * as Yup from 'yup';
 import {ALERT_TYPE, Dialog, Root} from 'react-native-alert-notification';
-import FlashMessage, {showMessage} from 'react-native-flash-message';
 import {AppForm, SubmitButton} from '../../Components/forms';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';
 import RadioButtonListing from '../../Components/RadioButtonListing';
 import routes from '../../Navigations/routes';
-import axios from '../../Utils/axios';
 import color from '../../Config/color';
 import {ScrollView} from 'react-native-gesture-handler';
 import userService from '../../Services/userService';
 import blocService from '../../Services/blocService';
 
-const list = [
-  {id: 1, label: 'Hassene'},
-  {id: 2, label: 'Marouene'},
-  {id: 3, label: 'Mohsen'},
-  {id: 4, label: 'Amel'},
-  {id: 5, label: 'Nizar'},
-  {id: 6, label: 'Karim'},
-];
-
-const labos = [
-  {id: 1, label: 'PC 1', checked: false},
-  {id: 2, label: 'PC 2', checked: false},
-  {id: 3, label: 'PC 3', checked: false},
-  {id: 4, label: 'PC 4', checked: false},
-  {id: 5, label: 'PC 5', checked: false},
-  {id: 6, label: 'PC 6', checked: false},
-  {id: 7, label: 'PC 7', checked: false},
-  {id: 8, label: 'PC 8', checked: false},
-  {id: 9, label: 'PC 9', checked: false},
-  {id: 10, label: 'PC 10', checked: false},
-  {id: 11, label: 'PC 11', checked: false},
-  {id: 12, label: 'PC 12', checked: false},
-  {id: 13, label: 'PC 13', checked: false},
-];
 const AddClaimScreen = ({navigation: {navigate}}) => {
   const [techniciens, setTechniciens] = useState([]);
   const [blocs, setBlocs] = useState([]);
@@ -103,9 +77,11 @@ const AddClaimScreen = ({navigation: {navigate}}) => {
           colors={[
             {
               danger: color.primary,
-              card: 'white',
+              card: color.lightBlue,
               overlay: 'black',
               label: 'black',
+              success: color.primary,
+              warning: color.primary,
             },
           ]}>
           <MyActivityIndicator loading={loading}>

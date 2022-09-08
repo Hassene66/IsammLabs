@@ -34,7 +34,7 @@ const SoftwareClaimForm = ({values}) => {
             ),
           }}
           name="Mise à jour"
-          children={() => <SoftwareUpdateForm />}
+          children={() => <SoftwareUpdateForm values={values} />}
         />
       </Tab.Navigator>
     </View>
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 5,
     margin: 20,
+    marginHorizontal: 12,
   },
   screenOptions: {
     tabBarAllowFontScaling: true,

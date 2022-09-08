@@ -11,7 +11,6 @@ export default Home = ({route}) => {
   const labsData = route?.params;
   const [data] = useState(labsData);
   const clickEventListener = (item, label) => {
-    console.log(label);
     navigation.navigate(routes.PC_LISTING, {...item, label});
   };
   return (

@@ -1,19 +1,10 @@
-import React, {useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableWithoutFeedback,
-  Image,
-} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import color from '../../Config/color';
-import Collapsible from 'react-native-collapsible';
-import User from '../../assets/userImage.png';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import routes from '../../Navigations/routes';
@@ -30,7 +21,7 @@ const ClaimsCard = ({data, pressable = true}) => {
         <View style={styles.cardHeader}>
           <Ionicons
             name="md-person-circle-sharp"
-            size={55}
+            size={60}
             color={color.light_green}
             style={styles.icon}
           />
@@ -55,10 +46,10 @@ const ClaimsCard = ({data, pressable = true}) => {
           <View style={styles.footerContainer}>
             <View style={styles.claimDetails}>
               <View style={styles.firstCol}>
-                <MaterialCommunityIcons
-                  name="calendar-range-outline"
+                <AntDesign
+                  name="calendar"
                   size={22}
-                  style={{marginHorizontal: 10, color: color.primary}}
+                  style={{marginRight: 10, color: color.primary}}
                 />
                 <Text style={styles.subTitle}>{`${moment(
                   data?.createdAt,
@@ -70,7 +61,7 @@ const ClaimsCard = ({data, pressable = true}) => {
                 <Ionicons
                   name="grid-outline"
                   size={20}
-                  style={{marginHorizontal: 10, color: color.primary}}
+                  style={{marginRight: 10, color: color.primary}}
                 />
                 <Text style={styles.subTitle}>{data?.bloc?.label}</Text>
               </View>
@@ -86,7 +77,7 @@ const ClaimsCard = ({data, pressable = true}) => {
                 <AntDesign
                   name="iconfontdesktop"
                   size={22}
-                  style={{marginHorizontal: 10, color: color.primary}}
+                  style={{marginRight: 10, color: color.primary}}
                 />
                 <View style={{paddingRight: 50}}>
                   <Text
@@ -101,7 +92,7 @@ const ClaimsCard = ({data, pressable = true}) => {
                 <SimpleLineIcons
                   name="location-pin"
                   size={20}
-                  style={{marginHorizontal: 10, color: color.primary}}
+                  style={{marginRight: 10, color: color.primary}}
                 />
                 <Text style={styles.subTitle}>{data?.labo?.label}</Text>
               </View>
@@ -163,18 +154,23 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 5,
   },
-  userInfo: {fontSize: 18, fontWeight: 'bold', color: color.dark_blue},
-  Title: {fontSize: 20, fontWeight: 'bold', color: color.dark_green},
-  subTitle: {fontSize: 13, color: color.medium, lineHeight: 17},
-  ToggleBtnContainer: {
-    backgroundColor: color.white,
-    borderWidth: 2,
-    borderColor: color.primary,
-    borderRadius: 5,
-    flexDirection: 'row',
-    width: '100%',
-    justifyContent: 'center',
-    marginTop: 8,
+  userInfo: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: color.dark_blue,
+  },
+  Title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: color.dark_green,
+    marginBottom: 5,
+  },
+  subTitle: {
+    fontSize: 13,
+    color: color.medium,
+    lineHeight: 17,
+    textAlign: 'justify',
+    textAlignVertical: 'center',
   },
   cardBodyContainer: {backgroundColor: 'white', margin: 15, marginTop: 0},
   claimDetails: {

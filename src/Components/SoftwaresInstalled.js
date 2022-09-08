@@ -1,38 +1,25 @@
-import {Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import color from '../Config/color';
-import Entypo from 'react-native-vector-icons/Entypo';
-import Feather from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Octicons from 'react-native-vector-icons/Octicons';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import uuid from 'react-native-uuid';
 
+const LabelHeader = ({label}) =>
+  label && (
+    <View style={{flexDirection: 'row', marginVertical: 5}}>
+      <Icon name={label} size={20} color={color.medium} style={styles.icon} />
+      <Text style={{fontWeight: '400', fontSize: 17, color: color.medium}}>
+        {label}
+      </Text>
+    </View>
+  );
 const SoftwaresInstalled = ({item}) => {
-  console.log(item);
+  console.log('item: ', item);
+
   return (
     <View style={{flex: 1, backgroundColor: color.white}}>
-      <View
-        style={{
-          flexDirection: 'row',
-          marginVertical: 10,
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            flex: 0.9,
-          }}>
-          <Entypo
-            color={color.primary}
-            name="install"
-            size={23}
-            style={{marginRight: 5}}
-          />
-          <Text style={{fontWeight: '400', fontSize: 17}}>
-            Logiciel installé :
-          </Text>
-        </View>
-      </View>
-      {/*  fisrt row */}
       <ScrollView
         horizontal={false}
         showsVerticalScrollIndicator={false}
@@ -41,26 +28,113 @@ const SoftwaresInstalled = ({item}) => {
           flexDirection: 'row',
           flexWrap: 'wrap',
         }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginVertical: 10,
+          }}></View>
+        {/*  fisrt row */}
         <FlatList
-          data={item}
+          data={item?.windows}
           renderItem={({item}) => (
             <View
-              key={item?.id}
-              style={{flexDirection: 'row', marginVertical: 5, width: 170}}>
-              <Feather
-                color="black"
-                name="check"
-                size={23}
+              key={item?._id}
+              style={{
+                flexDirection: 'row',
+                marginVertical: 5,
+                width: 170,
+                alignItems: 'center',
+              }}>
+              <Octicons
+                color={color.green}
+                name="dot-fill"
+                size={15}
                 style={{marginRight: 5}}
               />
-              <Text style={{fontWeight: '400', fontSize: 17}}>
+              <Text
+                style={{
+                  fontWeight: '400',
+                  fontSize: 17,
+                  color: color.green,
+                }}>
                 {item?.name}
               </Text>
             </View>
           )}
+          listKey={() => `${uuid.v4()}`}
           keyExtractor={() => `${uuid.v4()}`}
           showsHorizontalScrollIndicator={false}
           numColumns={2}
+          ListHeaderComponent={
+            <LabelHeader label={item?.windows && 'windows'} />
+          }
+        />
+        <FlatList
+          data={item?.linux}
+          renderItem={({item}) => (
+            <View
+              key={item?._id}
+              style={{
+                flexDirection: 'row',
+                marginVertical: 5,
+                width: 170,
+                alignItems: 'center',
+              }}>
+              <Octicons
+                color={color.green}
+                name="dot-fill"
+                size={15}
+                style={{marginRight: 5}}
+              />
+              <Text
+                style={{
+                  fontWeight: '400',
+                  fontSize: 17,
+                  color: color.green,
+                }}>
+                {item?.name}
+              </Text>
+            </View>
+          )}
+          listKey={() => `${uuid.v4()}`}
+          keyExtractor={() => `${uuid.v4()}`}
+          showsHorizontalScrollIndicator={false}
+          numColumns={2}
+          ListHeaderComponent={<LabelHeader label={item?.linux && 'linux'} />}
+        />
+        <FlatList
+          data={item?.macos}
+          renderItem={({item}) => (
+            <View
+              key={item?._id}
+              style={{
+                flexDirection: 'row',
+                marginVertical: 5,
+                width: 170,
+                alignItems: 'center',
+              }}>
+              <Octicons
+                color={color.green}
+                name="dot-fill"
+                size={15}
+                style={{marginRight: 5}}
+              />
+              <Text
+                style={{
+                  fontWeight: '400',
+                  fontSize: 17,
+                  color: color.green,
+                }}>
+                {item?.name}
+              </Text>
+              listKey
+            </View>
+          )}
+          listKey={() => `${uuid.v4()}`}
+          keyExtractor={() => `${uuid.v4()}`}
+          showsHorizontalScrollIndicator={false}
+          numColumns={2}
+          ListHeaderComponent={<LabelHeader label={item?.maxos && 'macos'} />}
         />
       </ScrollView>
     </View>
@@ -68,3 +142,9 @@ const SoftwaresInstalled = ({item}) => {
 };
 
 export default SoftwaresInstalled;
+
+const styles = StyleSheet.create({
+  icon: {
+    marginRight: 7,
+  },
+});

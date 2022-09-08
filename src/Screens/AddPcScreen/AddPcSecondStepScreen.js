@@ -1,30 +1,116 @@
+import React, {useRef, useCallback, useState, useMemo} from 'react';
 import {StyleSheet, ScrollView, View} from 'react-native';
-import React from 'react';
 import Title from '../../Components/Title';
 import CharacteristicsForm from './CharacteristicsForm';
 import AddSoftwareForm from './AddSoftwareForm';
-import {FlatList} from 'react-native-gesture-handler';
+import {AppForm, SubmitButton} from '../../Components/forms';
+import * as Yup from 'yup';
+import {ALERT_TYPE, Root, Toast} from 'react-native-alert-notification';
+import computerService from '../../Services/computerService';
+import {useNavigation} from '@react-navigation/native';
+import routes from '../../Navigations/routes';
+import MyActivityIndicator from '../../Components/MyActivityIndicator';
+import color from '../../Config/color';
 
+const validationSchema = Yup.object().shape({
+  characteristics: Yup.object()
+    .nullable()
+    .required('Veuillez indiquer le characteristics'),
+});
 const AddPcSecondStepScreen = () => {
+  let idsList = useMemo(() => ({}), []);
+  const formRef = useCallback(useRef(), []);
+  const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    formRef.current.submitForm();
+  };
+
+  const handleFormSubmit = async ({characteristics}) => {
+    const toSubmitData = {
+      label: characteristics?.pc,
+      characteristics,
+      ...idsList,
+    };
+    setLoading(true);
+    computerService
+      .addComputerApi(toSubmitData)
+      .then(() => {
+        navigation.reset({
+          index: 0,
+          routes: [
+            {
+              name: routes.TO_REPAIR,
+            },
+          ],
+        });
+        Toast.show({
+          type: ALERT_TYPE.SUCCESS,
+          title: 'Succès',
+          textBody: 'Le pc a été ajouté avec succès',
+          autoClose: 3000,
+        });
+      })
+      .catch(() => {
+        Toast.show({
+          type: ALERT_TYPE.DANGER,
+          title: 'Erreur',
+          textBody:
+            "Une erreur s'est produite lors de l'exécution de l'opération",
+          autoClose: 3000,
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const getSelectedIds = selectedIds => {
+    idsList = selectedIds;
+  };
   return (
-    <FlatList
-      style={styles.container}
-      ListHeaderComponent={() => (
-        <>
-          <Title
-            text="Caractéristiques matérielles"
-            titleStyle={styles.titleStyle}
-          />
-          <View style={styles.formContainer}>
-            <CharacteristicsForm />
-          </View>
-          <Title text="Logiciel installé" titleStyle={styles.titleStyle} />
-          <View style={styles.formContainer}>
-            <AddSoftwareForm />
-          </View>
-        </>
-      )}
-    />
+    <Root
+      theme="light"
+      colors={[
+        {
+          danger: color.primary,
+          card: color.lightBlue,
+          overlay: 'black',
+          label: 'black',
+          success: color.primary,
+          warning: color.primary,
+        },
+      ]}>
+      <MyActivityIndicator loading={loading}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <AppForm
+            initialValues={{characteristics: null}}
+            validationSchema={validationSchema}
+            onSubmit={handleFormSubmit}>
+            <View style={styles.container}>
+              <Title
+                text="Caractéristiques matérielles"
+                titleStyle={styles.titleStyle}
+              />
+              <CharacteristicsForm innerRef={formRef} name="characteristics" />
+              <Title text="Logiciel installé" titleStyle={styles.titleStyle} />
+              <AddSoftwareForm
+                getSelectedIds={getSelectedIds}
+                setLoading={setLoading}
+              />
+              <SubmitButton
+                title="Envoyer"
+                style={styles.SubmitButton}
+                onSubmit={handleSubmit}
+                withSleep
+                setLoading={setLoading}
+              />
+            </View>
+          </AppForm>
+        </ScrollView>
+      </MyActivityIndicator>
+    </Root>
   );
 };
 
@@ -32,21 +118,7 @@ export default AddPcSecondStepScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
     margin: 20,
-  },
-  formContainer: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-
-    elevation: 8,
-    backgroundColor: 'white',
-    padding: 10,
   },
   titleStyle: {
     fontSize: 23,
@@ -60,4 +132,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
     flexGrow: 1,
   },
+  SubmitButton: {marginTop: 10},
 });

@@ -1,14 +1,22 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, Dimensions, View, Platform} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  Dimensions,
+  View,
+  Platform,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import PcCaractiresitics from './PcCaracteresitics';
 import SoftwaresInstalled from './SoftwaresInstalled';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import color from '../Config/color';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const CardItem = ({item, block}) => {
-  console.log(item, block);
+  console.log('item: ', item);
+
   const [showCaracteristic, setShowCaracteristic] = useState(true);
   const handleShowCaracteristic = () => {
     setShowCaracteristic(true);
@@ -17,14 +25,16 @@ const CardItem = ({item, block}) => {
     setShowCaracteristic(false);
   };
   return (
-    <View style={{marginVertical: 15, alignItems: 'center'}}>
+    <View style={{margin: 15, alignItems: 'center'}}>
       <View
         // the card view
         style={styles.card}>
         {/* first row */}
         <View style={{flexDirection: 'row'}}>
           <View style={{flex: 0.9}}>
-            <Text style={styles.mainText}>{item.label}</Text>
+            <Text style={[styles.textColor, styles.mainText]}>
+              {item.label}
+            </Text>
           </View>
           <View
             style={{
@@ -33,70 +43,24 @@ const CardItem = ({item, block}) => {
             }}>
             <View style={styles.pcStatus(item)} />
             <View>
-              <Text>{item.isWorking ? 'En marche' : 'En panne'}</Text>
+              <Text style={styles.textColor}>
+                {item.isWorking ? 'En marche' : 'En panne'}
+              </Text>
             </View>
           </View>
         </View>
-        {/* second row */}
         <View
           style={{
             flexDirection: 'row',
-            marginTop: 15,
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              flex: 0.8,
-            }}>
-            <MaterialCommunityIcons
-              color={color.primary}
-              name="view-grid"
-              size={24}
-              style={{marginRight: 5}}
-            />
-            <Text style={styles.iconStyle}>{block}</Text>
-          </View>
-          <View
-            style={{
-              marginLeft: 44,
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <Entypo
-              color={color.primary}
-              name="location"
-              size={21}
-              style={{marginRight: 6}}
-            />
-            <Text style={styles.iconStyle}>{item?.label}</Text>
-          </View>
-        </View>
-        {/* third row  */}
-        <View
-          style={{
-            flexDirection: 'row',
+            marginTop: 10,
             marginVertical: 10,
           }}>
-          <TouchableWithoutFeedback
-            onPress={handleShowCaracteristic}
-            style={{
-              flexWrap: 'wrap',
-              borderRadius: 8,
-              marginRight: 8,
-              backgroundColor: showCaracteristic
-                ? color.primary
-                : color.lightRed,
-            }}>
-            <Text
-              style={{
-                padding: 9,
-                fontWeight: '600',
-                fontSize: 15,
-                color: !showCaracteristic ? color.black : color.white,
-              }}>
-              caractéristique
-            </Text>
+          <TouchableWithoutFeedback onPress={handleShowCaracteristic}>
+            <View style={styles.btnStyle(!showCaracteristic)}>
+              <Text style={styles.selectBtnFontStyle(!showCaracteristic)}>
+                Caractéristiques
+              </Text>
+            </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={handleShowSoftwares}>
             <View style={styles.btnStyle(showCaracteristic)}>
@@ -106,9 +70,10 @@ const CardItem = ({item, block}) => {
             </View>
           </TouchableWithoutFeedback>
         </View>
-        {showCaracteristic && <PcCaractiresitics item={item} />}
-        {!showCaracteristic && (
-          <SoftwaresInstalled item={item?.softwareInstalled} />
+        {showCaracteristic ? (
+          <PcCaractiresitics item={item} />
+        ) : (
+          <SoftwaresInstalled item={item} />
         )}
       </View>
     </View>
@@ -121,7 +86,8 @@ const styles = StyleSheet.create({
   btnStyle: caracteristic => ({
     flexWrap: 'wrap',
     borderRadius: 8,
-    backgroundColor: !caracteristic ? color.primary : color.lightRed,
+    backgroundColor: !caracteristic ? color.primary : color.light,
+    marginRight: 10,
   }),
   selectBtnFontStyle: caracteristic => ({
     padding: 9,
@@ -131,10 +97,10 @@ const styles = StyleSheet.create({
   }),
   iconStyle: {fontWeight: '400', fontSize: 17},
   pcStatus: item => ({
-    backgroundColor: item.isWorking ? 'green' : color.primary,
+    backgroundColor: item.isWorking ? 'green' : 'red',
     width: 14,
-    height: '50%',
-    borderRadius: 40,
+    height: 14,
+    borderRadius: 7,
     marginRight: 6,
   }),
   mainText: {
@@ -143,11 +109,21 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   card: {
+    overflow: 'hidden',
     backgroundColor: 'white',
-    width: Math.floor(Dimensions.get('window').width - 36),
-    minHeight: 300,
-    borderRadius: 15,
-    shadowColor: '#171717',
+    width: '100%',
+    minHeight: 250,
+    borderRadius: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+
+    elevation: 10,
+    padding: 10,
     ...Platform.select({
       ios: {
         shadowOffset: {width: -2, height: 4},
@@ -173,7 +149,6 @@ const styles = StyleSheet.create({
   },
   ColumnTwo: {
     flexDirection: 'row',
-    backgroundColor: 'tomato',
   },
   Status: {
     display: 'flex',
@@ -182,5 +157,8 @@ const styles = StyleSheet.create({
   },
   firstRow: {
     flexDirection: 'row',
+  },
+  textColor: {
+    color: color.medium,
   },
 });

@@ -1,37 +1,61 @@
-import {StyleSheet, View} from 'react-native';
 import React, {useState, useEffect} from 'react';
+import {StyleSheet, View, Text} from 'react-native';
 import {AppForm, AppFormField, SubmitButton} from '../../Components/forms';
 import Title from '../../Components/Title';
 import * as Yup from 'yup';
 import storage from '../../Utils/asyncStorage';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';
-import axios from '../../Utils/axios';
-import {ALERT_TYPE, Dialog, Toast} from 'react-native-alert-notification';
+import {ALERT_TYPE, Toast} from 'react-native-alert-notification';
 import routes from '../../Navigations/routes';
 import {useNavigation} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
+import claimService from '../../Services/claimService';
+import softwareService from '../../Services/softwareService';
+import AdvancedRadioButton from '../../Components/AdvancedRadioButton';
+import osOptions from '../../Utils/osOptions';
+import OsSwitchSelector from '../../Components/OsSwitchSelector';
+import color from '../../Config/color';
 
 const NewSoftwareForm = ({values}) => {
   const navigation = useNavigation();
   const [user, setUser] = useState({});
+  const [softwareList, setSoftwareList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [reload, setReload] = useState(0);
 
-  console.log('values: ', values);
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('Veuillez indiquer le titre'),
-    toAddSoftware: Yup.string().required('Veuillez indiquer le logicielle'),
+    toAddSoftware: Yup.object()
+      .nullable()
+      .required('Veuillez indiquer le logiciel à installer '),
     description: Yup.string().required('Veuillez indiquer la description'),
   });
   useEffect(() => {
     storage
       .getItem('user')
-      .then(user => setUser(user))
-      .catch(err => console.log(err));
-  }, []);
+      .then(user => {
+        setUser(user);
+        return softwareService.getAllSoftwaresApi();
+      })
+      .then(({data}) => {
+        setSoftwareList(
+          data.map(software => ({...software, label: software?.name})),
+        );
+      })
+      .catch(() =>
+        Toast.show({
+          type: ALERT_TYPE.DANGER,
+          title: 'Erreur',
+          textBody:
+            "Une erreur s'est produite lors de l'exécution de l'opération",
+          autoClose: 3000,
+        }),
+      );
+  }, [reload]);
   const handleSubmit = formValues => {
     setLoading(true);
-    axios
-      .post('/api/claim', {
+    claimService
+      .addClaimApi({
         ...formValues,
         ...{
           claimType: 'software',
@@ -73,27 +97,38 @@ const NewSoftwareForm = ({values}) => {
       });
   };
   return (
-    <>
-      <ScrollView>
-        <MyActivityIndicator loading={loading}>
-          <AppForm
-            initialValues={{titre: '', logicielle: '', description: ''}}
-            onSubmit={handleSubmit}
-            validationSchema={validationSchema}>
-            <View style={styles.formContainer}>
-              <Title
-                text="Formulaire de réclamation"
-                titleStyle={styles.formTitleStyle}
-              />
-              <AppFormField name="title" placeholder="titre" />
-              <AppFormField name="toAddSoftware" placeholder="logicielle" />
-              <AppFormField name="description" placeholder="description" />
-              <SubmitButton title="Envoyer" style={styles.SubmitButton} />
-            </View>
-          </AppForm>
-        </MyActivityIndicator>
-      </ScrollView>
-    </>
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <MyActivityIndicator loading={loading}>
+        <AppForm
+          initialValues={{
+            title: '',
+            toAddSoftware: null,
+            description: '',
+            installedIn: osOptions[0].value,
+            type: 'newSoftware',
+          }}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}>
+          <View style={styles.formContainer}>
+            <Title
+              text="Formulaire de réclamation"
+              titleStyle={styles.formTitleStyle}
+            />
+            <AppFormField name="title" placeholder="titre" />
+            <AppFormField name="description" placeholder="description" />
+            <AdvancedRadioButton
+              placeholder="logiciel"
+              name="toAddSoftware"
+              list={softwareList}
+              setReload={setReload}
+            />
+            <Text style={styles.osLabel}>Sera installé sur :</Text>
+            <OsSwitchSelector name="installedIn" />
+            <SubmitButton title="Envoyer" style={styles.SubmitButton} />
+          </View>
+        </AppForm>
+      </MyActivityIndicator>
+    </ScrollView>
   );
 };
 
@@ -107,7 +142,16 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   SubmitButton: {
-    marginTop: 20,
+    marginTop: 5,
     paddingVertical: 18,
+  },
+  icon: {
+    marginRight: 5,
+  },
+  osLabel: {
+    marginBottom: 10,
+    fontSize: 16,
+    fontWeight: '500',
+    color: color.medium,
   },
 });

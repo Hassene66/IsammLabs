@@ -6,13 +6,13 @@ import LabsListing from '../Screens/HomeScreen/LabsListingScreen';
 import LabsInfoScreen from '../Screens/LabsInfoScreen/LabsInfoScreen';
 const Stack = createNativeStackNavigator();
 const DisplayLabsNavigator = () => (
-  <Stack.Navigator initialRouteName={routes.ACCEUIL}>
+  <Stack.Navigator initialRouteName={routes.LAB_BLOCS}>
     <Stack.Screen
-      name={routes.ACCEUIL}
+      name={routes.LAB_BLOCS}
       component={HomeScreen}
       options={{
+        title: 'Liste des blocs',
         headerTitleAlign: 'center',
-        headerShown: false,
       }}
     />
     <Stack.Screen

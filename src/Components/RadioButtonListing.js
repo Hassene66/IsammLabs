@@ -33,16 +33,20 @@ const RadioButtonListing = ({
   };
   useEffect(() => {
     setSelectedItem(undefined);
-
-    return () => {
-      setSelectedItem(undefined);
-      setFieldValue(name, undefined);
-    };
-  }, []);
+    setFieldValue(name, null, false);
+  }, [list]);
   return (
     <>
-      <TouchableWithoutFeedback onPress={() => refRBSheet.current.open()}>
-        <View style={[styles.container, errors[name] && styles.error, style]}>
+      <TouchableWithoutFeedback
+        disabled={!!!list.length}
+        onPress={() => refRBSheet.current.open()}>
+        <View
+          style={[
+            styles.container,
+            errors[name] && touched[name] && styles.error,
+            style,
+            {backgroundColor: !!!list.length ? color.lighter : 'white'},
+          ]}>
           {[
             selectedItem && (
               <Text key={uuid.v4()} style={styles.title}>
@@ -79,14 +83,14 @@ const RadioButtonListing = ({
           <View style={styles.list}>
             <View style={styles.modalHeader}>
               <Title
-                text={` liste des ${name}`}
+                text={` liste des ${placeholder}s`}
                 titleStyle={styles.titleStyle}
               />
               <TouchableOpacity onPress={() => refRBSheet.current.close()}>
                 <View style={styles.soumettreBtn}>
                   <LinearGradient
-                    colors={['#de392c', '#f2a39d']}
-                    start={{x: 0, y: 0}}
+                    colors={['#0E94CF', '#8DCBCB']}
+                    start={{x: 0, y: 1}}
                     end={{x: 1, y: 0}}
                     style={styles.linearGradient}>
                     <Text style={[styles.btn, {color: 'white'}]}>
@@ -99,7 +103,15 @@ const RadioButtonListing = ({
             <ItemRadioBtn
               name={name}
               title={placeholder}
-              data={list}
+              data={list.sort(function (a, b) {
+                if (a.name < b.name) {
+                  return -1;
+                }
+                if (a.name > b.name) {
+                  return 1;
+                }
+                return 0;
+              })}
               initial={-1}
               onPress={item => {
                 setFieldValue(name, item);
@@ -120,12 +132,14 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
     width: '100%',
-    borderRadius: 10,
-    backgroundColor: 'white',
+    borderRadius: 5,
+    backgroundColor: color.white,
     alignSelf: 'center',
     height: 65,
     padding: 7,
     justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: color.green,
   },
   title: {
     paddingLeft: 11,
@@ -150,6 +164,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'flex-end',
     paddingRight: 15,
+    color: color.green,
   },
   modal: {
     margin: 0,
@@ -165,8 +180,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     backgroundColor: 'white',
     height: '99%',
-    borderTopRightRadius: 40,
-    borderTopLeftRadius: 40,
     overflow: 'hidden',
   },
   titleStyle: {
@@ -190,7 +203,8 @@ const styles = StyleSheet.create({
       backgroundColor: 'rgba(0,0,0,0.2)',
     },
     container: {
-      borderRadius: 20,
+      borderTopRightRadius: 20,
+      borderTopLeftRadius: 20,
     },
   },
   modalHeader: {
