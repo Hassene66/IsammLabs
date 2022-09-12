@@ -11,6 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 import routes from '../../Navigations/routes';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';
 import color from '../../Config/color';
+const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 const validationSchema = Yup.object().shape({
   characteristics: Yup.object()

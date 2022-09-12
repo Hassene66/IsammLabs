@@ -1,5 +1,4 @@
 import React, {useRef, useState, useEffect, useMemo} from 'react';
-import {StyleSheet} from 'react-native';
 import {AppForm} from '../../Components/forms';
 import * as Yup from 'yup';
 import osOptions from '../../Utils/osOptions';
@@ -7,7 +6,6 @@ import OsSwitchSelector from '../../Components/OsSwitchSelector';
 import AdvancedChecklistButton from '../../Components/AdvancedChecklistButton';
 import softwareService from '../../Services/softwareService';
 import {ALERT_TYPE, Toast} from 'react-native-alert-notification';
-import useDeepCompareEffect from 'use-deep-compare-effect';
 const AddSoftwareForm = ({
   getSelectedIds = () => {},
   setLoading = () => {},
@@ -16,17 +14,20 @@ const AddSoftwareForm = ({
     () => ({windows: [], linux: [], macos: []}),
     [],
   );
+  const [, setListLength] = useState(0);
+
   let idsList = useMemo(() => ({}), []);
   const addSoftwareRef = useRef();
-  const [selectedOs, setSelectedSoftware] = useState(osOptions[0].value);
+  const [selectedOs, setSelectedOs] = useState(osOptions[0].value);
   const [reload, setReload] = useState(0);
   const [softwareList, setSoftwareList] = useState([]);
-  useState(selectedSoftwareList);
   const getSelectedIdsAndItems = (name, ids, listItems) => {
     selectedSoftwareList[name] = listItems;
     idsList[name] = ids;
     getSelectedIds(idsList);
+    setListLength(listItems.length);
   };
+
   useEffect(() => {
     softwareService
       .getAllSoftwaresApi()
@@ -46,9 +47,7 @@ const AddSoftwareForm = ({
       );
   }, [reload]);
 
-  const handleSubmit = values => {
-    console.log('values: ', values);
-  };
+  const handleSubmit = values => {};
   const validationSchema = Yup.object().shape({
     os: Yup.string().required("Veuillez indiquer l'os"),
   });
@@ -63,7 +62,7 @@ const AddSoftwareForm = ({
       innerRef={addSoftwareRef}
       onSubmit={handleSubmit}
       validationSchema={validationSchema}>
-      <OsSwitchSelector name="os" getSelectedItem={setSelectedSoftware} />
+      <OsSwitchSelector name="os" getSelectedItem={setSelectedOs} />
       <AdvancedChecklistButton
         placeholder="logiciel"
         name={selectedOs}

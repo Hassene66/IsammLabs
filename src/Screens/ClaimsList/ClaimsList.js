@@ -14,7 +14,6 @@ import {ActivityIndicator} from 'react-native-paper';
 import moment from 'moment-timezone';
 import claimOptions from '../../Utils/claimOptions';
 const ClaimsList = ({route}) => {
-  console.log('route: ', route);
   const [loading, setLoading] = useState(true);
   const [claims, setClaims] = useState([]);
   const [reload, setReload] = useState(0);
@@ -61,7 +60,6 @@ const ClaimsList = ({route}) => {
         }
       })
       .catch(err => {
-        console.log('err: ', err);
         Dialog.show({
           type: ALERT_TYPE.DANGER,
           title: 'Erreur',

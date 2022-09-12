@@ -11,9 +11,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const ForgotPassword = () => {
-  const handleSubmit = values => {
-    console.log(values);
-  };
+  const handleSubmit = values => {};
 
   return (
     <SafeAreaView style={styles.loginScreen}>

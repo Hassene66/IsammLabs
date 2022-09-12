@@ -2,21 +2,15 @@ import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
-  Dimensions,
   View,
   Platform,
   TouchableWithoutFeedback,
 } from 'react-native';
 import PcCaractiresitics from './PcCaracteresitics';
 import SoftwaresInstalled from './SoftwaresInstalled';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import color from '../Config/color';
 
 const CardItem = ({item, block}) => {
-  console.log('item: ', item);
-
   const [showCaracteristic, setShowCaracteristic] = useState(true);
   const handleShowCaracteristic = () => {
     setShowCaracteristic(true);

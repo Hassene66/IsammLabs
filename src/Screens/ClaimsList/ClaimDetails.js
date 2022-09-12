@@ -23,7 +23,6 @@ const ClaimDetails = ({route}) => {
   const claimType = route?.params?.fromRoute;
   const initialSelectedSwitch =
     claimType === options[0].value ? options[0].value : options[1].value;
-  console.log('initialSelectedSwitch: ', initialSelectedSwitch);
   const navigation = useNavigation();
   const {params} = route;
   const [loading, setLoading] = useState(false);
@@ -66,7 +65,6 @@ const ClaimDetails = ({route}) => {
         });
       })
       .catch(err => {
-        console.log('err: ', err);
         Toast.show({
           type: ALERT_TYPE.DANGER,
           title: 'Erreur',

@@ -52,7 +52,6 @@ const HardwareClaimForm = ({values}) => {
   }, []);
 
   const handleSubmit = formValues => {
-    console.log('formValues: ', formValues);
     setLoading(true);
     claimService
       .addClaimApi({

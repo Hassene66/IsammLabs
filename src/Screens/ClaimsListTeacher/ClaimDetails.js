@@ -52,7 +52,6 @@ const ClaimDetails = ({route}) => {
         });
       })
       .catch(err => {
-        console.log('err: ', err);
         Toast.show({
           type: ALERT_TYPE.DANGER,
           title: 'Erreur',

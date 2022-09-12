@@ -30,8 +30,6 @@ const SoftwareUpdateForm = ({values}) => {
   const [selectedSwitch, setSelectedSwitch] = useState(osOptions[0].value);
   const navigation = useNavigation();
 
-  console.log('values: ', JSON.stringify(values?.ordinateur[selectedSwitch]));
-  console.log('softwareList: ', softwareList);
   useEffect(() => {
     storage
       .getItem('user')
@@ -45,7 +43,6 @@ const SoftwareUpdateForm = ({values}) => {
         );
       })
       .catch(e => {
-        console.log('e: ', e);
         Toast.show({
           type: ALERT_TYPE.DANGER,
           title: 'Erreur',
@@ -61,7 +58,6 @@ const SoftwareUpdateForm = ({values}) => {
   };
 
   const handleSubmit = formValues => {
-    console.log('formValues: ', formValues);
     setLoading(true);
     claimService
       .addClaimApi({

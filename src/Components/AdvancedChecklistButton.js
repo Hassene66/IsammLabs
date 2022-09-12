@@ -113,7 +113,11 @@ const AdvancedChecklistButton = ({
                     numberOfLines={1}
                     style={[styles.subTitle]}
                     key={uuid.v4()}>
-                    {selectedSoftware[name].map(item => `${item.name} ,`)}
+                    {selectedSoftware[name].map((item, idx) =>
+                      selectedSoftware[name].length - 1 === idx
+                        ? `${item.name}`
+                        : `${item.name}, `,
+                    )}
                   </Text>
                 </View>,
               ]

@@ -78,7 +78,11 @@ const PcCaractiresitics = ({item}) => {
             style={[styles.textColor, styles.characteristicFont]}
             numberOfLines={1}
             ellipsizeMode="tail">
-            {availableSoftwares(item).map(software => `${software} ,`)}
+            {availableSoftwares(item).map((software, idx) =>
+              availableSoftwares(item).length - 1 === idx
+                ? `${software}`
+                : `${software}, `,
+            )}
           </Text>
         </View>
         <View
