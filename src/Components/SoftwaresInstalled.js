@@ -11,13 +11,11 @@ const LabelHeader = ({label}) =>
     <View style={{flexDirection: 'row', marginVertical: 5}}>
       <Icon name={label} size={20} color={color.medium} style={styles.icon} />
       <Text style={{fontWeight: '400', fontSize: 17, color: color.medium}}>
-        {label}
+        {label + ' :'}
       </Text>
     </View>
   );
 const SoftwaresInstalled = ({item}) => {
-  console.log('item: ', item);
-
   return (
     <View style={{flex: 1, backgroundColor: color.white}}>
       <ScrollView
@@ -127,7 +125,6 @@ const SoftwaresInstalled = ({item}) => {
                 }}>
                 {item?.name}
               </Text>
-              listKey
             </View>
           )}
           listKey={() => `${uuid.v4()}`}

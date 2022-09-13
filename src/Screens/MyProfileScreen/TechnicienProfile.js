@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, FlatList, Text} from 'react-native';
+import {StyleSheet, View, FlatList} from 'react-native';
 import {Root} from 'react-native-alert-notification';
 import Screen from '../../Components/Screen';
 import ListItem from '../../Components/List/ListItem';
@@ -15,7 +15,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const menuItem = [
   {
-    title: 'Traitées',
+    title: 'Réclamations Traitées',
     icon: {
       name: 'clipboard-check-outline',
       backgroundColor: color.green,
@@ -165,39 +165,42 @@ const TechnicienProfile = () => {
                   onPress={() => navigation.navigate(item.targetScreen)}
                 />
               )}
-              onPress={() => console.log('test')}
-            />
-          </View>
-          <View>
-            <ListItem
-              title="Déconnexion"
-              topBorder
-              IconComponent={
-                <MaskedView
-                  maskElement={
-                    <MaterialCommunityIcons
-                      name="logout"
-                      size={40}
-                      color={color.light_green}
-                      style={[styles.icon, {backgroundColor: 'transparent'}]}
-                    />
-                  }>
-                  <LinearGradient
-                    start={{x: 0, y: 0}}
-                    end={{x: 1, y: 0}}
-                    colors={['#0e94cf', '#8ac9cb', '#8ac9cb']}>
-                    <MaterialCommunityIcons
-                      name="logout"
-                      size={40}
-                      color={color.light_green}
-                      style={[styles.icon, {opacity: 0}]}
-                    />
-                  </LinearGradient>
-                </MaskedView>
+              onPress={() => {}}
+              ListFooterComponent={
+                <ListItem
+                  title="Déconnexion"
+                  topBorder
+                  IconComponent={
+                    <MaskedView
+                      maskElement={
+                        <MaterialCommunityIcons
+                          name="logout"
+                          size={40}
+                          color={color.light_green}
+                          style={[
+                            styles.icon,
+                            {backgroundColor: 'transparent'},
+                          ]}
+                        />
+                      }>
+                      <LinearGradient
+                        start={{x: 0, y: 0}}
+                        end={{x: 1, y: 0}}
+                        colors={['#0e94cf', '#8ac9cb', '#8ac9cb']}>
+                        <MaterialCommunityIcons
+                          name="logout"
+                          size={40}
+                          color={color.light_green}
+                          style={[styles.icon, {opacity: 0}]}
+                        />
+                      </LinearGradient>
+                    </MaskedView>
+                  }
+                  onPress={() => {
+                    storage.removeItem('user');
+                  }}
+                />
               }
-              onPress={async () => {
-                await storage.removeItem('user');
-              }}
             />
           </View>
         </Screen>
@@ -209,6 +212,9 @@ const TechnicienProfile = () => {
 export default TechnicienProfile;
 
 const styles = StyleSheet.create({
+  container: {
+    marginBottom: 120,
+  },
   profileInfo: {
     // merginVertical: 10,
   },

@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, TouchableOpacity, Animated} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
 import moment from 'moment';
 import momentTimezone from 'moment-timezone';
@@ -13,7 +13,6 @@ import {useNavigation} from '@react-navigation/native';
 import routes from '../Navigations/routes';
 
 const Notification = ({data, handleDelete = () => {}}) => {
-  console.log('data: ', data);
   const navigation = useNavigation();
 
   const DeleteAction = () => {

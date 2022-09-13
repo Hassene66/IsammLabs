@@ -6,7 +6,6 @@ import * as Yup from 'yup';
 import RadioButtonListing from '../../Components/RadioButtonListing';
 import color from '../../Config/color';
 import storage from '../../Utils/asyncStorage';
-import softwareService from '../../Services/softwareService';
 import {ALERT_TYPE, Toast} from 'react-native-alert-notification';
 import {useNavigation} from '@react-navigation/native';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';
@@ -30,8 +29,6 @@ const SoftwareUpdateForm = ({values}) => {
   const [selectedSwitch, setSelectedSwitch] = useState(osOptions[0].value);
   const navigation = useNavigation();
 
-  console.log('values: ', JSON.stringify(values?.ordinateur[selectedSwitch]));
-  console.log('softwareList: ', softwareList);
   useEffect(() => {
     storage
       .getItem('user')
@@ -45,7 +42,6 @@ const SoftwareUpdateForm = ({values}) => {
         );
       })
       .catch(e => {
-        console.log('e: ', e);
         Toast.show({
           type: ALERT_TYPE.DANGER,
           title: 'Erreur',
@@ -61,7 +57,6 @@ const SoftwareUpdateForm = ({values}) => {
   };
 
   const handleSubmit = formValues => {
-    console.log('formValues: ', formValues);
     setLoading(true);
     claimService
       .addClaimApi({

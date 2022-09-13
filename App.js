@@ -7,7 +7,7 @@ import TeacherTabNavigator from './src/Navigations/TeacherTabNavigator';
 import LoginScreen from './src/Screens/LoginScreen/LoginScreenV2';
 import storage from './src/Utils/asyncStorage';
 import notificationListeners from './src/Utils/notificationListeners';
-import {Root} from 'react-native-alert-notification';
+import {AlertNotificationRoot} from 'react-native-alert-notification';
 import LottieSplashScreen from 'react-native-lottie-splash-screen';
 import color from './src/Config/color';
 
@@ -34,7 +34,7 @@ const App = () => {
     }
   }, [user]);
   return (
-    <Root
+    <AlertNotificationRoot
       theme="light"
       colors={[
         {
@@ -58,7 +58,7 @@ const App = () => {
             <LoginScreen setUser={setUser} />
           ))}
       </NavigationContainer>
-    </Root>
+    </AlertNotificationRoot>
   );
 };
 export default App;
