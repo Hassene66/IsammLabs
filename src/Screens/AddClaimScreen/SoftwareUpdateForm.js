@@ -6,7 +6,6 @@ import * as Yup from 'yup';
 import RadioButtonListing from '../../Components/RadioButtonListing';
 import color from '../../Config/color';
 import storage from '../../Utils/asyncStorage';
-import softwareService from '../../Services/softwareService';
 import {ALERT_TYPE, Toast} from 'react-native-alert-notification';
 import {useNavigation} from '@react-navigation/native';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';

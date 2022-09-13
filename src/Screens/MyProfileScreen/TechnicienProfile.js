@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, FlatList, Text} from 'react-native';
+import {StyleSheet, View, FlatList} from 'react-native';
 import {Root} from 'react-native-alert-notification';
 import Screen from '../../Components/Screen';
 import ListItem from '../../Components/List/ListItem';
@@ -15,7 +15,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const menuItem = [
   {
-    title: 'Traitées',
+    title: 'Réclamations Traitées',
     icon: {
       name: 'clipboard-check-outline',
       backgroundColor: color.green,

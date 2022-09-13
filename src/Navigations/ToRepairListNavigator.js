@@ -14,7 +14,7 @@ const ToRepairListNavigator = () => (
       component={ClaimsList}
       initialParams={{fromRoute: claimOptions[0].value}}
       options={{
-        title: 'Liste des réclamations',
+        title: 'Réclamations non traitées',
         headerTitleAlign: 'center',
       }}
     />
@@ -22,7 +22,7 @@ const ToRepairListNavigator = () => (
       name={routes.CLAIM_CARD}
       component={ClaimsCard}
       options={{
-        title: 'Liste des réclamations',
+        title: 'Réclamations non traitées',
         headerTitleAlign: 'center',
       }}
     />

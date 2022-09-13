@@ -8,7 +8,7 @@ import blocService from '../../Services/blocService';
 import {ALERT_TYPE, Dialog, Root} from 'react-native-alert-notification';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';
 import color from '../../Config/color';
-
+import {useNavigation} from '@react-navigation/native';
 const validationSchema = Yup.object().shape({
   bloc: Yup.object()
     .nullable()
@@ -20,14 +20,16 @@ const validationSchema = Yup.object().shape({
     .label('Laboratoire'),
 });
 
-const AddPcFirstStepScreen = ({navigation: {navigate}}) => {
+const AddPcFirstStepScreen = () => {
+  const navigation = useNavigation();
+
   const [blocs, setBlocs] = useState([]);
   const [selectedBloc, setSelectedBloc] = useState([]);
   const [loading, setLoading] = useState(false);
   const [refetch, setRefetech] = useState(0);
 
   const handleSubmit = values => {
-    navigate(routes.ADD_PC_SECOND, {values});
+    navigation.navigate(routes.ADD_PC_SECOND, {values});
   };
 
   useEffect(() => {

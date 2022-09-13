@@ -5,20 +5,20 @@ import CharacteristicsForm from './CharacteristicsForm';
 import AddSoftwareForm from './AddSoftwareForm';
 import {AppForm, SubmitButton} from '../../Components/forms';
 import * as Yup from 'yup';
-import {ALERT_TYPE, Root, Toast} from 'react-native-alert-notification';
+import {ALERT_TYPE, Toast} from 'react-native-alert-notification';
 import computerService from '../../Services/computerService';
 import {useNavigation} from '@react-navigation/native';
 import routes from '../../Navigations/routes';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';
-import color from '../../Config/color';
-const sleep = ms => new Promise(r => setTimeout(r, ms));
+import laboratoryService from '../../Services/laboratoryService';
 
 const validationSchema = Yup.object().shape({
   characteristics: Yup.object()
     .nullable()
     .required('Veuillez indiquer le characteristics'),
 });
-const AddPcSecondStepScreen = () => {
+const AddPcSecondStepScreen = ({route}) => {
+  const {values} = route.params;
   let idsList = useMemo(() => ({}), []);
   const formRef = useCallback(useRef(), []);
   const navigation = useNavigation();
@@ -37,6 +37,11 @@ const AddPcSecondStepScreen = () => {
     setLoading(true);
     computerService
       .addComputerApi(toSubmitData)
+      .then(({data: addedComputer}) =>
+        laboratoryService.updateLaboratoryApi(values?.laboratoire?._id, {
+          computer: addedComputer?._id,
+        }),
+      )
       .then(() => {
         navigation.reset({
           index: 0,
@@ -53,7 +58,8 @@ const AddPcSecondStepScreen = () => {
           autoClose: 3000,
         });
       })
-      .catch(() => {
+      .catch(err => {
+        console.log('err: ', err.response.data);
         Toast.show({
           type: ALERT_TYPE.DANGER,
           title: 'Erreur',
@@ -71,47 +77,37 @@ const AddPcSecondStepScreen = () => {
     idsList = selectedIds;
   };
   return (
-    <Root
-      theme="light"
-      colors={[
-        {
-          danger: color.primary,
-          card: color.lightBlue,
-          overlay: 'black',
-          label: 'black',
-          success: color.primary,
-          warning: color.primary,
-        },
-      ]}>
-      <MyActivityIndicator loading={loading}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <AppForm
-            initialValues={{characteristics: null}}
-            validationSchema={validationSchema}
-            onSubmit={handleFormSubmit}>
-            <View style={styles.container}>
-              <Title
-                text="Caractéristiques matérielles"
-                titleStyle={styles.titleStyle}
-              />
-              <CharacteristicsForm innerRef={formRef} name="characteristics" />
-              <Title text="Logiciel installé" titleStyle={styles.titleStyle} />
-              <AddSoftwareForm
-                getSelectedIds={getSelectedIds}
-                setLoading={setLoading}
-              />
-              <SubmitButton
-                title="Envoyer"
-                style={styles.SubmitButton}
-                onSubmit={handleSubmit}
-                withSleep
-                setLoading={setLoading}
-              />
-            </View>
-          </AppForm>
-        </ScrollView>
-      </MyActivityIndicator>
-    </Root>
+    <MyActivityIndicator loading={loading}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <AppForm
+          initialValues={{characteristics: null}}
+          validationSchema={validationSchema}
+          onSubmit={handleFormSubmit}>
+          <View style={styles.container}>
+            <Title
+              text="Caractéristiques matérielles"
+              titleStyle={styles.titleStyle}
+            />
+            <CharacteristicsForm innerRef={formRef} name="characteristics" />
+            <Title
+              text="Logiciels à installer"
+              titleStyle={styles.titleStyle}
+            />
+            <AddSoftwareForm
+              getSelectedIds={getSelectedIds}
+              setLoading={setLoading}
+            />
+            <SubmitButton
+              title="Envoyer"
+              style={styles.SubmitButton}
+              onSubmit={handleSubmit}
+              withSleep
+              setLoading={setLoading}
+            />
+          </View>
+        </AppForm>
+      </ScrollView>
+    </MyActivityIndicator>
   );
 };
 
