@@ -64,7 +64,9 @@ const SoftwaresInstalled = ({item}) => {
           showsHorizontalScrollIndicator={false}
           numColumns={2}
           ListHeaderComponent={
-            <LabelHeader label={item?.windows && 'windows'} />
+            item?.windows?.length && (
+              <LabelHeader label={item?.windows && 'windows'} />
+            )
           }
         />
         <FlatList
@@ -98,7 +100,11 @@ const SoftwaresInstalled = ({item}) => {
           keyExtractor={() => `${uuid.v4()}`}
           showsHorizontalScrollIndicator={false}
           numColumns={2}
-          ListHeaderComponent={<LabelHeader label={item?.linux && 'linux'} />}
+          ListHeaderComponent={
+            item?.linux?.length && (
+              <LabelHeader label={item?.linux && 'linux'} />
+            )
+          }
         />
         <FlatList
           data={item?.macos}
@@ -131,7 +137,11 @@ const SoftwaresInstalled = ({item}) => {
           keyExtractor={() => `${uuid.v4()}`}
           showsHorizontalScrollIndicator={false}
           numColumns={2}
-          ListHeaderComponent={<LabelHeader label={item?.maxos && 'macos'} />}
+          ListHeaderComponent={
+            item?.macos?.length && (
+              <LabelHeader label={item?.maxos && 'macos'} />
+            )
+          }
         />
       </ScrollView>
     </View>

@@ -44,6 +44,8 @@ const ProcessedClaims = ({route}) => {
           offset: offsetP + 1,
           size: 5,
           isApproved: route.name === routes.PROCESSED_CLAIMS ? true : undefined,
+          isConfirmed:
+            route.name === routes.WAITING_FOR_APPROVAL ? false : true,
         });
       })
       .then(({data}) => {
