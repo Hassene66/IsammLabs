@@ -15,7 +15,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const menuItem = [
   {
-    title: 'Réclamations passées',
+    title: 'Mes réclamations',
     icon: {
       name: 'clipboard-list-outline',
       backgroundColor: color.purple,

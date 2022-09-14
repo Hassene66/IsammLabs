@@ -10,7 +10,7 @@ import PcCaractiresitics from './PcCaracteresitics';
 import SoftwaresInstalled from './SoftwaresInstalled';
 import color from '../Config/color';
 
-const CardItem = ({item, block}) => {
+const CardItem = ({item}) => {
   const [showCaracteristic, setShowCaracteristic] = useState(true);
   const handleShowCaracteristic = () => {
     setShowCaracteristic(true);
