@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, FlatList} from 'react-native';
-import {Root} from 'react-native-alert-notification';
+import {ALERT_TYPE, Dialog, Root, Toast} from 'react-native-alert-notification';
 import Screen from '../../Components/Screen';
 import ListItem from '../../Components/List/ListItem';
 import color from '../../Config/color';
@@ -12,6 +12,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaskedView from '@react-native-masked-view/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
+import authService from '../../Services/authService';
 
 const menuItem = [
   {
@@ -72,6 +73,30 @@ const TeacherProfile = () => {
       )
       .finally(() => setLoading(false));
   }, [reload]);
+
+  const handleLogout = () => {
+    setLoading(true);
+    storage
+      .getItem('user')
+      .then(async user => {
+        const fcm = await storage.getItem('fcm_token');
+        return [user, fcm];
+      })
+      .then(([user, fcm]) => authService.logoutApi(user._id, fcm))
+      .then(async () => await storage.clear())
+      .catch(() => {
+        Toast.show({
+          type: ALERT_TYPE.DANGER,
+          title: 'Erreur',
+          textBody:
+            'Un problème est survenu lors de la tentative de déconnexion. Veuillez réessayer.',
+          autoClose: 3000,
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   return (
     <MyActivityIndicator loading={loading}>
@@ -186,12 +211,9 @@ const TeacherProfile = () => {
                       </LinearGradient>
                     </MaskedView>
                   }
-                  onPress={() => {
-                    storage.removeItem('user');
-                  }}
+                  onPress={handleLogout}
                 />
               }
-              onPress={() => {}}
             />
           </View>
         </Screen>
