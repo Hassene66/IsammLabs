@@ -11,7 +11,7 @@ import FlashMessage, {showMessage} from 'react-native-flash-message';
 import messaging from '@react-native-firebase/messaging';
 import authService from '../../Services/authService';
 import userService from '../../Services/userService';
-
+import moment from 'moment-timezone';
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .required('Veuillez indiquer votre email')
@@ -120,17 +120,14 @@ const LoginScreenV2 = ({setUser, navigation}) => {
                   <View style={{marginTop: 20}}>
                     <SubmitButton title="Login" />
                   </View>
-                  <Text
-                    onPress={() => navigation.navigate('Forgot Password')}
-                    style={styles.forgotPassword}>
-                    mot de passe oublié?
-                  </Text>
+                  <Text style={styles.footerText}></Text>
                 </View>
               </AppForm>
             </View>
           </View>
         </View>
       </SafeAreaView>
+      <Text style={styles.footerText}>© ISAMM LABS {moment().year()}</Text>
       <FlashMessage position="top" />
     </MyActivityIndicator>
   );
@@ -180,9 +177,9 @@ const styles = StyleSheet.create({
 
     elevation: 8,
   },
-  forgotPassword: {
+  footerText: {
     marginVertical: 15,
-    color: color.primary,
+    color: color.green,
     fontSize: 16,
     textAlign: 'center',
   },

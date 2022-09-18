@@ -9,10 +9,8 @@ import {useIsFocused} from '@react-navigation/native';
 import color from '../../../Config/color';
 import {AppForm, SubmitButton} from '../../../Components/forms';
 import claimService from '../../../Services/claimService';
-import ClaimsCardWithDetails from '../../../Components/ClaimCardWithDetails';
 import SwitchSelector from 'react-native-switch-selector';
 import {ActivityIndicator} from 'react-native-paper';
-import routes from '../../../Navigations/routes';
 import moment from 'moment-timezone';
 import ClaimsCard from '../../ClaimsListTeacher/ClaimsCard';
 

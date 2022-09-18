@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
 import routes from '../../Navigations/routes';
 import blocService from '../../Services/blocService';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';
@@ -10,10 +11,10 @@ import Logo2 from '../../assets/camera.svg';
 import Logo3 from '../../assets/window.svg';
 import Logo4 from '../../assets/pain.svg';
 import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
-import {Root, Dialog} from 'react-native-alert-notification';
+import {Root, Dialog, ALERT_TYPE} from 'react-native-alert-notification';
 import color from '../../Config/color';
-
 export default Home = () => {
+  const isFocused = useIsFocused();
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const [reload, setReload] = useState(0);
@@ -40,7 +41,7 @@ export default Home = () => {
         });
       })
       .finally(() => setLoading(false));
-  }, [reload]);
+  }, [reload, isFocused]);
   const CustomTag = idx => {
     switch (idx) {
       case 0:

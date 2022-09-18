@@ -7,7 +7,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {AppForm, AppFormField, SubmitButton} from '../../Components/forms';
 import moment from 'moment';
-import axios from '../../Utils/axios';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';
 import {useNavigation} from '@react-navigation/native';
 import routes from '../../Navigations/routes';
@@ -216,37 +215,39 @@ const ClaimDetails = ({route}) => {
                       </View>
                     </View>
                   )}
-                  <View style={[styles.section, {flexDirection: 'column'}]}>
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        fontWeight: 'bold',
-                        color: color.medium,
-                        marginVertical: 7,
-                      }}>
-                      Votre progression :
-                    </Text>
-                    <ClaimStatusSwitchSelector
-                      name="status"
-                      getSelectedItem={handleSwitchChange}
-                      switchOptons={
-                        claimType === claimOptions[1].value
-                          ? lessOptions
-                          : undefined
-                      }
-                    />
-                    <Collapsible collapsed={!showMoreContent}>
-                      <View style={styles.formContainer}>
-                        <AppFormField name="reason" placeholder="raison" />
-                      </View>
-                    </Collapsible>
-                    <View style={styles.submitBtnMargin(showMoreContent)}>
-                      <SubmitButton
-                        title="Soumettre"
-                        style={styles.SubmitButton}
+                  {!!!route?.params?.fromNotification && (
+                    <View style={[styles.section, {flexDirection: 'column'}]}>
+                      <Text
+                        style={{
+                          fontSize: 15,
+                          fontWeight: 'bold',
+                          color: color.medium,
+                          marginVertical: 7,
+                        }}>
+                        Votre progression :
+                      </Text>
+                      <ClaimStatusSwitchSelector
+                        name="status"
+                        getSelectedItem={handleSwitchChange}
+                        switchOptons={
+                          claimType === claimOptions[1].value
+                            ? lessOptions
+                            : undefined
+                        }
                       />
+                      <Collapsible collapsed={!showMoreContent}>
+                        <View style={styles.formContainer}>
+                          <AppFormField name="reason" placeholder="raison" />
+                        </View>
+                      </Collapsible>
+                      <View style={styles.submitBtnMargin(showMoreContent)}>
+                        <SubmitButton
+                          title="Soumettre"
+                          style={styles.SubmitButton}
+                        />
+                      </View>
                     </View>
-                  </View>
+                  )}
                 </View>
               </View>
             </View>

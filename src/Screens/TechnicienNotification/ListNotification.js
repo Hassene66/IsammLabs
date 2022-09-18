@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, FlatList, RefreshControl, Text, View} from 'react-native';
 import SwitchSelector from 'react-native-switch-selector';
-import moment from 'moment';
-import momentTimezone from 'moment-timezone';
+import moment from 'moment-timezone';
 import color from '../../Config/color';
 import Notification from '../../Components/Notification';
 import uuid from 'react-native-uuid';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';
-import {Dialog, Root} from 'react-native-alert-notification';
+import {ALERT_TYPE, Dialog, Root} from 'react-native-alert-notification';
 import {useIsFocused} from '@react-navigation/native';
 import {AppForm, SubmitButton} from '../../Components/forms';
 import ListItemSeperator from '../../Components/List/ListItemSeperator';
@@ -42,7 +41,7 @@ const ListNotification = () => {
         setTodayNotifications(
           data.filter(notification =>
             moment(notification?.createdAt).isSame(
-              momentTimezone().tz('Africa/Tunis').add(1, 'hours'),
+              moment().tz('Africa/Tunis'),
               'days',
             ),
           ),

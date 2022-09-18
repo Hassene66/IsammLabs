@@ -10,8 +10,9 @@ import color from '../../Config/color';
 import {ScrollView} from 'react-native-gesture-handler';
 import userService from '../../Services/userService';
 import blocService from '../../Services/blocService';
-
+import {useIsFocused} from '@react-navigation/native';
 const AddClaimScreen = ({navigation: {navigate}}) => {
+  const isFocused = useIsFocused();
   const [techniciens, setTechniciens] = useState([]);
   const [blocs, setBlocs] = useState([]);
   const [selectedBloc, setSelectedBloc] = useState([]);
@@ -68,7 +69,7 @@ const AddClaimScreen = ({navigation: {navigate}}) => {
       .finally(() => {
         setLoading(false);
       });
-  }, [refetch]);
+  }, [refetch, isFocused]);
   return (
     <>
       <ScrollView>

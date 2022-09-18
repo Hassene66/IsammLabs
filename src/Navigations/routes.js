@@ -12,6 +12,7 @@ export default Object.freeze({
   TECHNICIEN_PROFILE: 'Technicien Profile',
   TEACHER_PROFILE: 'Teacher Profile',
   TECH_PROFILE_TAB: 'Technicien Profile Tab',
+  TEACHER_PROFILE_TAB: 'Teacher Profile Tab',
   TO_REPAIR: 'To repair',
   CLAIM_CARD: 'Claim Card',
   CLAIM_LIST: 'Claim List',

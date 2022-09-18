@@ -64,7 +64,7 @@ const TeacherTabNavigator = () => (
       })}
     />
     <Tab.Screen
-      name={routes.TECHNICIEN_PROFILE}
+      name={routes.TEACHER_PROFILE_TAB}
       children={TeacherProfileNavigator}
       options={{
         headerShown: false,

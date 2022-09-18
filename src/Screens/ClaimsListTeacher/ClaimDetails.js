@@ -40,7 +40,7 @@ const ClaimDetails = ({route}) => {
           index: 0,
           routes: [
             {
-              name: routes.TECHNICIEN_PROFILE,
+              name: routes.TEACHER_PROFILE,
             },
           ],
         });
@@ -95,14 +95,14 @@ const ClaimDetails = ({route}) => {
                 />
                 <View style={styles.cardHeaderInfo}>
                   <Text style={styles.userInfo}>
-                    {params?.createdBy?.fullname}
+                    {params?.assignedTo?.fullname}
                   </Text>
                   <Text
                     style={{
                       color: '#B0B0B0',
                       fontWeight: '600',
                     }}>
-                    {params?.createdBy?.email}
+                    {params?.assignedTo?.email}
                   </Text>
                 </View>
               </View>

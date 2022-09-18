@@ -194,7 +194,6 @@ const TechnicienProfile = () => {
               ListFooterComponent={
                 <ListItem
                   title="Déconnexion"
-                  topBorder
                   IconComponent={
                     <MaskedView
                       maskElement={

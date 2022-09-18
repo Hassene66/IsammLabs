@@ -184,7 +184,6 @@ const TeacherProfile = () => {
               ListFooterComponent={
                 <ListItem
                   title="Déconnexion"
-                  topBorder
                   IconComponent={
                     <MaskedView
                       maskElement={
