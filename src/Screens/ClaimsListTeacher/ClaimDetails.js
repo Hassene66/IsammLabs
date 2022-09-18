@@ -29,9 +29,18 @@ const data = [
 const ClaimDetails = ({route}) => {
   const navigation = useNavigation();
   const {params} = route;
-  console.log('params: ', params.reason);
+  console.log('params: ', params);
   const [loading, setLoading] = useState(false);
   const claimType = route?.params?.fromRoute;
+  console.log(
+    'claimType !== routes.TEACHER_PASSED_CLAIMS: ',
+    claimType !== routes.TEACHER_PASSED_CLAIMS,
+  );
+  console.log(
+    'params.fromNotification === true: ',
+    params.fromNotification === true,
+  );
+  console.log('params.isConfirmed === false: ', params.isConfirmed === false);
 
   const handleSubmit = values => {
     setLoading(true);
@@ -205,7 +214,10 @@ const ClaimDetails = ({route}) => {
                     </SeeMore>
                   </View>
                 )}
-                {claimType !== routes.TEACHER_PASSED_CLAIMS && (
+                {((claimType !== routes.TEACHER_PASSED_CLAIMS &&
+                  params.fromNotification !== true) ||
+                  (params.fromNotification === true &&
+                    params.isConfirmed === false)) && (
                   <View style={[styles.section, {flexDirection: 'column'}]}>
                     <Text
                       style={{
@@ -214,7 +226,7 @@ const ClaimDetails = ({route}) => {
                         color: color.medium,
                         marginVertical: 7,
                       }}>
-                      Confirmation de réparation :
+                      Veuillez confirmer si cela est correct :
                     </Text>
                     <RadioButton data={data} name="isApproved" />
                     <View style={{marginTop: 20}}>

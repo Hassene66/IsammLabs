@@ -5,6 +5,7 @@ import Notification from '../Screens/TechnicienNotification/ListNotification';
 import TeacherProfile from '../Screens/MyProfileScreen/TeacherProfile';
 import ToConfirmClaimsNavigator from './ToConfirmClaimsNavigator';
 import TeacherClaimsListNavigator from './TeacherClaimsListNavigator';
+import ClaimDetails from '../Screens/ClaimsListTeacher/ClaimDetails';
 const Stack = createNativeStackNavigator();
 const TeacherProfileNavigator = () => (
   <Stack.Navigator initialRouteName={routes.TEACHER_PROFILE}>
@@ -42,6 +43,13 @@ const TeacherProfileNavigator = () => (
       name={routes.TEACHER_NOTIFICATION}
       component={Notification}
       options={{title: 'Mes notifications'}}
+    />
+    <Stack.Screen
+      name={routes.CLAIM_DETAIL}
+      component={ClaimDetails}
+      options={{
+        title: 'Détail réclamation',
+      }}
     />
   </Stack.Navigator>
 );
