@@ -96,21 +96,6 @@ const ListNotification = () => {
         />
         <View style={styles.BodyContainer}>
           <MyActivityIndicator loading={loading}>
-            <View style={styles.toast}>
-              <Root
-                theme="light"
-                colors={[
-                  {
-                    danger: color.primary,
-                    card: color.lightBlue,
-                    overlay: 'black',
-                    label: 'black',
-                    success: color.primary,
-                    warning: color.primary,
-                  },
-                ]}
-              />
-            </View>
             {!loading &&
               ((!!todayNotifications.length && selectedSwitch === TODAY) ||
               (!!allNotifications.length && selectedSwitch === ALL) ? (

@@ -160,9 +160,7 @@ const ClaimsCardWithDetails = ({data}) => {
                       numberOfLines={1}
                       ellipsizeMode="tail"
                       style={styles.subTitle}>
-                      {data.type === 'newSoftware'
-                        ? data?.toAddSoftware?.name
-                        : data?.toUpdateSoftware?.name}
+                      {data?.state}
                     </Text>
                   </View>
                 </View>

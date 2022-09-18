@@ -59,41 +59,30 @@ const AddPcFirstStepScreen = () => {
   }, [refetch, isFocused]);
   return (
     <ScrollView>
-      <Root
-        theme="light"
-        colors={[
-          {
-            danger: color.primary,
-            card: 'white',
-            overlay: 'black',
-            label: 'black',
-          },
-        ]}>
-        <MyActivityIndicator loading={loading}>
-          <View style={{marginHorizontal: 20}}>
-            <AppForm
-              validationSchema={validationSchema}
-              initialValues={{
-                bloc: null,
-                laboratoire: null,
-              }}
-              onSubmit={handleSubmit}>
-              <RadioButtonListing
-                placeholder="bloc"
-                name="bloc"
-                list={blocs}
-                getSelectedItem={setSelectedBloc}
-              />
-              <RadioButtonListing
-                placeholder="laboratoire"
-                name="laboratoire"
-                list={selectedBloc?.labs || []}
-              />
-              <SubmitButton style={styles.SubmitButton} title="Procéder" />
-            </AppForm>
-          </View>
-        </MyActivityIndicator>
-      </Root>
+      <MyActivityIndicator loading={loading}>
+        <View style={{marginHorizontal: 20}}>
+          <AppForm
+            validationSchema={validationSchema}
+            initialValues={{
+              bloc: null,
+              laboratoire: null,
+            }}
+            onSubmit={handleSubmit}>
+            <RadioButtonListing
+              placeholder="bloc"
+              name="bloc"
+              list={blocs}
+              getSelectedItem={setSelectedBloc}
+            />
+            <RadioButtonListing
+              placeholder="laboratoire"
+              name="laboratoire"
+              list={selectedBloc?.labs || []}
+            />
+            <SubmitButton style={styles.SubmitButton} title="Procéder" />
+          </AppForm>
+        </View>
+      </MyActivityIndicator>
     </ScrollView>
   );
 };

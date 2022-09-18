@@ -57,75 +57,62 @@ export default Home = () => {
     }
   };
   return (
-    <Root
-      theme="light"
-      colors={[
-        {
-          danger: color.primary,
-          card: color.lightBlue,
-          overlay: 'black',
-          label: 'black',
-          success: color.primary,
-          warning: color.primary,
-        },
-      ]}>
-      <MyActivityIndicator loading={loading}>
-        <View style={styles.container}>
-          <FlatList
-            style={styles.list}
-            contentContainerStyle={styles.listContainer}
-            data={data}
-            horizontal={false}
-            numColumns={2}
-            keyExtractor={({_id}) => _id}
-            renderItem={({item, index}) => {
-              return (
-                <View>
-                  <TouchableOpacity
-                    style={styles.card}
-                    onPress={() => {
-                      clickEventListener(item);
+    <MyActivityIndicator loading={loading}>
+      <View style={styles.container}>
+        <FlatList
+          style={styles.list}
+          contentContainerStyle={styles.listContainer}
+          data={data}
+          horizontal={false}
+          numColumns={2}
+          keyExtractor={({_id}) => _id}
+          renderItem={({item, index}) => {
+            return (
+              <View>
+                <TouchableOpacity
+                  style={styles.card}
+                  onPress={() => {
+                    clickEventListener(item);
+                  }}>
+                  <View
+                    style={{
+                      marginVertical: 7,
+                      marginTop: 28,
                     }}>
-                    <View
-                      style={{
-                        marginVertical: 7,
-                        marginTop: 28,
-                      }}>
-                      {CustomTag(index)}
-                    </View>
-                    <MaskedView
-                      maskElement={
-                        <Text
-                          style={[
-                            styles.title,
-                            {backgroundColor: 'transparent'},
-                          ]}>
-                          {item.label}
-                        </Text>
-                      }>
-                      <LinearGradient
-                        start={{x: 0, y: 0}}
-                        end={{x: 1, y: 0}}
-                        colors={[
-                          '#0e94cf',
-                          '#289fce',
-                          '#5db5cc',
-                          '#72bfcc',
-                          '#8ac9cb',
+                    {CustomTag(index)}
+                  </View>
+                  <MaskedView
+                    maskElement={
+                      <Text
+                        style={[
+                          styles.title,
+                          {backgroundColor: 'transparent'},
                         ]}>
-                        <Text style={[styles.title, {opacity: 0}]}>
-                          {item.label}
-                        </Text>
-                      </LinearGradient>
-                    </MaskedView>
-                  </TouchableOpacity>
-                </View>
-              );
-            }}
-          />
-        </View>
-      </MyActivityIndicator>
-    </Root>
+                        {item.label}
+                      </Text>
+                    }>
+                    <LinearGradient
+                      start={{x: 0, y: 0}}
+                      end={{x: 1, y: 0}}
+                      colors={[
+                        '#0e94cf',
+                        '#289fce',
+                        '#5db5cc',
+                        '#72bfcc',
+                        '#8ac9cb',
+                      ]}>
+                      <Text style={[styles.title, {opacity: 0}]}>
+                        {item.label}
+                      </Text>
+                    </LinearGradient>
+                  </MaskedView>
+                </TouchableOpacity>
+              </View>
+            );
+          }}
+        />
+      </View>
+    </MyActivityIndicator>
   );
 };
 

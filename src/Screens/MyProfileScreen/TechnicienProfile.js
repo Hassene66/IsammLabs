@@ -108,125 +108,106 @@ const TechnicienProfile = () => {
 
   return (
     <MyActivityIndicator loading={loading}>
-      <Root
-        theme="light"
-        colors={[
-          {
-            danger: color.primary,
-            card: color.lightBlue,
-            overlay: 'black',
-            label: 'black',
-            success: color.primary,
-            warning: color.primary,
-          },
-        ]}>
-        <Screen style={styles.screen}>
-          <View style={styles.profileInfo}>
-            <ListItem
-              title={user.fullname || ' '}
-              subTitle={user.email || ' '}
-              IconComponent={
-                <MaskedView
-                  maskElement={
-                    <Ionicons
-                      name="md-person-circle-sharp"
-                      size={80}
-                      color={color.light_green}
-                      style={[styles.icon, {backgroundColor: 'transparent'}]}
-                    />
-                  }>
-                  <LinearGradient
-                    start={{x: 0, y: 0}}
-                    end={{x: 1, y: 0}}
-                    colors={['#0e94cf', '#8ac9cb', '#8ac9cb']}>
-                    <Ionicons
-                      name="md-person-circle-sharp"
-                      size={80}
-                      color={color.light_green}
-                      style={[styles.icon, {opacity: 0}]}
-                    />
-                  </LinearGradient>
-                </MaskedView>
-              }
-              isProfile
-              isTech
-              isAvailable={user.isAvailable}
-              userID={user._id}
-            />
-          </View>
-          <View style={styles.container}>
-            <FlatList
-              data={menuItem}
-              keyExtractor={menuItem => menuItem.title}
-              renderItem={({item, idx}) => (
-                <ListItem
-                  title={item.title}
-                  IconComponent={
-                    <MaskedView
-                      maskElement={
-                        <MaterialCommunityIcons
-                          name={item?.icon?.name}
-                          size={40}
-                          color={color.light_green}
-                          style={[
-                            styles.icon,
-                            {backgroundColor: 'transparent'},
-                          ]}
-                        />
-                      }>
-                      <LinearGradient
-                        start={{x: 0, y: 0}}
-                        end={{x: 1, y: 0}}
-                        colors={['#0e94cf', '#8ac9cb', '#8ac9cb']}>
-                        <MaterialCommunityIcons
-                          name={item?.icon?.name}
-                          size={40}
-                          color={color.light_green}
-                          style={[styles.icon, {opacity: 0}]}
-                        />
-                      </LinearGradient>
-                    </MaskedView>
-                  }
-                  onPress={() => navigation.navigate(item.targetScreen)}
-                />
-              )}
-              onPress={() => {}}
-              ListFooterComponent={
-                <ListItem
-                  title="Déconnexion"
-                  IconComponent={
-                    <MaskedView
-                      maskElement={
-                        <MaterialCommunityIcons
-                          name="logout"
-                          size={40}
-                          color={color.light_green}
-                          style={[
-                            styles.icon,
-                            {backgroundColor: 'transparent'},
-                          ]}
-                        />
-                      }>
-                      <LinearGradient
-                        start={{x: 0, y: 0}}
-                        end={{x: 1, y: 0}}
-                        colors={['#0e94cf', '#8ac9cb', '#8ac9cb']}>
-                        <MaterialCommunityIcons
-                          name="logout"
-                          size={40}
-                          color={color.light_green}
-                          style={[styles.icon, {opacity: 0}]}
-                        />
-                      </LinearGradient>
-                    </MaskedView>
-                  }
-                  onPress={handleLogout}
-                />
-              }
-            />
-          </View>
-        </Screen>
-      </Root>
+      <Screen style={styles.screen}>
+        <View style={styles.profileInfo}>
+          <ListItem
+            title={user.fullname || ' '}
+            subTitle={user.email || ' '}
+            IconComponent={
+              <MaskedView
+                maskElement={
+                  <Ionicons
+                    name="md-person-circle-sharp"
+                    size={80}
+                    color={color.light_green}
+                    style={[styles.icon, {backgroundColor: 'transparent'}]}
+                  />
+                }>
+                <LinearGradient
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 0}}
+                  colors={['#0e94cf', '#8ac9cb', '#8ac9cb']}>
+                  <Ionicons
+                    name="md-person-circle-sharp"
+                    size={80}
+                    color={color.light_green}
+                    style={[styles.icon, {opacity: 0}]}
+                  />
+                </LinearGradient>
+              </MaskedView>
+            }
+            isProfile
+            isTech
+            isAvailable={user.isAvailable}
+            userID={user._id}
+          />
+        </View>
+        <View style={styles.container}>
+          <FlatList
+            data={menuItem}
+            keyExtractor={menuItem => menuItem.title}
+            renderItem={({item, idx}) => (
+              <ListItem
+                title={item.title}
+                IconComponent={
+                  <MaskedView
+                    maskElement={
+                      <MaterialCommunityIcons
+                        name={item?.icon?.name}
+                        size={40}
+                        color={color.light_green}
+                        style={[styles.icon, {backgroundColor: 'transparent'}]}
+                      />
+                    }>
+                    <LinearGradient
+                      start={{x: 0, y: 0}}
+                      end={{x: 1, y: 0}}
+                      colors={['#0e94cf', '#8ac9cb', '#8ac9cb']}>
+                      <MaterialCommunityIcons
+                        name={item?.icon?.name}
+                        size={40}
+                        color={color.light_green}
+                        style={[styles.icon, {opacity: 0}]}
+                      />
+                    </LinearGradient>
+                  </MaskedView>
+                }
+                onPress={() => navigation.navigate(item.targetScreen)}
+              />
+            )}
+            onPress={() => {}}
+            ListFooterComponent={
+              <ListItem
+                title="Déconnexion"
+                IconComponent={
+                  <MaskedView
+                    maskElement={
+                      <MaterialCommunityIcons
+                        name="logout"
+                        size={40}
+                        color={color.light_green}
+                        style={[styles.icon, {backgroundColor: 'transparent'}]}
+                      />
+                    }>
+                    <LinearGradient
+                      start={{x: 0, y: 0}}
+                      end={{x: 1, y: 0}}
+                      colors={['#0e94cf', '#8ac9cb', '#8ac9cb']}>
+                      <MaterialCommunityIcons
+                        name="logout"
+                        size={40}
+                        color={color.light_green}
+                        style={[styles.icon, {opacity: 0}]}
+                      />
+                    </LinearGradient>
+                  </MaskedView>
+                }
+                onPress={handleLogout}
+              />
+            }
+          />
+        </View>
+      </Screen>
     </MyActivityIndicator>
   );
 };
