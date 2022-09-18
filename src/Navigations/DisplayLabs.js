@@ -4,6 +4,7 @@ import routes from './routes';
 import HomeScreen from '../Screens/HomeScreen/HomeScreen';
 import LabsListing from '../Screens/HomeScreen/LabsListingScreen';
 import LabsInfoScreen from '../Screens/LabsInfoScreen/LabsInfoScreen';
+import ClaimDetails from '../Screens/ClaimsListTeacher/ClaimDetails';
 const Stack = createNativeStackNavigator();
 const DisplayLabsNavigator = () => (
   <Stack.Navigator initialRouteName={routes.LAB_BLOCS}>
