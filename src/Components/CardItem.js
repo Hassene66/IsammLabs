@@ -92,9 +92,9 @@ const styles = StyleSheet.create({
   iconStyle: {fontWeight: '400', fontSize: 17},
   pcStatus: item => ({
     backgroundColor: item.isWorking ? 'green' : 'red',
-    width: 14,
-    height: 14,
-    borderRadius: 7,
+    width: 12,
+    height: 12,
+    borderRadius: 6,
     marginRight: 6,
   }),
   mainText: {

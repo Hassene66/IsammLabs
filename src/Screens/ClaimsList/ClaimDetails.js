@@ -7,7 +7,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {AppForm, AppFormField, SubmitButton} from '../../Components/forms';
 import moment from 'moment';
-import axios from '../../Utils/axios';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';
 import {useNavigation} from '@react-navigation/native';
 import routes from '../../Navigations/routes';
@@ -78,144 +77,131 @@ const ClaimDetails = ({route}) => {
       });
   };
   return (
-    <Root
-      theme="light"
-      colors={[
-        {
-          danger: color.primary,
-          card: color.lightBlue,
-          overlay: 'black',
-          label: 'black',
-          success: color.primary,
-          warning: color.primary,
-        },
-      ]}>
-      <ScrollView>
-        <AppForm
-          initialValues={{
-            reason: undefined,
-            status: selectedSwitch,
-          }}
-          onSubmit={handleSubmit}>
-          <MyActivityIndicator loading={loading}>
-            <View style={styles.cardContainer}>
-              <View style={styles.cardHeader}>
-                <Ionicons
-                  name="md-person-circle-sharp"
-                  size={56}
-                  color={color.light_green}
-                  style={styles.icon}
-                />
-                <View style={styles.cardHeaderInfo}>
-                  <Text style={styles.userInfo}>
-                    {params?.createdBy?.fullname}
-                  </Text>
-                  <Text
-                    style={{
-                      color: '#B0B0B0',
-                      fontWeight: '600',
-                    }}>
-                    {params?.createdBy?.email}
-                  </Text>
-                </View>
+    <ScrollView>
+      <AppForm
+        initialValues={{
+          reason: undefined,
+          status: selectedSwitch,
+        }}
+        onSubmit={handleSubmit}>
+        <MyActivityIndicator loading={loading}>
+          <View style={styles.cardContainer}>
+            <View style={styles.cardHeader}>
+              <Ionicons
+                name="md-person-circle-sharp"
+                size={56}
+                color={color.light_green}
+                style={styles.icon}
+              />
+              <View style={styles.cardHeaderInfo}>
+                <Text style={styles.userInfo}>
+                  {params?.createdBy?.fullname}
+                </Text>
+                <Text
+                  style={{
+                    color: '#B0B0B0',
+                    fontWeight: '600',
+                  }}>
+                  {params?.createdBy?.email}
+                </Text>
               </View>
-              <View style={styles.cardBodyContainer}>
-                <Text style={styles.Title}>{params.title}</Text>
-                <Text style={styles.subTitle}>{params.description}</Text>
-                <View style={styles.footerContainer}>
-                  <View style={styles.section}>
-                    <View style={styles.firstCol}>
-                      <AntDesign
-                        name="calendar"
-                        size={22}
-                        style={{marginRight: 10, color: color.primary}}
-                      />
-                      <Text style={styles.subTitle}>{`${moment(
-                        params?.createdAt,
-                      ).format('DD/MM/YYYY')} > ${moment(params?.createdAt)
-                        .add(7, 'days')
-                        .format('DD/MM/YYYY')} `}</Text>
-                    </View>
-                    <View style={styles.secondCol}>
-                      <Ionicons
-                        name="grid-outline"
-                        size={20}
-                        style={{marginRight: 10, color: color.primary}}
-                      />
-                      <Text style={styles.subTitle}>{params?.bloc?.label}</Text>
+            </View>
+            <View style={styles.cardBodyContainer}>
+              <Text style={styles.Title}>{params.title}</Text>
+              <Text style={styles.subTitle}>{params.description}</Text>
+              <View style={styles.footerContainer}>
+                <View style={styles.section}>
+                  <View style={styles.firstCol}>
+                    <AntDesign
+                      name="calendar"
+                      size={22}
+                      style={{marginRight: 10, color: color.primary}}
+                    />
+                    <Text style={styles.subTitle}>{`${moment(
+                      params?.createdAt,
+                    ).format('DD/MM/YYYY')} > ${moment(params?.createdAt)
+                      .add(7, 'days')
+                      .format('DD/MM/YYYY')} `}</Text>
+                  </View>
+                  <View style={styles.secondCol}>
+                    <Ionicons
+                      name="grid-outline"
+                      size={20}
+                      style={{marginRight: 10, color: color.primary}}
+                    />
+                    <Text style={styles.subTitle}>{params?.bloc?.label}</Text>
+                  </View>
+                </View>
+                <View style={[styles.section, {marginTop: 10}]}>
+                  <View style={styles.firstCol}>
+                    <AntDesign
+                      name="iconfontdesktop"
+                      size={22}
+                      style={{marginRight: 10, color: color.primary}}
+                    />
+                    <View style={{paddingRight: 50}}>
+                      <Text style={styles.subTitle}>
+                        {params?.computer?.label}
+                      </Text>
                     </View>
                   </View>
+                  <View style={styles.secondCol}>
+                    <SimpleLineIcons
+                      name="location-pin"
+                      size={20}
+                      style={{marginRight: 10, color: color.primary}}
+                    />
+                    <Text style={styles.subTitle}>{params.labo?.label}</Text>
+                  </View>
+                </View>
+                {(params.type === 'newSoftware' ||
+                  params.type === 'updateSoftware') && (
                   <View style={[styles.section, {marginTop: 10}]}>
                     <View style={styles.firstCol}>
                       <AntDesign
-                        name="iconfontdesktop"
-                        size={22}
+                        name={
+                          params.type === 'newSoftware' ? 'download' : 'sync'
+                        }
+                        size={params.type === 'newSoftware' ? 22 : 18}
                         style={{marginRight: 10, color: color.primary}}
                       />
                       <View style={{paddingRight: 50}}>
                         <Text style={styles.subTitle}>
-                          {params?.computer?.label}
+                          {params.type === 'newSoftware'
+                            ? params?.toAddSoftware?.name
+                            : params?.toUpdateSoftware?.name}
                         </Text>
                       </View>
                     </View>
                     <View style={styles.secondCol}>
-                      <SimpleLineIcons
-                        name="location-pin"
+                      <AntDesign
+                        name="codesquareo"
                         size={20}
                         style={{marginRight: 10, color: color.primary}}
                       />
-                      <Text style={styles.subTitle}>{params.labo?.label}</Text>
+                      <Text style={styles.subTitle}>{params.installedIn}</Text>
                     </View>
                   </View>
-                  {(params.type === 'newSoftware' ||
-                    params.type === 'updateSoftware') && (
-                    <View style={[styles.section, {marginTop: 10}]}>
-                      <View style={styles.firstCol}>
-                        <AntDesign
-                          name={
-                            params.type === 'newSoftware' ? 'download' : 'sync'
-                          }
-                          size={params.type === 'newSoftware' ? 22 : 18}
-                          style={{marginRight: 10, color: color.primary}}
-                        />
-                        <View style={{paddingRight: 50}}>
-                          <Text style={styles.subTitle}>
-                            {params.type === 'newSoftware'
-                              ? params?.toAddSoftware?.name
-                              : params?.toUpdateSoftware?.name}
-                          </Text>
-                        </View>
-                      </View>
-                      <View style={styles.secondCol}>
-                        <AntDesign
-                          name="codesquareo"
-                          size={20}
-                          style={{marginRight: 10, color: color.primary}}
-                        />
-                        <Text style={styles.subTitle}>
-                          {params.installedIn}
-                        </Text>
+                )}
+                {params.type === 'hardware' && (
+                  <View style={[styles.section, {marginTop: 10}]}>
+                    <View style={styles.firstCol}>
+                      <Octicons
+                        name="dot-fill"
+                        size={22}
+                        style={{
+                          marginRight: 10,
+                          color:
+                            params?.state === 'En marche' ? 'green' : 'red',
+                        }}
+                      />
+                      <View style={{paddingRight: 50}}>
+                        <Text style={styles.subTitle}>{params?.state}</Text>
                       </View>
                     </View>
-                  )}
-                  {params.type === 'hardware' && (
-                    <View style={[styles.section, {marginTop: 10}]}>
-                      <View style={styles.firstCol}>
-                        <Octicons
-                          name="dot-fill"
-                          size={22}
-                          style={{
-                            marginRight: 10,
-                            color:
-                              params?.state === 'En marche' ? 'green' : 'red',
-                          }}
-                        />
-                        <View style={{paddingRight: 50}}>
-                          <Text style={styles.subTitle}>{params?.state}</Text>
-                        </View>
-                      </View>
-                    </View>
-                  )}
+                  </View>
+                )}
+                {!!!route?.params?.fromNotification && (
                   <View style={[styles.section, {flexDirection: 'column'}]}>
                     <Text
                       style={{
@@ -247,13 +233,13 @@ const ClaimDetails = ({route}) => {
                       />
                     </View>
                   </View>
-                </View>
+                )}
               </View>
             </View>
-          </MyActivityIndicator>
-        </AppForm>
-      </ScrollView>
-    </Root>
+          </View>
+        </MyActivityIndicator>
+      </AppForm>
+    </ScrollView>
   );
 };
 

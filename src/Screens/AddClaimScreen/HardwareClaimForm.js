@@ -10,6 +10,7 @@ import claimService from '../../Services/claimService';
 import {ALERT_TYPE, Toast} from 'react-native-alert-notification';
 import storage from '../../Utils/asyncStorage';
 import routes from '../../Navigations/routes';
+import computerService from '../../Services/computerService';
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Veuillez indiquer le titre'),
@@ -52,7 +53,7 @@ const HardwareClaimForm = ({values}) => {
   }, []);
 
   const handleSubmit = formValues => {
-    setLoading(true);
+    //
     claimService
       .addClaimApi({
         ...formValues,
@@ -64,6 +65,11 @@ const HardwareClaimForm = ({values}) => {
           assignedTo: values.technicien.id,
         },
       })
+      .then(({data: claim}) =>
+        computerService.updateComputerApi(claim.computer, {
+          isWorking: claim.state === 'En marche' ? true : false,
+        }),
+      )
       .then(() => {
         navigation.reset({
           index: 0,
@@ -81,7 +87,9 @@ const HardwareClaimForm = ({values}) => {
           autoClose: 3000,
         });
       })
-      .catch(() => {
+
+      .catch(err => {
+        console.log('err: ', err.response.data);
         Toast.show({
           type: ALERT_TYPE.DANGER,
           title: 'Erreur',
@@ -94,7 +102,6 @@ const HardwareClaimForm = ({values}) => {
         setLoading(false);
       });
   };
-
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <MyActivityIndicator loading={loading}>

@@ -1,7 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import routes from './routes';
-import ProcessedClaims from '../Screens/Claims/processed_claims/ProcessedClaims';
 import Notification from '../Screens/TechnicienNotification/ListNotification';
 import TeacherProfile from '../Screens/MyProfileScreen/TeacherProfile';
 import ToConfirmClaimsNavigator from './ToConfirmClaimsNavigator';

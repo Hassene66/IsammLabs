@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   bottomBorder: {
-    borderBottomWidth: 1,
+    borderBottomWidth: 2,
     borderBottomColor: color.primary,
   },
   topBorder: {

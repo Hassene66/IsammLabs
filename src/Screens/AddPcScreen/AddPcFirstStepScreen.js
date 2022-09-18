@@ -9,6 +9,7 @@ import {ALERT_TYPE, Dialog, Root} from 'react-native-alert-notification';
 import MyActivityIndicator from '../../Components/MyActivityIndicator';
 import color from '../../Config/color';
 import {useNavigation} from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
 const validationSchema = Yup.object().shape({
   bloc: Yup.object()
     .nullable()
@@ -22,7 +23,7 @@ const validationSchema = Yup.object().shape({
 
 const AddPcFirstStepScreen = () => {
   const navigation = useNavigation();
-
+  const isFocused = useIsFocused();
   const [blocs, setBlocs] = useState([]);
   const [selectedBloc, setSelectedBloc] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -55,44 +56,33 @@ const AddPcFirstStepScreen = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, [refetch]);
+  }, [refetch, isFocused]);
   return (
     <ScrollView>
-      <Root
-        theme="light"
-        colors={[
-          {
-            danger: color.primary,
-            card: 'white',
-            overlay: 'black',
-            label: 'black',
-          },
-        ]}>
-        <MyActivityIndicator loading={loading}>
-          <View style={{marginHorizontal: 20}}>
-            <AppForm
-              validationSchema={validationSchema}
-              initialValues={{
-                bloc: null,
-                laboratoire: null,
-              }}
-              onSubmit={handleSubmit}>
-              <RadioButtonListing
-                placeholder="bloc"
-                name="bloc"
-                list={blocs}
-                getSelectedItem={setSelectedBloc}
-              />
-              <RadioButtonListing
-                placeholder="laboratoire"
-                name="laboratoire"
-                list={selectedBloc?.labs || []}
-              />
-              <SubmitButton style={styles.SubmitButton} title="Procéder" />
-            </AppForm>
-          </View>
-        </MyActivityIndicator>
-      </Root>
+      <MyActivityIndicator loading={loading}>
+        <View style={{marginHorizontal: 20}}>
+          <AppForm
+            validationSchema={validationSchema}
+            initialValues={{
+              bloc: null,
+              laboratoire: null,
+            }}
+            onSubmit={handleSubmit}>
+            <RadioButtonListing
+              placeholder="bloc"
+              name="bloc"
+              list={blocs}
+              getSelectedItem={setSelectedBloc}
+            />
+            <RadioButtonListing
+              placeholder="laboratoire"
+              name="laboratoire"
+              list={selectedBloc?.labs || []}
+            />
+            <SubmitButton style={styles.SubmitButton} title="Procéder" />
+          </AppForm>
+        </View>
+      </MyActivityIndicator>
     </ScrollView>
   );
 };

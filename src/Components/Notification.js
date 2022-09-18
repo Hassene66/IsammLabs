@@ -34,14 +34,17 @@ const Notification = ({data, handleDelete = () => {}}) => {
       <Swipeable renderRightActions={DeleteAction}>
         <TouchableWithoutFeedback
           onPress={() => {
-            navigation.navigate(routes[data?.targetScreen], data?.data);
+            navigation.navigate(routes[data?.targetScreen], {
+              ...(data.data ?? {}),
+              fromNotification: true,
+            });
           }}>
           <View style={styles.container}>
             <View style={styles.firstRaw}>
               <Text style={styles.title}>{data?.title}</Text>
               <Text style={styles.dateTime}>
-                {moment(data?.datetime).isSame(
-                  momentTimezone().tz('Africa/Tunis').add(1, 'hours'),
+                {moment(data?.createdAt).isSame(
+                  momentTimezone().tz('Africa/Tunis'),
                   'days',
                 )
                   ? moment(data?.createdAt).fromNow()

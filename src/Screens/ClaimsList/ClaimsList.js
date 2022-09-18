@@ -95,21 +95,6 @@ const ClaimsList = ({route}) => {
         }}
         onSubmit={() => {}}>
         <MyActivityIndicator loading={loading}>
-          <View style={styles.toast}>
-            <Root
-              theme="light"
-              colors={[
-                {
-                  danger: color.primary,
-                  card: color.lightBlue,
-                  overlay: 'black',
-                  label: 'black',
-                  success: color.primary,
-                  warning: color.primary,
-                },
-              ]}
-            />
-          </View>
           {!loading &&
             (!!claims.length ? (
               <FlatList

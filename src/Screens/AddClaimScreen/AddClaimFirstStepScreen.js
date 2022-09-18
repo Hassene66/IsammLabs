@@ -10,8 +10,9 @@ import color from '../../Config/color';
 import {ScrollView} from 'react-native-gesture-handler';
 import userService from '../../Services/userService';
 import blocService from '../../Services/blocService';
-
+import {useIsFocused} from '@react-navigation/native';
 const AddClaimScreen = ({navigation: {navigate}}) => {
+  const isFocused = useIsFocused();
   const [techniciens, setTechniciens] = useState([]);
   const [blocs, setBlocs] = useState([]);
   const [selectedBloc, setSelectedBloc] = useState([]);
@@ -68,62 +69,49 @@ const AddClaimScreen = ({navigation: {navigate}}) => {
       .finally(() => {
         setLoading(false);
       });
-  }, [refetch]);
+  }, [refetch, isFocused]);
   return (
     <>
       <ScrollView>
-        <Root
-          theme="light"
-          colors={[
-            {
-              danger: color.primary,
-              card: color.lightBlue,
-              overlay: 'black',
-              label: 'black',
-              success: color.primary,
-              warning: color.primary,
-            },
-          ]}>
-          <MyActivityIndicator loading={loading}>
-            <View style={styles.container}>
-              <AppForm
-                validationSchema={validationSchema}
-                initialValues={{
-                  bloc: null,
-                  laboratoire: null,
-                  ordinateur: null,
-                  technicien: null,
-                }}
-                onSubmit={handleSubmit}>
-                <RadioButtonListing
-                  getSelectedItem={setSelectedBloc}
-                  placeholder="bloc"
-                  name="bloc"
-                  list={blocs}
-                />
-                <RadioButtonListing
-                  getSelectedItem={setSelectedLaboratory}
-                  placeholder="laboratoire"
-                  name="laboratoire"
-                  list={selectedBloc?.labs || []}
-                />
-                <RadioButtonListing
-                  getSelectedItem={setSelectedComputer}
-                  placeholder="ordinateur"
-                  name="ordinateur"
-                  list={selectedLaboratory?.computer || []}
-                />
+        <MyActivityIndicator loading={loading}>
+          <View style={styles.container}>
+            <AppForm
+              validationSchema={validationSchema}
+              initialValues={{
+                bloc: null,
+                laboratoire: null,
+                ordinateur: null,
+                technicien: null,
+              }}
+              onSubmit={handleSubmit}>
+              <RadioButtonListing
+                getSelectedItem={setSelectedBloc}
+                placeholder="bloc"
+                name="bloc"
+                list={blocs}
+              />
+              <RadioButtonListing
+                getSelectedItem={setSelectedLaboratory}
+                placeholder="laboratoire"
+                name="laboratoire"
+                list={selectedBloc?.labs || []}
+              />
+              <RadioButtonListing
+                getSelectedItem={setSelectedComputer}
+                placeholder="ordinateur"
+                name="ordinateur"
+                list={selectedLaboratory?.computer || []}
+              />
 
-                <RadioButtonListing
-                  placeholder="technicien"
-                  name="technicien"
-                  list={techniciens}
-                />
-                <SubmitButton style={styles.SubmitButton} title="Procéder" />
-              </AppForm>
-            </View>
-          </MyActivityIndicator>
-        </Root>
+              <RadioButtonListing
+                placeholder="technicien"
+                name="technicien"
+                list={techniciens}
+              />
+              <SubmitButton style={styles.SubmitButton} title="Procéder" />
+            </AppForm>
+          </View>
+        </MyActivityIndicator>
       </ScrollView>
     </>
   );

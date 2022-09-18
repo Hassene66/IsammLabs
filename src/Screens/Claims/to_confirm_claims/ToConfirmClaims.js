@@ -9,10 +9,8 @@ import {useIsFocused} from '@react-navigation/native';
 import color from '../../../Config/color';
 import {AppForm, SubmitButton} from '../../../Components/forms';
 import claimService from '../../../Services/claimService';
-import ClaimsCardWithDetails from '../../../Components/ClaimCardWithDetails';
 import SwitchSelector from 'react-native-switch-selector';
 import {ActivityIndicator} from 'react-native-paper';
-import routes from '../../../Navigations/routes';
 import moment from 'moment-timezone';
 import ClaimsCard from '../../ClaimsListTeacher/ClaimsCard';
 
@@ -111,67 +109,54 @@ const ProcessedClaims = () => {
           />
         </View>
         <View style={styles.BodyContainer}>
-          <Root
-            theme="light"
-            colors={[
-              {
-                danger: color.primary,
-                card: color.lightBlue,
-                overlay: 'black',
-                label: 'black',
-                success: color.primary,
-                warning: color.primary,
-              },
-            ]}>
-            <MyActivityIndicator loading={loading}>
-              {!loading &&
-                (!!claims.length ? (
-                  <FlatList
-                    refreshControl={
-                      <RefreshControl
-                        refreshing={loading}
-                        onRefresh={reset}
-                        colors={[color.primary]}
-                        tintColor={color.primary}
-                      />
-                    }
-                    showsVerticalScrollIndicator={false}
-                    data={claims}
-                    keyExtractor={() => uuid.v4()}
-                    onEndReached={fetchData}
-                    onEndReachedThreshold={1}
-                    renderItem={({item}) => <ClaimsCard data={item} />}
-                    ListFooterComponent={() => {
-                      return (
-                        loadMore && (
-                          <View
-                            style={{
-                              width: '100%',
-                              marginTop: 10,
-                              marginBottom: 50,
-                            }}>
-                            <ActivityIndicator
-                              size="small"
-                              color={color.primary}
-                            />
-                          </View>
-                        )
-                      );
-                    }}
-                  />
-                ) : (
-                  <View style={styles.messageContainer}>
-                    <Text style={styles.text}>Aucune réclamation</Text>
-                    <SubmitButton
-                      onSubmit={reset}
-                      title="Actualiser"
-                      isGradient={false}
-                      textStyle={styles.btnText}
+          <MyActivityIndicator loading={loading}>
+            {!loading &&
+              (!!claims.length ? (
+                <FlatList
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={loading}
+                      onRefresh={reset}
+                      colors={[color.primary]}
+                      tintColor={color.primary}
                     />
-                  </View>
-                ))}
-            </MyActivityIndicator>
-          </Root>
+                  }
+                  showsVerticalScrollIndicator={false}
+                  data={claims}
+                  keyExtractor={() => uuid.v4()}
+                  onEndReached={fetchData}
+                  onEndReachedThreshold={1}
+                  renderItem={({item}) => <ClaimsCard data={item} />}
+                  ListFooterComponent={() => {
+                    return (
+                      loadMore && (
+                        <View
+                          style={{
+                            width: '100%',
+                            marginTop: 10,
+                            marginBottom: 50,
+                          }}>
+                          <ActivityIndicator
+                            size="small"
+                            color={color.primary}
+                          />
+                        </View>
+                      )
+                    );
+                  }}
+                />
+              ) : (
+                <View style={styles.messageContainer}>
+                  <Text style={styles.text}>Aucune réclamation</Text>
+                  <SubmitButton
+                    onSubmit={reset}
+                    title="Actualiser"
+                    isGradient={false}
+                    textStyle={styles.btnText}
+                  />
+                </View>
+              ))}
+          </MyActivityIndicator>
         </View>
       </View>
     </AppForm>
