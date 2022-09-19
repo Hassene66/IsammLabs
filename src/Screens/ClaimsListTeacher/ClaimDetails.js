@@ -29,19 +29,8 @@ const data = [
 const ClaimDetails = ({route}) => {
   const navigation = useNavigation();
   const {params} = route;
-  console.log('params: ', params);
   const [loading, setLoading] = useState(false);
   const claimType = route?.params?.fromRoute;
-  console.log(
-    'claimType !== routes.TEACHER_PASSED_CLAIMS: ',
-    claimType !== routes.TEACHER_PASSED_CLAIMS,
-  );
-  console.log(
-    'params.fromNotification === true: ',
-    params.fromNotification === true,
-  );
-  console.log('params.isConfirmed === false: ', params.isConfirmed === false);
-
   const handleSubmit = values => {
     setLoading(true);
     claimService

@@ -88,8 +88,7 @@ const HardwareClaimForm = ({values}) => {
         });
       })
 
-      .catch(err => {
-        console.log('err: ', err.response.data);
+      .catch(() => {
         Toast.show({
           type: ALERT_TYPE.DANGER,
           title: 'Erreur',
