@@ -42,7 +42,6 @@ const LoginScreenV2 = ({setUser, navigation}) => {
         saveFcmKeyToDatabase(data?.user?._id);
       })
       .catch(error => {
-        console.log('error: ', error);
         if (error?.response?.status) {
           showMessage({
             message: 'Les informations de connexion fournies sont invalides',
