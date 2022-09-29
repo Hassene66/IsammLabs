@@ -1,9 +1,7 @@
 # IsammLabs
 <h1 align="center">
   <br>
-  <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://raw.githubusercontent.com/Hassene66/IsammLabs/src/assets/bootsplash_logo@1,5x.png" alt="Markdownify" width="200"></a>
-  <br>
-  IsammLabs
+  <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://raw.githubusercontent.com/Hassene66/IsammLabs/src/assets/bootsplash_logo@1,5x.png" alt="IsammLabs" width="200"></a>
   <br>
 </h1>
 
