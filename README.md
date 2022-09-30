@@ -2,14 +2,25 @@
 <h1 align="center">
   <br/>
   <img src="./src/assets/bootsplash_logo@1,5x.png" alt="IsammLabs" width="200"/></a>
+  <h4 align="center">A minimal University's labs management system made with <a href="https://reactnative.dev/" target="_blank">React Native</a>.</h4>
   <br/>
 </h1>
+
 
 ![Python](https://img.shields.io/badge/React--native-0.69.2-orange)
 [![Build Status](https://travis-ci.org/anfederico/clairvoyant.svg?branch=master)](https://travis-ci.org/anfederico/clairvoyant)
 ![Dependencies](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+<p align="center">
+  <a href="#key-features">Key Features</a> •
+  <a href="#how-to-use">How To Use</a> •
+  <a href="#download">Download</a> •
+  <a href="#credits">Credits</a> •
+  <a href="#related">Related</a> •
+  <a href="#license">License</a>
+</p>
 
 ## 💻 Technology
 
