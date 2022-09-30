@@ -17,10 +17,10 @@
 <p align="center">
   <a href="#key-features">Basic overview</a> •
   <a href="#how-to-use">Key features</a> •
-  <a href="#download">Technology used</a> •
-  <a href="#credits">How to use</a> •
-  <a href="#related">You may also like...</a> •
-  <a href="#related">Project screenshots</a>
+  <a href="#Technology-used">Technology used</a> •
+  <a href="#How-to-use">How to use</a> •
+  <a href="#You-may-also-like...">You may also like...</a> •
+  <a href="#Project-screenshots">Project screenshots</a>
   
 </p>
 
