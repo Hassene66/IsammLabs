@@ -19,7 +19,7 @@
   <a href="#how-to-use">Key features</a> •
   <a href="#Technology-used">Technology used</a> •
   <a href="#How-to-use">How to use</a> •
-  <a href="#You-may-also-like...">You may also like...</a> •
+  <a href="#You-may-also-like">You may also like</a> •
   <a href="#Project-screenshots">Project screenshots</a>
   
 </p>
@@ -76,7 +76,7 @@ $ npm run ios
 |<img width="200" alt="splashscreen" src="./screenshots/s1.jpg"> |  <img width="200" alt="login screen" src="./screenshots/s6.jpg">|<img width="200" alt="unprocessed claims screen" src="./screenshots/s7.jpg">|<img width="200" alt="add claim form (first step)" src="./screenshots/s3.jpg">  |  <img width="200" alt="add claim form (second step)" src="./screenshots/s4.jpg">|<img width="200" alt="all ISAMM blocs screen" src="./screenshots/s2.jpg">|
 |<img width="200" alt="show computers stats" src="./screenshots/s9.jpg">  |  <img width="200" alt="add computer form" src="./screenshots/s8.jpg">|<img width="200" alt="add claim form (first step)" src="./screenshots/s10.jpg">|<img width="200" alt="teacher profile screen" src="./screenshots/s5.jpg">|
 
-## You may also like...
+## You may also like
 
 - [HiCoach](https://github.com/salimkazdaghli/Hicotech-Frontend) - A coaching web app.
 - [School MS](https://github.com/amitmerchant1990/correo) - A school managment system web app.
