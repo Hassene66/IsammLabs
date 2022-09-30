@@ -1,29 +1,41 @@
 <h1 align="center">
   <br/>
   <img src="./src/assets/bootsplash_logo@1,5x.png" alt="IsammLabs" width="200"/></a>
-  <h4 align="center">A simple laboratory management system for university built with <a href="https://reactnative.dev/" target="_blank">React Native</a>.</h4>
+  <h4 align="center">A University labs management mobile application made with <a href="https://reactnative.dev/" target="_blank">React Native</a>.</h4>
   <br/>
 </h1>
 <div align="center">
 
 
 ![Python](https://img.shields.io/badge/React--native-0.69.2-orange)
-![Build Status](https://travis-ci.org/anfederico/clairvoyant.svg?branch=master)
+[![Build Status](https://travis-ci.org/anfederico/clairvoyant.svg?branch=master)](https://travis-ci.org/anfederico/clairvoyant)
 ![Dependencies](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 </div>
 
 <p align="center">
-  <a href="#key-features">Key Features</a> •
-  <a href="#how-to-use">How To Use</a> •
-  <a href="#download">Download</a> •
-  <a href="#credits">Credits</a> •
-  <a href="#related">Related</a> •
-  <a href="#license">License</a>
+  <a href="#key-features">Basic overview</a> •
+  <a href="#how-to-use">Key features</a> •
+  <a href="#download">Technology used</a> •
+  <a href="#credits">How to use</a> •
+  <a href="#related">You may also like...</a> •
+  <a href="#related">Project screenshots</a>
+  
 </p>
 
-## 💻 Technology
+## Basic overview
+IsammLabs is a cross-platform mobile application built with React native and Node.js that manage the whole process of passing claims between professors and technicians in the ISAMM's laboratories.
+
+## Key features
+* Pass a claim for a specific computer and a specific technician.
+* Receive a real time push notification for both technicians and professors for receiving a new claim.
+* Receive an alert notification if the first deadline (2 days) is exceeded without handling the claim.
+* Receive an averstisment notification if the second deadline (one week) is exceeded without repairing the problem.
+* Send a detailed Email to the administration in case of not repairing the problem after the third deadline exeeding (11 days).
+* Check out the software installed on various computers and their characteristics.
+
+## Technology used
 
 <p align="left">
   <img src="https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
@@ -34,11 +46,37 @@
     <img src="https://img.shields.io/badge/firebase cloud messaging-%23ED8B00.svg?style=for-the-badge&logo=firebase&logoColor=white" />
 </p>
 
+## How to use
+To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer and [Setting the development environment](https://reactnative.dev/docs/environment-setup) . From your command line:
+```bash
+# Clone this repository
+$ git clone https://github.com/Hassene66/IsammLabs)
 
-# Project screenshots
+# Go into the repository
+$ cd IsammLabs
+
+# Install dependencies
+$ npm install
+
+# Run the app on Android simulator
+$ npm run android
+or
+# Run the app on IOS simulator (for mac users only)
+$ npm run ios
+```
+
+
+
+
+## Project screenshots
 
 
 | | | | |
 |:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
 |<img width="200" alt="splashscreen" src="./screenshots/s1.jpg"> |  <img width="200" alt="login screen" src="./screenshots/s6.jpg">|<img width="200" alt="unprocessed claims screen" src="./screenshots/s7.jpg">|<img width="200" alt="add claim form (first step)" src="./screenshots/s3.jpg">  |  <img width="200" alt="add claim form (second step)" src="./screenshots/s4.jpg">|<img width="200" alt="all ISAMM blocs screen" src="./screenshots/s2.jpg">|
 |<img width="200" alt="show computers stats" src="./screenshots/s9.jpg">  |  <img width="200" alt="add computer form" src="./screenshots/s8.jpg">|<img width="200" alt="add claim form (first step)" src="./screenshots/s10.jpg">|<img width="200" alt="teacher profile screen" src="./screenshots/s5.jpg">|
+
+## You may also like...
+
+- [HiCoach](https://github.com/salimkazdaghli/Hicotech-Frontend) - A coaching web app.
+- [School MS](https://github.com/amitmerchant1990/correo) - A school managment system web app.
