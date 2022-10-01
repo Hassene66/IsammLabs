@@ -25,7 +25,7 @@
 </p>
 
 ## Basic overview
-IsammLabs is a cross-platform mobile application built with React native and Node.js that manage the whole process of passing claims between professors and technicians in the ISAMM's laboratories.
+IsammLabs is a cross-platform mobile application built with React native and Node.js that aims to automate the whole process of passing claims between professors and technicians in the ISAMM's laboratories.
 
 ## Key features
 * Pass a claim for a specific computer and a specific technician.
