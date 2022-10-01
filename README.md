@@ -15,12 +15,12 @@
 </div>
 
 <p align="center">
-  <a href="#key-features">Basic overview</a> •
-  <a href="#how-to-use">Key features</a> •
-  <a href="#Technology-used">Technology used</a> •
-  <a href="#How-to-use">How to use</a> •
-  <a href="#Project-screenshots">Project screenshots</a> •
-  <a href="#You-may-also-like">You may also like</a>
+  <a href="#basic-overview">Basic overview</a> •
+  <a href="#key-features">Key features</a> •
+  <a href="#technology-used">Technology used</a> •
+  <a href="#how-to-use">How to use</a> •
+  <a href="#project-screenshots">Project screenshots</a> •
+  <a href="#you-may-also-like">You may also like</a>
   
 </p>
 
