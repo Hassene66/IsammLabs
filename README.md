@@ -50,7 +50,7 @@ IsammLabs is a cross-platform mobile application built with React native and Nod
 To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer and [Setting the development environment](https://reactnative.dev/docs/environment-setup) . From your command line:
 ```bash
 # Clone this repository
-$ git clone https://github.com/Hassene66/IsammLabs)
+$ git clone https://github.com/Hassene66/IsammLabs
 
 # Go into the repository
 $ cd IsammLabs
