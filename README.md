@@ -19,7 +19,7 @@
   <a href="#key-features">Key features</a> •
   <a href="#technology-used">Technology used</a> •
   <a href="#how-to-use">How to use</a> •
-  <a href="#project-screenshots">Project screenshots</a> •
+  <a href="#project-overview">Project overview</a> •
   <a href="#you-may-also-like">You may also like</a>
   
 </p>
@@ -69,7 +69,7 @@ $ npm run ios
 
 
 
-## Project screenshots
+## Project overview
 
 
 | | | | |
@@ -80,4 +80,4 @@ $ npm run ios
 ## You may also like
 
 - [HiCoach](https://github.com/salimkazdaghli/Hicotech-Frontend) - A coaching web app.
-- [School MS](https://github.com/amitmerchant1990/correo) - A school managment system web app.
+- [Tahi](https://github.dev/Hassene66/Tahi-Project) - A traditional food delivery mobile app.
