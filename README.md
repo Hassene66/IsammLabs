@@ -1,7 +1,7 @@
 <h1 align="center">
   <br/>
   <img src="./src/assets/bootsplash_logo@1,5x.png" alt="IsammLabs" width="200"/></a>
-  <h4 align="center">A <a href="https://reactnative.dev/" target="_blank">React Native</a> based mobile application for managing university laboratories..</h4>
+  <h4 align="center">A <a href="https://reactnative.dev/" target="_blank">React Native</a> based mobile application for managing university laboratories.</h4>
   <br/>
 </h1>
 <div align="center">
