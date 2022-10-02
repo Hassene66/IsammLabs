@@ -80,4 +80,4 @@ $ npm run ios
 ## You may also like
 
 - [HiCoach](https://github.com/salimkazdaghli/Hicotech-Frontend) - A coaching web app.
-- [Tahi](https://github.dev/Hassene66/Tahi-Project) - A traditional food delivery mobile app.
+- [Tahi](https://github.com/Hassene66/Tahi-Project) - A traditional food delivery mobile app.
